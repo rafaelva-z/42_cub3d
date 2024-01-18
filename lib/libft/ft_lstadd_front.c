@@ -1,24 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/18 12:13:14 by rvaz             ###   ########.fr       */
+/*   Created: 2023/04/18 23:13:41 by rvaz              #+#    #+#             */
+/*   Updated: 2023/12/29 19:50:53 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#include "libft.h"
 
-#include "../lib/libft/libft.h"
-#include "../lib/minilibx-linux/mlx.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <math.h>
-
-
-#endif
+void	ft_lstadd_front(t_env_var **lst, t_env_var *new_lst)
+{
+	new_lst->next = *lst;
+	*lst = new_lst;
+}

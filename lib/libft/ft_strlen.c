@@ -1,24 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/18 12:13:14 by rvaz             ###   ########.fr       */
+/*   Created: 2023/03/10 12:22:52 by rvaz              #+#    #+#             */
+/*   Updated: 2024/01/12 16:41:54 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#include "libft.h"
 
-#include "../lib/libft/libft.h"
-#include "../lib/minilibx-linux/mlx.h"
+size_t	ft_strlen(const char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i])
+		i++;
+	return (i);
+}
+
+/*
 #include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <math.h>
-
-
-#endif
+int main()
+{
+	int a = ft_strlen("He");
+	printf("%d\n", a);
+}
+*/

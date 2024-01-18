@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/18 12:13:14 by rvaz             ###   ########.fr       */
+/*   Created: 2023/05/13 19:59:06 by fda-estr          #+#    #+#             */
+/*   Updated: 2023/09/20 19:16:57 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#include "libft.h"
 
-#include "../lib/libft/libft.h"
-#include "../lib/minilibx-linux/mlx.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <math.h>
-
-
-#endif
+void	ft_putnbr(long int nbr, int *len)
+{
+	if (nbr < 0)
+	{
+		ft_putchar('-', len);
+		nbr *= -1;
+	}
+	if (nbr > 9)
+	{
+		ft_putnbr(nbr / 10, len);
+		ft_putnbr(nbr % 10, len);
+	}
+	else
+		ft_putchar(nbr + 48, len);
+}
