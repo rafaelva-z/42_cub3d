@@ -3,25 +3,30 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+         #
+#    By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by rvaz              #+#    #+#              #
-#    Updated: 2024/01/17 20:46:53 by rvaz             ###   ########.fr        #
+#    Updated: 2024/01/18 00:19:50 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .SILENT:
 NAME		=	cub3d
+
 CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror -g #-fsanitize=address 
-LIBFLAGS	=	-L$(LIBFT_PATH) -lft
 RM			=	/bin/rm -f
+
+LIBFLAGS	=	-L$(LIBFT_PATH) -lft -lmlx -lXext -lX11 -lm -lz
 INCLUDES	=	./include
 LIBFT_PATH	=	./lib/libft/
 LIBFT		=	$(LIBFT_PATH)libft.a
+MLX_PATH	=	./lib/minilibx-linux/
+MLX			=	$(MLX_PATH)libmlx.a
+
 SRCS		=	$(addprefix ./src/,				\
 				main.c							\
-				)								\
+				)
 
 OBJS = $(SRCS:.c=.o)
 
@@ -44,7 +49,7 @@ $(LIBFT):
 clean:
 	@$(RM) $(OBJS)
 	@make -C $(LIBFT_PATH) clean
-	@$(RM) $(OBJ_FOLDER) readline.supp
+	@$(RM) $(OBJ_FOLDER)
 
 fclean: clean
 	@echo "$(TAG) Full clean." 
