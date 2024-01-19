@@ -6,7 +6,7 @@
 #    By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by rvaz              #+#    #+#              #
-#    Updated: 2024/01/18 00:19:50 by rvaz             ###   ########.fr        #
+#    Updated: 2024/01/19 01:17:56 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror -g #-fsanitize=address 
 RM			=	/bin/rm -f
 
-LIBFLAGS	=	-L$(LIBFT_PATH) -lft -lmlx -lXext -lX11 -lm -lz
+LIBFLAGS	=	-L$(LIBFT_PATH) -L$(MLX_PATH) -lft -lmlx -lXext -lX11 -lm -lz
 INCLUDES	=	./include
 LIBFT_PATH	=	./lib/libft/
 LIBFT		=	$(LIBFT_PATH)libft.a
@@ -39,17 +39,21 @@ TAG			=	$(CYAN)[$(NAME)]$(RESET)
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJS)
+$(NAME): $(LIBFT) $(MLX) $(OBJS)
 	@echo "$(TAG) Making Program"
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFLAGS) -o $(NAME)
 
 $(LIBFT):
 	@make -C $(LIBFT_PATH)
 
+$(MLX):
+	@make -C $(MLX_PATH)
+
 clean:
 	@$(RM) $(OBJS)
-	@make -C $(LIBFT_PATH) clean
 	@$(RM) $(OBJ_FOLDER)
+	@make -C $(LIBFT_PATH) clean
+	@make -C $(MLX_PATH) clean
 
 fclean: clean
 	@echo "$(TAG) Full clean." 
