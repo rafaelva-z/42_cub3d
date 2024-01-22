@@ -6,7 +6,7 @@
 #    By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by rvaz              #+#    #+#              #
-#    Updated: 2024/01/21 23:04:48 by fda-estr         ###   ########.fr        #
+#    Updated: 2024/01/22 20:10:12 by fda-estr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,9 +26,12 @@ MLX			=	$(MLX_PATH)libmlx.a
 
 SRCS		=	$(addprefix ./src/,				\
 				main.c							\
+				utils.c							\
+				$(addprefix /parsing/,			\
 				parser.c						\
 				parser_2.c						\
-				utils.c							\
+				map_check.c						\
+				)								\
 				)
 
 OBJS = $(SRCS:.c=.o)

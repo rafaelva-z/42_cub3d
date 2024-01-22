@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:16:32 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/22 00:09:49 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/22 20:26:10 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,19 @@ void	initializer(t_data *data)
 	data->file->west_file = NULL;
 	data->file->floor_file = NULL;
 	data->file->ceiling_file = NULL;
+}
+
+void	free_and_exit(t_data *data, char *msg)
+{
+	if (msg)
+		ft_putstr_fd(msg, 2);
+	if (data->file)
+	{
+		if (data->file->file)
+			matrix_deleter(&data->file->file);
+		free (data->file);
+	}
+	if (data->player)
+		free (data->player);
+	exit (0);
 }
