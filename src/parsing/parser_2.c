@@ -6,11 +6,11 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 23:05:31 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/22 00:10:53 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/22 21:51:52 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "../../include/cub3d.h"
 
 static char	*identifier_skipper(t_data *data, char *s)
 {
@@ -24,19 +24,11 @@ static char	*identifier_skipper(t_data *data, char *s)
 	while (*prod && *prod == ' ')
 		prod++;
 	if (!(*prod))
-	{
-		printf("Error: invalid identifier\n");		//	Error handling
-		matrix_deleter (&data->file->file);
-		exit (1);
-	}
+		free_and_exit(data, "Error: invalid identifier\n");
 	while (prod[++i])
 	{
 		if (prod[i] == ' ')
-		{
-			printf("Error: invalid identifier\n");		//	Error handling
-			matrix_deleter (&data->file->file);
-			exit (1);
-		}
+			free_and_exit(data, "Error: invalid identifier\n");
 	}
 	return (prod);
 }
@@ -61,18 +53,10 @@ void	identifier_init(t_data *dt)
 		else if (!ft_strncmp(dt->file->file[i], "C ", 2))
 			dt->file->ceiling_file = identifier_skipper(dt, dt->file->file[i]);
 		else
-		{
-			printf("Invalid identifier\n");				//	Error handling
-			matrix_deleter (&dt->file->file);
-			exit (1);
-		}
+			free_and_exit(dt, "Error: Invalid identifier\n");
 	}
 	if (!dt->file->ceiling_file || !dt->file->floor_file
 			|| !dt->file->west_file || !dt->file->north_file
 			|| !dt->file->east_file || !dt->file->south_file)
-	{
-		printf("Error: Doubled identifier\n");
-		matrix_deleter (&dt->file->file);
-		exit (1);
-	}
+		free_and_exit(dt, "Error: Doubled identifier\n");
 }

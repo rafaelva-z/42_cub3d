@@ -6,29 +6,24 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:08:06 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/22 00:01:54 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/22 22:31:06 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "../../include/cub3d.h"
 
-static void	extension(char *str)
+static void	extension(t_data *data, char *str)
 {
 	char	*temp;
 
 	temp = str;
 	while (*temp && *temp != '.')
 		temp++;
-	printf("extension: %s\n", temp);
 	if (ft_strncmp(temp, ".cub", 5))
-	{
-		printf("Error: invalid file extension\n");
-		exit (1);
-	}
-	printf("All riiiight\n");
+		free_and_exit(data, "Error: invalid file extension");
 }
 
-static void	new_line_check(char *s)
+static void	new_line_check(t_data *data, char *s)
 {
 	int	i;
 	int	line_count;
@@ -47,22 +42,19 @@ static void	new_line_check(char *s)
 	}
 	if (!s[i])
 	{
-		printf("Error: invalid map\n");
 		free (s);
-		exit (1);
+		free_and_exit(data, "Error: invalid map\n");
 	}
 	while (s[++i])
 		if (s[i] == '\n' && s[i + 1] == '\n')
 		{
-			printf("Error: invalid map\n");
 			free (s);
-			exit (1);
+			free_and_exit(data, "Error: invalid map\n");
 		}
 	if (i && s[i - 1] == '\n')
 	{
-		printf("Error: invalid map\n");
 		free (s);
-		exit (1);
+		free_and_exit(data, "Error: invalid map\n");
 	}
 }
 
@@ -89,7 +81,7 @@ static void	file_extractor(t_data *data, char *str)
 		printf("Error: empty map...\n");
 		exit (1);
 	}
-	new_line_check(join_s);
+	new_line_check(data, join_s);
 	data->file->file = ft_split(join_s, '\n');
 	free (join_s);
 }
@@ -110,7 +102,7 @@ static void	trimmer(t_data *data)
 
 void	parser(t_data *data, char *str)
 {
-	extension(str);
+	extension(data, str);
 	file_extractor(data, str);
 	trimmer(data);
 
@@ -129,6 +121,8 @@ void	parser(t_data *data, char *str)
 	printf("F: %s|\n", data->file->floor_file);
 	printf("C: %s|\n", data->file->ceiling_file);
 
+	map_check(data);
+	printf("\nVALID MAP!\n");
 	matrix_deleter(&data->file->file);
 	free (data->file);
 }

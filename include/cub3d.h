@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/21 23:28:07 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/22 20:18:20 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,13 @@ void	parser(t_data *data, char *str);
 
 void	identifier_init(t_data *data);
 
+/* map_check */
+
+void	map_check(t_data *data);
+
 /* utils.c	*/
 
 void	initializer(t_data *data);
+void	free_and_exit(t_data *data, char *msg);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:31:58 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/13 13:32:07 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/22 11:59:57 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,10 @@ void		ft_adress(unsigned long int ad, int *len);
 
 void		matrix_deleter(char ***mtx);
 char		*ft_strjoin_free(char const *s1, char const *s2, int tofree);
+char		**matrix_dup(char **mtx);
+int			matrix_finder(char **mtx, char *s);
+void		matrix_printer(char **mtx);
+int			matrix_sizer(char **mtx, char d);
+int			str_finder(char *s, char *c);
 
 #endif

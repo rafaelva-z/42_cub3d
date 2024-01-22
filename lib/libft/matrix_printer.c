@@ -1,24 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   matrix_printer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/17 20:34:35 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/22 19:18:32 by fda-estr         ###   ########.fr       */
+/*   Created: 2023/09/22 20:43:12 by fda-estr          #+#    #+#             */
+/*   Updated: 2024/01/22 11:56:04 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "libft.h"
 
-int	main(int argc, char **argv)
+void	matrix_printer(char **mtx)
 {
-	t_data data;
-	
-	if (argc != 2)
-		return (1);			// Error handling
-	initializer(&data);
-	parser(&data, argv[1]);
-	
+	int		i;
+	int		j;
+	char	c;
+
+	i = 0;
+	c = '\n';
+	while (mtx[i])
+	{
+		j = 0;
+		while (mtx[i][j])
+		{
+			write(1, &mtx[i][j], 1);
+			j++;
+		}
+		write(1, &c, 1);
+		i++;
+	}
 }

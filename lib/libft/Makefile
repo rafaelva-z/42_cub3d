@@ -16,7 +16,8 @@ SRC = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
 	get_next_line.c	get_next_line_bonus.c get_next_line_utils.c	\
 	get_next_line_utils_bonus.c ft_printf.c	matrix_deleter.c \
 	ft_param.c ft_putchar.c ft_putstr.c ft_putnbr.c ft_putnbrhexa.c ft_putunsigned.c \
-	ft_adress.c ft_strjoin_free.c
+	ft_adress.c ft_strjoin_free.c matrix_dup.c matrix_finder.c matrix_printer.c matrix_sizer.c \
+	str_finder.c
 
 OBJ = $(SRC:.c=.o)
 
