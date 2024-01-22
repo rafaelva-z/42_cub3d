@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 02:32:24 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/12 17:34:26 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/21 21:50:17 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@ char	*ft_strjoin_free(char const *s1, char const *s2, int tofree)
 	size_t	s1len;
 	size_t	s2len;
 
+	if (!s1)
+		return ((char *)s2);
+	if (!s2)
+		return ((char *)s1);
 	s1len = ft_strlen(s1);
 	s2len = ft_strlen(s2);
 	sj = malloc(sizeof(char) * (s1len + s2len + 1));
