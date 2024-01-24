@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:16:32 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/24 17:14:20 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/24 18:59:06 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ void	initializer(t_data *data)
 	data->east_img = NULL;
 	data->south_img = NULL;
 	data->west_img = NULL;
-	data->map = NULL;
-	data->player = NULL;
 	data->file = malloc(sizeof(t_file));
 	if (!data->file)
 		return ;		//	Error handler
@@ -44,8 +42,6 @@ void	free_and_exit(t_data *data, char *msg)
 			matrix_deleter(&data->file->file);
 		free (data->file);
 	}
-	if (data->player)
-		free (data->player);
 	exit (0);
 }
 

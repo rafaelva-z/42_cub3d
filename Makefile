@@ -6,7 +6,7 @@
 #    By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by rvaz              #+#    #+#              #
-#    Updated: 2024/01/24 15:47:49 by rvaz             ###   ########.fr        #
+#    Updated: 2024/01/24 19:04:09 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,10 @@ SRCS		=	$(addprefix ./src/,				\
 				parser_2.c						\
 				map_check.c						\
 				)								\
+				$(addprefix /raycast/,			\
+				dda.c							\
+				raycast.c						\
+				)
 				)
 
 OBJS = $(SRCS:.c=.o)

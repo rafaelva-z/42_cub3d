@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/24 17:01:58 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/24 19:01:52 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 # include "../lib/libft/libft.h"
-//# include "../lib/minilibx-linux/mlx.h"
+# include "../lib/minilibx-linux/mlx.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
@@ -79,20 +79,25 @@ typedef struct s_map
 {
 	char		**map;
 	t_2d_point	size;
-}				t_map; 
+}				t_map;
 
+/**
+ * @brief Structure that holds file content and file names
+*/
 typedef struct s_file
 {
-	char	**file;						//	pointer to the matrix to the file content
-	char	*north_file;				//	pointer to the texture file name
-	char	*east_file;					//				||
-	char	*south_file;				//				||
-	char	*west_file;					//				||
-	char	*ceiling_file;				//				||
-	char	*floor_file;				//				||
+	char	**file;
+	char	*north_file;
+	char	*east_file;
+	char	*south_file;
+	char	*west_file;
+	char	*ceiling_file;
+	char	*floor_file;
 }				t_file;
 
-
+/**
+ * @brief Structure that holds all the data needed for the program
+*/
 typedef struct s_data
 {
 	void		*mlx;					//	pointer to mlx
@@ -102,26 +107,24 @@ typedef struct s_data
 	void		*south_img;				//	pointer to south image
 	void		*west_img;				//	pointer to west image
 	t_file		*file;					//	pointer to the file struct
-	char		**map;					//	pointer to map
-	t_2d_point	map_size;
-	t_player	*player;				//	pointer to player's struct
+	t_map		map;					//	pointer to map
+	t_player	player;					//	pointer to player's struct
 }				t_data;
 
-/* parser.c	*/
-
+//		parser.c
 void	parser(t_data *data, char *str);
 
-/* parser.c	*/
-
+//		parser_2.c
 void	identifier_init(t_data *data);
 
-/* map_check */
-
+//		map_check.c
 void	map_check(t_data *data);
 
-/* utils.c	*/
-
+//		utils.c
 void	initializer(t_data *data);
 void	free_and_exit(t_data *data, char *msg);
+
+//		dda.c
+double	dda(t_2d_point *start, t_2d_point *dir, t_data *data);
 
 #endif
