@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+         #
+#    By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by rvaz              #+#    #+#              #
-#    Updated: 2024/01/24 15:47:49 by rvaz             ###   ########.fr        #
+#    Updated: 2024/01/24 18:34:43 by fda-estr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,10 @@ SRCS		=	$(addprefix ./src/,				\
 				parser.c						\
 				parser_2.c						\
 				map_check.c						\
+				map_check_utils.c				\
+				)								\
+				$(addprefix /mini_map/,			\
+				mini_map.c						\
 				)								\
 				)
 

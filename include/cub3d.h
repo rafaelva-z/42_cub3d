@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/24 17:01:58 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/24 18:35:28 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,8 @@ typedef struct s_data
 	void		*south_img;				//	pointer to south image
 	void		*west_img;				//	pointer to west image
 	t_file		*file;					//	pointer to the file struct
-	char		**map;					//	pointer to map
-	t_2d_point	map_size;
-	t_player	*player;				//	pointer to player's struct
+	t_map		map;					//	pointer to map
+	t_player	player;				//	pointer to player's struct
 }				t_data;
 
 /* parser.c	*/
@@ -119,9 +118,14 @@ void	identifier_init(t_data *data);
 
 void	map_check(t_data *data);
 
+/* map_check_utils */
+
+void	map_and_player_init(t_data *data);
+
 /* utils.c	*/
 
 void	initializer(t_data *data);
 void	free_and_exit(t_data *data, char *msg);
+int		coordinate_finder(char **mtx, char c, char axle);
 
 #endif

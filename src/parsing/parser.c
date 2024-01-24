@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:08:06 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/22 22:31:06 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/24 17:57:08 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,5 @@ void	parser(t_data *data, char *str)
 
 	map_check(data);
 	printf("\nVALID MAP!\n");
-	matrix_deleter(&data->file->file);
 	free (data->file);
 }

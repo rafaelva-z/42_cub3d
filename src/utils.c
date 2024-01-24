@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:16:32 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/24 17:14:20 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/24 18:21:52 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ void	initializer(t_data *data)
 	data->east_img = NULL;
 	data->south_img = NULL;
 	data->west_img = NULL;
-	data->map = NULL;
-	data->player = NULL;
+	data->map.map = NULL;
 	data->file = malloc(sizeof(t_file));
 	if (!data->file)
 		return ;		//	Error handler
@@ -44,8 +43,6 @@ void	free_and_exit(t_data *data, char *msg)
 			matrix_deleter(&data->file->file);
 		free (data->file);
 	}
-	if (data->player)
-		free (data->player);
 	exit (0);
 }
 
@@ -63,4 +60,27 @@ void	rotate_point(t_2d_point *point, double angle)
 	rot.y = point->y * cos(angle) + point->x * sin(angle);
 	point->x = rot.x;
 	point->y = rot.y;
+}
+
+int	coordinate_finder(char **mtx, char c, char axle)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (mtx[i])
+	{
+		j = 0;
+		while (mtx[i][j] && mtx[i][j] != c)
+			j++;
+		if (mtx[i][j] == c)
+			break ;
+		i++;
+	}
+	if (axle == 'x')
+		return (j);
+	else if (axle == 'y')
+		return (i);
+	else
+		return (-1);
 }
