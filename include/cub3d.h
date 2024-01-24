@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/23 12:01:16 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/24 17:01:58 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 # define CUB3D_H
 
 # include "../lib/libft/libft.h"
-# include "../lib/minilibx-linux/mlx.h"
+//# include "../lib/minilibx-linux/mlx.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h>
 # include <math.h>
+
+# define M_PI 3.14159265358979323846
 
 //	Screen Resolution
 # define WIN_WIDTH	900
@@ -68,9 +70,16 @@ typedef struct s_vector
 
 typedef struct s_player
 {
-	int		pos_x;						//	player's x position
-	int		pos_y;						//	player's y position
+	t_2d_point	pos;
+	t_2d_point	dir;
+	t_vector	camera;
 }				t_player;
+
+typedef struct s_map
+{
+	char		**map;
+	t_2d_point	size;
+}				t_map; 
 
 typedef struct s_file
 {
@@ -94,6 +103,7 @@ typedef struct s_data
 	void		*west_img;				//	pointer to west image
 	t_file		*file;					//	pointer to the file struct
 	char		**map;					//	pointer to map
+	t_2d_point	map_size;
 	t_player	*player;				//	pointer to player's struct
 }				t_data;
 
