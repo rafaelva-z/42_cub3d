@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+         #
+#    By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by rvaz              #+#    #+#              #
-#    Updated: 2024/01/22 20:10:12 by fda-estr         ###   ########.fr        #
+#    Updated: 2024/01/24 15:47:49 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 NAME		=	cub3d
 
 CC			=	cc
-CFLAGS		=	-Wall -Wextra -Werror -g #-fsanitize=address 
+CFLAGS		=	-g #-Wall -Wextra -Werror #-fsanitize=address 
 RM			=	/bin/rm -f
 
 LIBFLAGS	=	-L$(LIBFT_PATH) -L$(MLX_PATH) -lft -lmlx -lXext -lX11 -lm -lz
@@ -76,6 +76,6 @@ run: $(NAME)
 
 runvg: $(NAME)
 	@clear
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ./$(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes  --track-origins=yes ./$(NAME) maps/test.cub
 
 .PHONY: all clean fclean re run runvg
