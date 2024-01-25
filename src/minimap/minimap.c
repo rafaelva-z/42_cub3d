@@ -14,5 +14,5 @@
 
 void	minimap(t_data *data)
 {
-	
+	(void)data;
 }

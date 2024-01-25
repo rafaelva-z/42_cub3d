@@ -54,3 +54,5 @@ dkms.conf
 cub3d
 vscode/
 vscode/*
+./vscode/
+./vscode/*

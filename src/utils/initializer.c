@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/25 18:00:59 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/25 19:17:08 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	init_mlx(t_data *data)
 	data->mlx = mlx_init();
 	if (!data->mlx)
 		free_and_exit(data, ERR_MLX_INIT);
-	data->mlx_win = mlx_new_window(data->mlx, WIN_WIDTH, WIN_HEIGHT, "Cub3D");
+	data->mlx_win = mlx_new_window(data->mlx, WIN_WIDTH, WIN_HEIGHT, "Cub3D - fda-est & rvaz");
 	if (!data->mlx_win)
 		free_and_exit(data, ERR_MLX_WIN);
 }

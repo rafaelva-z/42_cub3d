@@ -6,7 +6,7 @@
 #    By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by rvaz              #+#    #+#              #
-#    Updated: 2024/01/25 17:56:37 by rvaz             ###   ########.fr        #
+#    Updated: 2024/01/25 19:04:26 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 NAME		=	cub3d
 
 CC			=	cc
-CFLAGS		=	-g #-Wall -Wextra -Werror #-fsanitize=address 
+CFLAGS		=	-g -Wall -Wextra -Werror #-fsanitize=address 
 RM			=	/bin/rm -f
 
 LIBFLAGS	=	-L$(LIBFT_PATH) -L$(MLX_PATH) -lft -lmlx -lXext -lX11 -lm -lz
@@ -26,6 +26,7 @@ MLX			=	$(MLX_PATH)libmlx.a
 
 SRCS		=	$(addprefix ./src/,				\
 				main.c							\
+				hooks.c							\
 				$(addprefix /parsing/,			\
 				parser.c						\
 				parser_2.c						\
@@ -88,6 +89,6 @@ run: all
 
 runvg: all
 	@clear
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes  --track-origins=yes ./$(NAME) maps/test.cub	
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes  --track-origins=yes ./$(NAME) maps/test.cub
 
 .PHONY: all clean fclean re run runvg
