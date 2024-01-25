@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 17:06:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/24 18:40:45 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/25 14:54:53 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ double	dda(t_2d_point *start, t_2d_point *dir, t_data *data)
 	dist = 0;
 	step_size.x = sqrt(1 + (dir->y / dir->x) * (dir->y / dir->x));
 	step_size.y = sqrt(1 + (dir->x / dir->y) * (dir->x / dir->y));
-	current = (t_2d_point){(int)start->x, (int)start->y};
+	current = (t_2d_point){start->x, start->y};
 	dda_def_step_ray(&data->player, &step_size, &ray_len, &step);
 	// Make functions for these checks \/ (is_wall() && is_inside_map())
 	while (data->map.map[(int)current.y][(int)current.x] != '1' && current.x < data->map.size.x && current.y < data->map.size.y)
@@ -66,5 +66,7 @@ double	dda(t_2d_point *start, t_2d_point *dir, t_data *data)
 			ray_len.y += step_size.y;
 		}
 	}
+	//printf("Dist: %f (x)%f (y)%f [%d, %d]\n", dist, current.x, current.y, (int)current.x, (int)current.y);
+	printf("Dist: %f\t", dist);
 	return (dist);
 }
