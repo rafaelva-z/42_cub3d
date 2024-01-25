@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/24 19:01:52 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/25 01:36:27 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_player
 	t_2d_point	pos;
 	t_2d_point	dir;
 	t_vector	camera;
+	double		fov;
 }				t_player;
 
 typedef struct s_map
@@ -123,8 +124,12 @@ void	map_check(t_data *data);
 //		utils.c
 void	initializer(t_data *data);
 void	free_and_exit(t_data *data, char *msg);
+void	rotate_point(t_2d_point *point, double angle);
 
 //		dda.c
 double	dda(t_2d_point *start, t_2d_point *dir, t_data *data);
+
+//		raycat.c
+void	raycast(t_data *data);
 
 #endif
