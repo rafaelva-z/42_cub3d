@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/25 16:11:46 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/25 17:36:18 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <math.h>
+
+//	Error Messages
+# define ERR_MALLOC		"cub3d: malloc() failed\n"
+# define ERR_MLX_INIT	"cub3d: mlx_init() failed\n"
+# define ERR_MLX_WIN	"cub3d: mlx_new_window() failed\n"
 
 # define M_PI 3.14159265358979323846
 
@@ -116,6 +121,13 @@ typedef struct s_data
 	t_player	player;					//	pointer to player's struct
 }				t_data;
 
+//		initializer.c
+void	initializer(t_data *data);
+
+//		free.c
+void	free_data(t_data *data);
+void	free_and_exit(t_data *data, char *msg);
+
 //		parser.c
 void	parser(t_data *data, char *str);
 
@@ -133,7 +145,6 @@ void	map_and_player_init(t_data *data);
 
 //		utils.c
 void	initializer(t_data *data);
-void	free_and_exit(t_data *data, char *msg);
 int		coordinate_finder(char **mtx, char c, char axle);
 void	rotate_point(t_2d_point *point, double angle);
 

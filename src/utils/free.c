@@ -1,26 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/17 20:34:35 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/25 17:19:12 by rvaz             ###   ########.fr       */
+/*   Created: 2024/01/25 17:32:59 by rvaz              #+#    #+#             */
+/*   Updated: 2024/01/25 17:33:34 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-int	main(int argc, char **argv)
+void	free_data(t_data *data)
 {
-	t_data	data;
-	
-	if (argc != 2)
-		return (1);			// Error handling
-	initializer(&data);
-	parser(&data, argv[1]);
-	mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "Cub3D");
-	raycast(&data);
-	free_and_exit(&data, NULL);
+	if (!data)
+		return ;
+	if (data->file)
+	{
+		if (data->file->file)
+			matrix_deleter(&data->file->file);
+		free (data->file);
+	}
+	if (data->map.map)
+		matrix_deleter(&data->map.map);
+	if (data->mlx_win)
+		mlx_destroy_window(data->mlx, data->mlx_win);
+	if (data->mlx)
+		free(data->mlx);
+}
+
+void	free_and_exit(t_data *data, char *msg)
+{
+	if (msg)
+		ft_putstr_fd(msg, 2);
+	if (data)
+		free_data(data);
+	exit(0);
 }
