@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 12:03:00 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/22 21:51:28 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/25 16:17:56 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ static void	character_check(t_data *data)
 {
 	int	size;
 
-	size = matrix_sizer(data->map, 'c');
-	if (size != matrix_finder(data->map, "10 NSEW"))
+	size = matrix_sizer(data->map.map, 'c');
+	if (size != matrix_finder(data->map.map, "10 NSEW"))
 		free_and_exit(data, "Map Error: invalid character\n");
-	if (matrix_finder(data->map, "NSEW") != 1)
+	if (matrix_finder(data->map.map, "NSEW") != 1)
 		free_and_exit(data, "Map Error: invalid starting coordinate\n");
 }
 
@@ -67,31 +67,26 @@ static int	neighbors_check(char **map, int i, int j)
 
 void	borther_check(t_data *data)
 {
-	char	**dup;
 	int		i;
 	int		j;
 	int		flag;
 
 	i = 0;
 	flag = 0;
-	dup = map_dup(data->map);
-	while (dup[++i + 1] && flag == 0)
+	while (data->map.map[++i + 1] && flag == 0)
 	{
 		j = -1;
-		while (dup[i][++j] && flag == 0)
+		while (data->map.map[i][++j] && flag == 0)
 		{
-			if (dup[i][j] == '1' || dup[i][j] == ' ')
+			if (data->map.map[i][j] == '1' || data->map.map[i][j] == ' ')
 				continue ;
-			if (neighbors_check(dup, i, j))
+			if (neighbors_check(data->map.map, i, j))
 				flag = 1;
 		}
 	}
-	if (flag == 1 || str_finder(dup[0], "0NSEW") || str_finder(dup[i], "0NSEW"))
-	{
-		matrix_deleter(&dup);
+	if (flag == 1 || str_finder(data->map.map[0], "0NSEW")
+		|| str_finder(data->map.map[i], "0NSEW"))
 		free_and_exit(data, "Error: invalid map borders\n");
-	}
-	matrix_deleter(&dup);
 }
 
 void	map_check(t_data *data)
@@ -99,10 +94,11 @@ void	map_check(t_data *data)
 	int	i;
 
 	i = -1;
-	data->map = data->file->file + 6;
+	data->map.map = map_dup(data->file->file + 6);
 	character_check(data);
 	borther_check(data);
-	while (data->map[++i])
-		if (!str_finder(data->map[i], "1"))
+	while (data->map.map[++i])
+		if (!str_finder(data->map.map[i], "1"))
 			free_and_exit(data, "Error: Map cannot contain empty lines\n");
+	map_and_player_init(data);
 }

@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 17:06:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/25 14:54:53 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/25 16:15:47 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ double	dda(t_2d_point *start, t_2d_point *dir, t_data *data)
 			ray_len.y += step_size.y;
 		}
 	}
-	//printf("Dist: %f (x)%f (y)%f [%d, %d]\n", dist, current.x, current.y, (int)current.x, (int)current.y);
-	printf("Dist: %f\t", dist);
+	if (DEBUG == 2)
+		printf("Dist: %f (x)%f (y)%f [%d, %d]\t", dist, current.x, current.y, (int)current.x, (int)current.y);
 	return (dist);
 }
