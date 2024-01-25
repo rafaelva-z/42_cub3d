@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+         #
+#    By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by rvaz              #+#    #+#              #
-#    Updated: 2024/01/24 18:34:43 by fda-estr         ###   ########.fr        #
+#    Updated: 2024/01/25 15:29:17 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,10 @@ MLX			=	$(MLX_PATH)libmlx.a
 SRCS		=	$(addprefix ./src/,				\
 				main.c							\
 				utils.c							\
+				$(addprefix /raycast/,			\
+				dda.c							\
+				raycast.c						\
+				)								\
 				$(addprefix /parsing/,			\
 				parser.c						\
 				parser_2.c						\
@@ -74,11 +78,11 @@ re: fclean all
 	@echo "$(TAG) Recompiling."
 	@make -C $(LIBFT_PATH) re
 
-run: $(NAME)
+run: all
 	@clear
-	./$(NAME)
+	./$(NAME) maps/test.cub
 
-runvg: $(NAME)
+runvg: all
 	@clear
 	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes  --track-origins=yes ./$(NAME) maps/test.cub
 
