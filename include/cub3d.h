@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/25 01:36:27 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/25 15:28:47 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,9 +121,16 @@ void	identifier_init(t_data *data);
 //		map_check.c
 void	map_check(t_data *data);
 
+//		map_check_utils
+void	map_and_player_init(t_data *data);
+
+//		map_check_utils
+void	map_and_player_init(t_data *data);
+
 //		utils.c
 void	initializer(t_data *data);
 void	free_and_exit(t_data *data, char *msg);
+int		coordinate_finder(char **mtx, char c, char axle);
 void	rotate_point(t_2d_point *point, double angle);
 
 //		dda.c
