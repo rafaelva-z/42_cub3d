@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:34:35 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/25 15:30:00 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/25 15:45:12 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	main(int argc, char **argv)
 {
 	t_data	data;
-
+	
 	if (argc != 2)
 		return (1);			// Error handling
 	initializer(&data);
