@@ -6,12 +6,16 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/25 15:28:47 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/25 16:11:46 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
+
+# ifndef DEBUG
+#  define DEBUG 2
+# endif
 
 # include "../lib/libft/libft.h"
 # include "../lib/minilibx-linux/mlx.h"

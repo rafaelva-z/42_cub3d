@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 12:03:00 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/24 18:35:40 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/25 16:17:56 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	borther_check(t_data *data)
 		}
 	}
 	if (flag == 1 || str_finder(data->map.map[0], "0NSEW")
-			|| str_finder(data->map.map[i], "0NSEW"))
+		|| str_finder(data->map.map[i], "0NSEW"))
 		free_and_exit(data, "Error: invalid map borders\n");
 }
 
@@ -101,5 +101,4 @@ void	map_check(t_data *data)
 		if (!str_finder(data->map.map[i], "1"))
 			free_and_exit(data, "Error: Map cannot contain empty lines\n");
 	map_and_player_init(data);
-	
 }

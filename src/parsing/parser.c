@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:08:06 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/24 17:57:08 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/25 16:17:26 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	new_line_check(t_data *data, char *s)
 	while (s[++i])
 	{
 		if (s[i] == '\n')
-			continue;
+			continue ;
 		if (line_count == 6)
 			break ;
 		line_count++;
@@ -46,11 +46,13 @@ static void	new_line_check(t_data *data, char *s)
 		free_and_exit(data, "Error: invalid map\n");
 	}
 	while (s[++i])
+	{
 		if (s[i] == '\n' && s[i + 1] == '\n')
 		{
 			free (s);
 			free_and_exit(data, "Error: invalid map\n");
 		}
+	}
 	if (i && s[i - 1] == '\n')
 	{
 		free (s);
@@ -94,7 +96,7 @@ static void	trimmer(t_data *data)
 	i = -1;
 	while (++i < 6)
 	{
-		temp = data->file->file[i];	
+		temp = data->file->file[i];
 		data->file->file[i] = ft_strtrim(data->file->file[i], " ");
 		free (temp);
 	}
@@ -105,23 +107,28 @@ void	parser(t_data *data, char *str)
 	extension(data, str);
 	file_extractor(data, str);
 	trimmer(data);
-
-	int i = -1;
-	while (data->file->file[++i])
-		printf("%s|\n", data->file->file[i]);
-
-
+	if (DEBUG == 1)
+	{
+		printf("====MAP-FILE================\n");
+		for (int i = 0; data->file->file[i]; i++)
+			printf("%s|\n", data->file->file[i]);
+		printf("====MAP-END=================\n");
+	}
 	identifier_init(data);
-
-	
-	printf("SO: %s|\n", data->file->south_file);
-	printf("NO: %s|\n", data->file->north_file);
-	printf("WE: %s|\n", data->file->west_file);
-	printf("EA: %s|\n", data->file->east_file);
-	printf("F: %s|\n", data->file->floor_file);
-	printf("C: %s|\n", data->file->ceiling_file);
-
+	if (DEBUG == 1)
+	{
+		printf("\n===TEXTURE-FILES============\n");
+		printf("SO: %s|\n", data->file->south_file);
+		printf("NO: %s|\n", data->file->north_file);
+		printf("WE: %s|\n", data->file->west_file);
+		printf("EA: %s|\n", data->file->east_file);
+		printf("F: %s|\n", data->file->floor_file);
+		printf("C: %s|\n", data->file->ceiling_file);
+		printf("\n===TEXTURE-FILES-END========\n");
+	}
 	map_check(data);
-	printf("\nVALID MAP!\n");
+	if (DEBUG == 1)
+		printf("\nVALID MAP!\n");
 	free (data->file);
+	data->file = NULL;
 }
