@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:34:35 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/25 15:45:12 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/25 21:29:37 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	main(int argc, char **argv)
 		return (1);			// Error handling
 	initializer(&data);
 	parser(&data, argv[1]);
-	raycast(&data);
+	minimap(&data);
+
+	// raycast(&data);	
 	free_and_exit(&data, NULL);
 }
