@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/26 03:20:31 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/26 15:36:09 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 #  define DEBUG 0
 # endif
 
-# define SKY_COLOR		0x00000080
-# define WALL_COLOR		0x00bfbfbf
-# define FLOOR_COLOR	0x00ff0000
+# define SKY_COLOR		0x005274ff
+# define WALL_COLOR		0x00aeb5d1
+# define FLOOR_COLOR	0x000c1126
 # define START_FOV		66
 
 # include "../lib/libft/libft.h"
@@ -39,13 +39,11 @@
 
 # define MSG_EXIT		"cub3d: Thank you for testing!\n"
 
-
-
 # define M_PI			3.14159265358979323846
 
 //	Screen Resolution
-# define WIN_WIDTH		600
-# define WIN_HEIGHT		400
+# define WIN_WIDTH		750
+# define WIN_HEIGHT		500
 
 //	Keyboard
 # define KEY_ESC		65307

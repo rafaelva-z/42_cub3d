@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:44:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/26 03:44:59 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/26 15:40:33 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,18 @@
 
 void	move_player(int keycode, t_data *data)
 {
+	double	move_amt = 0.1;
 	if (keycode == MOVE_FORWARD)
-		data->player.pos = (t_2d_point){data->player.pos.x + data->player.dir.x, data->player.pos.y + data->player.dir.y};
+		data->player.pos = (t_2d_point){data->player.pos.x + data->player.dir.x * (move_amt * !is_wall((t_2d_point){data->player.pos.x + data->player.dir.x * move_amt, data->player.pos.y}, data)), 
+										data->player.pos.y + data->player.dir.y * (move_amt * !is_wall((t_2d_point){data->player.pos.x, data->player.pos.y + data->player.dir.y * move_amt}, data))};
 	else if (keycode == MOVE_BACK)
-		data->player.pos = (t_2d_point){data->player.pos.x - data->player.dir.x, data->player.pos.y - data->player.dir.y};
-	else if (keycode == MOVE_LEFT)
-		data->player.pos = (t_2d_point){data->player.pos.x - data->player.dir.y, data->player.pos.y - data->player.dir.x};
-	else if (keycode == MOVE_RIGHT)
-		data->player.pos = (t_2d_point){data->player.pos.x + data->player.dir.y, data->player.pos.y + data->player.dir.x};
-	printf("newpos: %f %f, dir %f %f\n", data->player.pos.x, data->player.pos.y, data->player.dir.x, data->player.dir.y);
+		data->player.pos = (t_2d_point){data->player.pos.x - data->player.dir.x * (move_amt * !is_wall((t_2d_point){data->player.pos.x - data->player.dir.x * move_amt, data->player.pos.y}, data)),
+										data->player.pos.y - data->player.dir.y * (move_amt * !is_wall((t_2d_point){data->player.pos.x, data->player.pos.y - data->player.dir.y * move_amt}, data))};
+	else if (keycode == MOVE_LEFT && !is_wall((t_2d_point){data->player.pos.x - data->player.dir.y * move_amt, data->player.pos.y - data->player.dir.x * move_amt}, data))
+		data->player.pos = (t_2d_point){data->player.pos.x - data->player.dir.y * move_amt, data->player.pos.y - data->player.dir.x * move_amt};
+	else if (keycode == MOVE_RIGHT && !is_wall((t_2d_point){data->player.pos.x + data->player.dir.y * move_amt, data->player.pos.y + data->player.dir.x * move_amt}, data))
+		data->player.pos = (t_2d_point){data->player.pos.x + data->player.dir.y * move_amt, data->player.pos.y + data->player.dir.x * move_amt};
+	printf("newpos: %f %f, dir %f %f\n", data->player.pos.x, data->player.pos.y * move_amt, data->player.dir.x, data->player.dir.y * move_amt);
 }
 
 void	adjust_fov(int keycode, t_data *data)
