@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 12:03:00 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/25 16:17:56 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/26 00:33:22 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@ static void	character_check(t_data *data)
 
 	size = matrix_sizer(data->map.map, 'c');
 	if (size != matrix_finder(data->map.map, "10 NSEW"))
-		free_and_exit(data, "Map Error: invalid character\n");
+		free_and_exit(data, "cub3d: Map Error: invalid character\n", 1);
 	if (matrix_finder(data->map.map, "NSEW") != 1)
-		free_and_exit(data, "Map Error: invalid starting coordinate\n");
+		free_and_exit(data, "cub3d: Map Error: invalid starting coordinate\n", 1);
 }
 
 static char *str_duplicator(char *prod, int len)
 {
 	char	*temp;
 	int		i;
-	
+
 	temp = ft_calloc(sizeof(char), len + 1);
 	if (!temp)
 		return (NULL);								//	Error handling
@@ -86,7 +86,7 @@ void	borther_check(t_data *data)
 	}
 	if (flag == 1 || str_finder(data->map.map[0], "0NSEW")
 		|| str_finder(data->map.map[i], "0NSEW"))
-		free_and_exit(data, "Error: invalid map borders\n");
+		free_and_exit(data, "cub3d: Error: invalid map borders\n", 1);
 }
 
 void	map_check(t_data *data)
@@ -99,6 +99,6 @@ void	map_check(t_data *data)
 	borther_check(data);
 	while (data->map.map[++i])
 		if (!str_finder(data->map.map[i], "1"))
-			free_and_exit(data, "Error: Map cannot contain empty lines\n");
+			free_and_exit(data, "cub3d: Error: Map cannot contain empty lines\n", 1);
 	map_and_player_init(data);
 }

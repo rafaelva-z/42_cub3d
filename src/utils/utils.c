@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:16:32 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/25 17:33:28 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/26 00:26:50 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,10 @@ int	coordinate_finder(char **mtx, char c, char axle)
 		return (i);
 	else
 		return (-1);
+}
+
+int	display_error(char *str)
+{
+	ft_putstr_fd(str, 2);
+	return (1);
 }

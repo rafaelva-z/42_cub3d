@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:44:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/26 00:08:14 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/26 00:27:59 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,6 @@ int	key_reader(int keycode, t_data *data)
 int	close_pgm(t_data *data)
 {
 	printf("Program closing\n");
-	free_and_exit(data, MSG_EXIT);
-	return (1);
+	free_and_exit(data, MSG_EXIT, 0);
+	return (0);
 }

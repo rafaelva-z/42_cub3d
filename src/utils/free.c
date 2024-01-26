@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:32:59 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/25 17:33:34 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/26 00:27:31 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ void	free_data(t_data *data)
 		free(data->mlx);
 }
 
-void	free_and_exit(t_data *data, char *msg)
+void	free_and_exit(t_data *data, char *msg, int exit_status)
 {
 	if (msg)
 		ft_putstr_fd(msg, 2);
 	if (data)
 		free_data(data);
-	exit(0);
+	exit(exit_status);
 }

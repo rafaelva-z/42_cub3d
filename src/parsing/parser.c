@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:08:06 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/25 16:17:26 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/26 00:41:49 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	extension(t_data *data, char *str)
 	while (*temp && *temp != '.')
 		temp++;
 	if (ft_strncmp(temp, ".cub", 5))
-		free_and_exit(data, "Error: invalid file extension");
+		free_and_exit(data, "Error: invalid file extension", 1);
 }
 
 static void	new_line_check(t_data *data, char *s)
@@ -43,20 +43,20 @@ static void	new_line_check(t_data *data, char *s)
 	if (!s[i])
 	{
 		free (s);
-		free_and_exit(data, "Error: invalid map\n");
+		free_and_exit(data, ERR_MAP, 1);
 	}
 	while (s[++i])
 	{
 		if (s[i] == '\n' && s[i + 1] == '\n')
 		{
 			free (s);
-			free_and_exit(data, "Error: invalid map\n");
+			free_and_exit(data, ERR_MAP, 1);
 		}
 	}
 	if (i && s[i - 1] == '\n')
 	{
 		free (s);
-		free_and_exit(data, "Error: invalid map\n");
+		free_and_exit(data, ERR_MAP, 1);
 	}
 }
 
@@ -79,10 +79,7 @@ static void	file_extractor(t_data *data, char *str)
 		join_s = ft_strjoin_free(join_s, s, 3);
 	}
 	if (!join_s)
-	{
-		printf("Error: empty map...\n");
-		exit (1);
-	}
+		free_and_exit(data, "Error: empty map...\n", 1);
 	new_line_check(data, join_s);
 	data->file->file = ft_split(join_s, '\n');
 	free (join_s);

@@ -36,19 +36,19 @@ static void	print_tile(t_data *data, t_2d_point print, t_2d_point offset)
 
 static void	draw_minimap(t_data *data)
 {
-	int	i;
-	int j;
-	t_2d_point print;
-	t_2d_point offset;
+	int			i;
+	int			j;
+	t_2d_point	print;
+	t_2d_point	offset;
 
-	offset = (t_2d_point) {data->player.pos.x - 5, data->player.pos.y - 5};
+	offset = (t_2d_point){data->player.pos.x - 5, data->player.pos.y - 5};
 	i = -7;
 	while (++i < 11)
 	{
 		j = -7;
 		while (++j < 11)
 		{
-			print = (t_2d_point) {data->player.pos.x - j, data->player.pos.y - i};
+			print = (t_2d_point){data->player.pos.x - j, data->player.pos.y - i};
 			print_tile(data, print, offset);
 		}
 	}
@@ -59,7 +59,7 @@ static int	ft_hooks(int keycode, t_data *data)
 	printf("keycode: %d\n", keycode);
 	matrix_printer(data->map.map);
 	if (keycode == 65307)
-		free_and_exit(data, "Game terminated\n");
+		free_and_exit(data, MSG_EXIT, 0);
 	if (keycode == 97 || keycode == 115 || keycode == 119 || keycode == 100)
 		draw_minimap(data);
 	return (0);

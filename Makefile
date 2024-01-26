@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+         #
+#    By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by rvaz              #+#    #+#              #
-#    Updated: 2024/01/25 19:04:26 by rvaz             ###   ########.fr        #
+#    Updated: 2024/01/26 01:07:48 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRCS		=	$(addprefix ./src/,				\
 				raycast.c						\
 				)								\
 				$(addprefix /utils/,			\
+				draw_pixel.c					\
 				initializer.c					\
 				utils.c							\
 				free.c							\

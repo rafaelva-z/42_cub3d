@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 17:06:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/25 18:41:13 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/26 01:03:49 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,16 @@ static void	dda_def_step_ray(t_player *player, t_2d_point *step_size,
 	}
 }
 
-double	dda(t_2d_point *start, t_2d_point *dir, t_data *data)
+double	dda(t_2d_point *start, t_ray *ray, t_data *data)
 {
 	t_2d_point	current;
 	t_2d_point	step_size;
 	t_2d_point	step;
 	t_2d_point	ray_len;
-	double		dist;
 
-	dist = 0;
-	step_size.x = sqrt(1 + (dir->y / dir->x) * (dir->y / dir->x));
-	step_size.y = sqrt(1 + (dir->x / dir->y) * (dir->x / dir->y));
+	ray->distance = 0;
+	step_size.x = sqrt(1 + (ray->dir.y / ray->dir.x) * (ray->dir.y / ray->dir.x));
+	step_size.y = sqrt(1 + (ray->dir.x / ray->dir.y) * (ray->dir.x / ray->dir.y));
 	current = (t_2d_point){start->x, start->y};
 	dda_def_step_ray(&data->player, &step_size, &ray_len, &step);
 	// Make functions for these checks \/ (is_wall() && is_inside_map())
@@ -56,17 +55,18 @@ double	dda(t_2d_point *start, t_2d_point *dir, t_data *data)
 		if (ray_len.x < ray_len.y)
 		{
 			current.x += step.x;
-			dist = ray_len.x;
+			ray->distance = ray_len.x;
 			ray_len.x += step_size.x;
 		}
 		else
 		{
 			current.y += step.y;
-			dist = ray_len.y;
+			ray->distance = ray_len.y;
 			ray_len.y += step_size.y;
 		}
 	}
+	ray->last_hit = current;
 	if (DEBUG == 2)
-		printf("Dist: %f (x)%f (y)%f [%d, %d]\t", dist, current.x, current.y, (int)current.x, (int)current.y);
-	return (dist);
+		printf("Dist: %f (x)%f (y)%f [%d, %d]\t", ray->distance, current.x, current.y, (int)current.x, (int)current.y);
+	return (ray->distance);
 }

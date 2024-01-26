@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/25 21:41:50 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/26 01:06:46 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@
 #  define DEBUG 2
 # endif
 
+# define SKY_COLOR		0x0000ff
+# define FLOOR_COLOR	0xff0000
+# define START_FOV		66
+
 # include "../lib/libft/libft.h"
 # include "../lib/minilibx-linux/mlx.h"
 # include <stdio.h>
@@ -26,9 +30,11 @@
 # include <math.h>
 
 //	Messages
+# define ERR_ARGC		"cub3d: wrong number of arguments. Use only a map path\n"
 # define ERR_MALLOC		"cub3d: malloc() failed\n"
 # define ERR_MLX_INIT	"cub3d: mlx_init() failed\n"
 # define ERR_MLX_WIN	"cub3d: mlx_new_window() failed\n"
+# define ERR_MAP		"cub3d: invalid map\n"
 
 # define MSG_EXIT		"cub3d: Thank you for testing!"
 
@@ -87,7 +93,6 @@ typedef struct s_player
 {
 	t_2d_point	pos;
 	t_2d_point	dir;
-	t_vector	camera;
 	double		fov;
 }				t_player;
 
@@ -96,6 +101,23 @@ typedef struct s_map
 	char		**map;
 	t_2d_point	size;
 }				t_map;
+
+typedef struct s_ray
+{
+	t_2d_point	dir;
+	t_2d_point	last_hit;
+	double		distance;
+}				t_ray;
+
+// this one may be provisory
+typedef struct s_img
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_img;
 
 /**
  * @brief Structure that holds file content and file names
@@ -139,7 +161,7 @@ int		close_pgm(t_data *data);
 
 //		free.c
 void	free_data(t_data *data);
-void	free_and_exit(t_data *data, char *msg);
+void	free_and_exit(t_data *data, char *msg, int exit_status);
 
 //		parser.c
 void	parser(t_data *data, char *str);
@@ -160,9 +182,10 @@ void	map_and_player_init(t_data *data);
 void	initializer(t_data *data);
 int		coordinate_finder(char **mtx, char c, char axle);
 void	rotate_point(t_2d_point *point, double angle);
+int	display_error(char *str);
 
 //		dda.c
-double	dda(t_2d_point *start, t_2d_point *dir, t_data *data);
+double	dda(t_2d_point *start, t_ray *ray, t_data *data);
 
 //		raycat.c
 void	raycast(t_data *data);
