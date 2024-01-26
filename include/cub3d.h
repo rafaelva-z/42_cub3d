@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/25 21:09:37 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/26 20:02:44 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,20 @@ typedef struct s_player
 	double		fov;
 }				t_player;
 
+
+typedef struct s_image
+{
+	void		*north_img;				//	ponter to north image
+	void		*east_img;				//	pointer to east image
+	void		*south_img;				//	pointer to south image
+	void		*west_img;				//	pointer to west image
+	void		*mm_wall_img;				//	pointer to west image
+	void		*mm_floor_img;				//	pointer to west image
+	void		*mm_vacum_img;				//	pointer to west image
+	void		*frame_x;
+	void		*frame_y;
+}				t_image;
+
 typedef struct s_map
 {
 	char		**map;
@@ -107,16 +121,10 @@ typedef struct s_data
 {
 	void		*mlx;					//	pointer to mlx
 	void		*mlx_win;				//	pointer to the mlx window
-	void		*north_img;				//	ponter to north image
-	void		*east_img;				//	pointer to east image
-	void		*south_img;				//	pointer to south image
-	void		*west_img;				//	pointer to west image
-	void		*mm_wall_img;				//	pointer to west image
-	void		*mm_floor_img;				//	pointer to west image
-	void		*mm_vacum_img;				//	pointer to west image
 	t_file		*file;					//	pointer to the file struct
 	t_map		map;					//	pointer to map
 	t_player	player;					//	pointer to player's struct
+	t_image		img;
 }				t_data;
 
 //		parser.c
