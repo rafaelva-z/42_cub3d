@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   matrix_deleter.c                                   :+:      :+:    :+:   */
+/*   draw_pixel.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/23 21:04:04 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/26 02:06:00 by rvaz             ###   ########.fr       */
+/*   Created: 2023/06/24 18:12:41 by rvaz              #+#    #+#             */
+/*   Updated: 2024/01/26 01:06:04 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../include/cub3d.h"
 
-void	matrix_deleter(char ***mtx)
+void	draw_pixel(t_img *img, int x, int y, int color)
 {
-	int	i;
+	char	*dst;
 
-	i = 0;
-	if (!mtx || !*mtx)
-		return ;
-	while ((*mtx)[i])
-	{
-		free((*mtx)[i]);
-		(*mtx)[i++] = NULL;
-	}
-	free(*mtx);
-	*mtx = NULL;
+	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
 }

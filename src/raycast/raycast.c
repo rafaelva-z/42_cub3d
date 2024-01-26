@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:41:12 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/26 01:09:33 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/26 01:57:05 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,14 @@ void	raycast(t_data *data)
 		}
 		else
 		{
-			get_wall_height(dda(&data->player.pos, &ray, data));
+			int	wall_height;
+			wall_height = get_wall_height(dda(&data->player.pos, &ray, data));
+			draw_line((t_vector){(t_2d_point){r, 0},
+				(t_2d_point){r, (WIN_HEIGHT - wall_height) / 2}}, data->img, SKY_COLOR);
+			draw_line((t_vector){(t_2d_point){r, (WIN_HEIGHT - wall_height) / 2},
+			 	(t_2d_point){r, (WIN_HEIGHT + wall_height) / 2}}, data->img, WALL_COLOR);
+			draw_line((t_vector){(t_2d_point){r, (WIN_HEIGHT - (WIN_HEIGHT - wall_height) / 2)},
+			 	(t_2d_point){r, (WIN_HEIGHT)}}, data->img, FLOOR_COLOR);
 		}
 		r++;
 	}

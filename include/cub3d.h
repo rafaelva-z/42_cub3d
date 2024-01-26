@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/26 01:06:46 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/26 01:58:59 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 # define CUB3D_H
 
 # ifndef DEBUG
-#  define DEBUG 2
+#  define DEBUG 0
 # endif
 
-# define SKY_COLOR		0x0000ff
-# define FLOOR_COLOR	0xff0000
+# define SKY_COLOR		0x00000080
+# define WALL_COLOR		0x00bfbfbf
+# define FLOOR_COLOR	0x00ff0000
 # define START_FOV		66
 
 # include "../lib/libft/libft.h"
@@ -43,8 +44,8 @@
 # define M_PI			3.14159265358979323846
 
 //	Screen Resolution
-# define WIN_WIDTH		900
-# define WIN_HEIGHT		600
+# define WIN_WIDTH		600
+# define WIN_HEIGHT		400
 
 //	Keyboard
 # define KEY_ESC		65307
@@ -74,8 +75,8 @@
 # define MOVE_RIGHT		KEY_D
 # define ZOOM_IN		KEY_PLUS
 # define ZOOM_OUT		KEY_MINUS
-# define ROT			KEY_Q
-# define RROT			KEY_E
+# define ROT			KEY_E
+# define RROT			KEY_Q
 
 typedef struct s_2d_point
 {
@@ -140,6 +141,7 @@ typedef struct s_data
 {
 	void		*mlx;					//	pointer to mlx
 	void		*mlx_win;				//	pointer to the mlx window
+	t_img		*img;
 	void		*north_img;				//	ponter to north image
 	void		*east_img;				//	pointer to east image
 	void		*south_img;				//	pointer to south image
@@ -196,5 +198,6 @@ void	minimap(t_data *data);
 void	move_player(int keycode, t_data *data);
 void	adjust_fov(int keycode, t_data *data);
 void	rotate_player(int keycode, t_data *data);
-
+void	draw_pixel(t_img *img, int x, int y, int color);
+void	draw_line(t_vector line, t_img *img, int color);
 #endif

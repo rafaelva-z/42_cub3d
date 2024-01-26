@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:34:35 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/26 00:28:27 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/26 02:22:39 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ int	main(int argc, char **argv)
 	initializer(&data);
 	parser(&data, argv[1]);
 	//minimap(&data);
-	//raycast(&data);
+	
+	raycast(&data);
+	mlx_put_image_to_window(data.mlx, data.mlx_win, data.img->img, 0, 0);
+
 	mlx_key_hook(data.mlx_win, key_reader, &data);
 	mlx_hook(data.mlx_win, 17, 0L, close_pgm, &data);
 	mlx_loop(data.mlx);

@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/26 00:55:35 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/26 02:05:06 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,13 @@ static void	init_mlx(t_data *data)
 	data->mlx_win = mlx_new_window(data->mlx, WIN_WIDTH, WIN_HEIGHT, "Cub3D - fda-est & rvaz");
 	if (!data->mlx_win)
 		free_and_exit(data, ERR_MLX_WIN, 1);
+	data->img = malloc(sizeof(t_img));
+	if (!data->img)
+		free_and_exit(data, ERR_MALLOC, 1);
+	data->img->img = mlx_new_image(data->mlx, WIN_WIDTH, WIN_HEIGHT); // what is this
+	data->img->addr = mlx_get_data_addr(data->img->img, 
+			&(data->img->bits_per_pixel), &(data->img->line_length),
+			&(data->img->endian));
 }
 
 void	initializer(t_data *data)

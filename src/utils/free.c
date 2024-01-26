@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:32:59 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/26 00:27:31 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/26 02:15:07 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,23 @@ void	free_data(t_data *data)
 	{
 		if (data->file->file)
 			matrix_deleter(&data->file->file);
-		free (data->file);
+		free(data->file);
+		data->file = NULL;
 	}
 	if (data->map.map)
 		matrix_deleter(&data->map.map);
+	if (data->img)
+	{
+		mlx_destroy_image(data->mlx, data->img->img);
+		free(data->img);
+	}
 	if (data->mlx_win)
 		mlx_destroy_window(data->mlx, data->mlx_win);
 	if (data->mlx)
+	{
+		mlx_destroy_display(data->mlx);
 		free(data->mlx);
+	}
 }
 
 void	free_and_exit(t_data *data, char *msg, int exit_status)

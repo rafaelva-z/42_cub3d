@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 12:03:00 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/26 00:33:22 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/26 02:06:00 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static char *str_duplicator(char *prod, int len)
 		;
 	while (i < len)
 		temp[i++] = ' ';
-	free (prod);
+	free(prod);
 	return (temp);
 }
 

@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:44:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/26 00:27:59 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/26 02:19:00 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,18 @@ void	rotate_player(int keycode, t_data *data)
 int	key_reader(int keycode, t_data *data)
 {
 	if (keycode == KEY_ESC)
-		close_pgm(data->mlx);
-	else if (keycode == MOVE_FORWARD || keycode == MOVE_BACK || keycode == MOVE_LEFT 
-		|| keycode == MOVE_RIGHT)
+		close_pgm(data);
+	else if (keycode == MOVE_FORWARD || keycode == MOVE_BACK
+		|| keycode == MOVE_LEFT || keycode == MOVE_RIGHT)
 		move_player(keycode, data);
 	else if (keycode == ZOOM_OUT || keycode == ZOOM_IN)
 		adjust_fov(keycode, data);
 	else if (keycode == ROT || keycode == RROT)
 		rotate_player(keycode, data);
-	// mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img->img, 0, 0);
+	// ft_bzero(data->img->addr, (WIN_WIDTH * WIN_HEIGHT)
+	// 	* sizeof(data->img->bits_per_pixel));
+	raycast(data);
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img->img, 0, 0);
 	return (0);
 }
 

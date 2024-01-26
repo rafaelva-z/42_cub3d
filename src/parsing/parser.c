@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:08:06 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/26 00:41:49 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/26 02:08:50 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,20 @@ static void	new_line_check(t_data *data, char *s)
 	}
 	if (!s[i])
 	{
-		free (s);
+		free(s);
 		free_and_exit(data, ERR_MAP, 1);
 	}
 	while (s[++i])
 	{
 		if (s[i] == '\n' && s[i + 1] == '\n')
 		{
-			free (s);
+			free(s);
 			free_and_exit(data, ERR_MAP, 1);
 		}
 	}
 	if (i && s[i - 1] == '\n')
 	{
-		free (s);
+		free(s);
 		free_and_exit(data, ERR_MAP, 1);
 	}
 }
@@ -82,7 +82,9 @@ static void	file_extractor(t_data *data, char *str)
 		free_and_exit(data, "Error: empty map...\n", 1);
 	new_line_check(data, join_s);
 	data->file->file = ft_split(join_s, '\n');
-	free (join_s);
+	if (!data->file->file)
+		free_and_exit(data, ERR_MALLOC, 1);
+	free(join_s);
 }
 
 static void	trimmer(t_data *data)
@@ -95,7 +97,7 @@ static void	trimmer(t_data *data)
 	{
 		temp = data->file->file[i];
 		data->file->file[i] = ft_strtrim(data->file->file[i], " ");
-		free (temp);
+		free(temp);
 	}
 }
 
@@ -126,6 +128,6 @@ void	parser(t_data *data, char *str)
 	map_check(data);
 	if (DEBUG == 1)
 		printf("\nVALID MAP!\n");
-	free (data->file);
+	free(data->file);
 	data->file = NULL;
 }
