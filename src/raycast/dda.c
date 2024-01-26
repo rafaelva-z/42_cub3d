@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 17:06:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/26 02:21:24 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/26 03:20:18 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ double	dda(t_2d_point *start, t_ray *ray, t_data *data)
 	current = (t_2d_point){start->x, start->y};
 	dda_def_step_ray(&data->player, &step_size, &ray_len, &step);
 	// Make functions for these checks \/ (is_wall() && is_inside_map())
-	while (data->map.map[(int)current.y][(int)current.x] != '1' && current.x < data->map.size.x - 1 && current.y < data->map.size.y - 1)
+	while (is_inside_map(current, data->map.size) && !is_wall(current, data))
 	{
 		if (ray_len.x < ray_len.y)
 		{

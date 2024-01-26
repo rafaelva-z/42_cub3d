@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:16:32 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/26 00:26:50 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/26 03:20:05 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,19 @@ int	display_error(char *str)
 {
 	ft_putstr_fd(str, 2);
 	return (1);
+}
+
+int	is_inside_map(t_2d_point point, t_2d_point map_size)
+{
+	if (point.x >= 0 && point.x < map_size.x
+		&& point.y >= 0 && point.y < map_size.y)
+		return (1);
+	return (0);
+}
+
+int	is_wall(t_2d_point point, t_data *data)
+{
+	if (data->map.map[(int)point.y][(int)point.x] == '1')
+		return (1);
+	return (0);
 }
