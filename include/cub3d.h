@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/25 21:41:50 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/26 01:58:59 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,13 @@
 # define CUB3D_H
 
 # ifndef DEBUG
-#  define DEBUG 2
+#  define DEBUG 0
 # endif
+
+# define SKY_COLOR		0x00000080
+# define WALL_COLOR		0x00bfbfbf
+# define FLOOR_COLOR	0x00ff0000
+# define START_FOV		66
 
 # include "../lib/libft/libft.h"
 # include "../lib/minilibx-linux/mlx.h"
@@ -26,9 +31,11 @@
 # include <math.h>
 
 //	Messages
+# define ERR_ARGC		"cub3d: wrong number of arguments. Use only a map path\n"
 # define ERR_MALLOC		"cub3d: malloc() failed\n"
 # define ERR_MLX_INIT	"cub3d: mlx_init() failed\n"
 # define ERR_MLX_WIN	"cub3d: mlx_new_window() failed\n"
+# define ERR_MAP		"cub3d: invalid map\n"
 
 # define MSG_EXIT		"cub3d: Thank you for testing!"
 
@@ -37,8 +44,8 @@
 # define M_PI			3.14159265358979323846
 
 //	Screen Resolution
-# define WIN_WIDTH		900
-# define WIN_HEIGHT		600
+# define WIN_WIDTH		600
+# define WIN_HEIGHT		400
 
 //	Keyboard
 # define KEY_ESC		65307
@@ -68,8 +75,8 @@
 # define MOVE_RIGHT		KEY_D
 # define ZOOM_IN		KEY_PLUS
 # define ZOOM_OUT		KEY_MINUS
-# define ROT			KEY_Q
-# define RROT			KEY_E
+# define ROT			KEY_E
+# define RROT			KEY_Q
 
 typedef struct s_2d_point
 {
@@ -87,7 +94,6 @@ typedef struct s_player
 {
 	t_2d_point	pos;
 	t_2d_point	dir;
-	t_vector	camera;
 	double		fov;
 }				t_player;
 
@@ -96,6 +102,23 @@ typedef struct s_map
 	char		**map;
 	t_2d_point	size;
 }				t_map;
+
+typedef struct s_ray
+{
+	t_2d_point	dir;
+	t_2d_point	last_hit;
+	double		distance;
+}				t_ray;
+
+// this one may be provisory
+typedef struct s_img
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_img;
 
 /**
  * @brief Structure that holds file content and file names
@@ -118,6 +141,7 @@ typedef struct s_data
 {
 	void		*mlx;					//	pointer to mlx
 	void		*mlx_win;				//	pointer to the mlx window
+	t_img		*img;
 	void		*north_img;				//	ponter to north image
 	void		*east_img;				//	pointer to east image
 	void		*south_img;				//	pointer to south image
@@ -139,7 +163,7 @@ int		close_pgm(t_data *data);
 
 //		free.c
 void	free_data(t_data *data);
-void	free_and_exit(t_data *data, char *msg);
+void	free_and_exit(t_data *data, char *msg, int exit_status);
 
 //		parser.c
 void	parser(t_data *data, char *str);
@@ -160,9 +184,10 @@ void	map_and_player_init(t_data *data);
 void	initializer(t_data *data);
 int		coordinate_finder(char **mtx, char c, char axle);
 void	rotate_point(t_2d_point *point, double angle);
+int	display_error(char *str);
 
 //		dda.c
-double	dda(t_2d_point *start, t_2d_point *dir, t_data *data);
+double	dda(t_2d_point *start, t_ray *ray, t_data *data);
 
 //		raycat.c
 void	raycast(t_data *data);
@@ -173,5 +198,6 @@ void	minimap(t_data *data);
 void	move_player(int keycode, t_data *data);
 void	adjust_fov(int keycode, t_data *data);
 void	rotate_player(int keycode, t_data *data);
-
+void	draw_pixel(t_img *img, int x, int y, int color);
+void	draw_line(t_vector line, t_img *img, int color);
 #endif

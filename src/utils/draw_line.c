@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   matrix_deleter.c                                   :+:      :+:    :+:   */
+/*   draw_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/23 21:04:04 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/26 02:06:00 by rvaz             ###   ########.fr       */
+/*   Created: 2023/06/24 17:45:18 by rvaz              #+#    #+#             */
+/*   Updated: 2024/01/26 01:37:45 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../include/cub3d.h"
 
-void	matrix_deleter(char ***mtx)
+void	draw_line(t_vector line, t_img *img, int color)
 {
-	int	i;
-
-	i = 0;
-	if (!mtx || !*mtx)
-		return ;
-	while ((*mtx)[i])
+	while (line.point_a.y != line.point_b.y)
 	{
-		free((*mtx)[i]);
-		(*mtx)[i++] = NULL;
+		if (line.point_a.x >= 0 && line.point_a.y >= 0
+			&& line.point_a.x < WIN_WIDTH && line.point_a.y < WIN_HEIGHT)
+			draw_pixel(img, line.point_a.x, line.point_a.y, color);
+		line.point_a.y++;
 	}
-	free(*mtx);
-	*mtx = NULL;
 }

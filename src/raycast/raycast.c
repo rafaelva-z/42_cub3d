@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:41:12 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/25 17:23:53 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/26 01:57:05 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,31 @@ static double	get_wall_height(double wall_distance)
 void	raycast(t_data *data)
 {
 	int			r;
-	t_2d_point	ray_dir;
+	t_ray		ray;
 	double		angle_step;
 
-	//change fov with keypress
-	data->player.fov = 66;
 	r = 0;
-	ray_dir = (t_2d_point){data->player.dir.x, data->player.dir.y};
+	ray.dir = (t_2d_point){data->player.dir.x, data->player.dir.y};
 	angle_step = data->player.fov / WIN_WIDTH;
 	while (r < WIN_WIDTH)
 	{
-		rotate_point(&ray_dir, angle_step);
+
+		rotate_point(&ray.dir, angle_step);
 		if (DEBUG == 2)
 		{
 			printf("%d.\t", r);
-			printf("new_dist: %f\n", get_wall_height(dda(&data->player.pos, &ray_dir, data)));
+			printf("new_dist: %f\n", get_wall_height(dda(&data->player.pos, &ray, data)));
+		}
+		else
+		{
+			int	wall_height;
+			wall_height = get_wall_height(dda(&data->player.pos, &ray, data));
+			draw_line((t_vector){(t_2d_point){r, 0},
+				(t_2d_point){r, (WIN_HEIGHT - wall_height) / 2}}, data->img, SKY_COLOR);
+			draw_line((t_vector){(t_2d_point){r, (WIN_HEIGHT - wall_height) / 2},
+			 	(t_2d_point){r, (WIN_HEIGHT + wall_height) / 2}}, data->img, WALL_COLOR);
+			draw_line((t_vector){(t_2d_point){r, (WIN_HEIGHT - (WIN_HEIGHT - wall_height) / 2)},
+			 	(t_2d_point){r, (WIN_HEIGHT)}}, data->img, FLOOR_COLOR);
 		}
 		r++;
 	}

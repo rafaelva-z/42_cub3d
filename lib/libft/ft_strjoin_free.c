@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin_free.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 02:32:24 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/21 21:50:17 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/26 02:06:00 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ char	*ft_strjoin_free(char const *s1, char const *s2, int tofree)
 	if (s2)
 		ft_strlcat(sj, s2, (s1len + s2len + 1));
 	if (s1 && (tofree == 1 || tofree == 3))
-		free ((char *) s1);
+		free((char *) s1);
 	if (s2 && (tofree == 2 || tofree == 3))
-		free ((char *) s2);
+		free((char *) s2);
 	return (sj);
 }

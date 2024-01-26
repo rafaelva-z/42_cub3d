@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 19:38:26 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/09/20 19:24:58 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/26 02:06:00 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*splitter(char *save)
 		i++;
 	}
 	if (save)
-		free (save);
+		free(save);
 	return (prod);
 }
 
@@ -73,7 +73,7 @@ char	*ft_strjoin_gnl(char *dest, char *src, int toread)
 		prod[i + j] = src[j];
 	prod[i + j] = 0;
 	if (dest)
-		free (dest);
+		free(dest);
 	return (prod);
 }
 

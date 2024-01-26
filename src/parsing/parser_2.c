@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 23:05:31 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/22 21:51:52 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/26 00:34:33 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ static char	*identifier_skipper(t_data *data, char *s)
 	while (*prod && *prod == ' ')
 		prod++;
 	if (!(*prod))
-		free_and_exit(data, "Error: invalid identifier\n");
+		free_and_exit(data, "Error: invalid identifier\n", 1);
 	while (prod[++i])
 	{
 		if (prod[i] == ' ')
-			free_and_exit(data, "Error: invalid identifier\n");
+			free_and_exit(data, "Error: invalid identifier\n", 1);
 	}
 	return (prod);
 }
@@ -53,10 +53,10 @@ void	identifier_init(t_data *dt)
 		else if (!ft_strncmp(dt->file->file[i], "C ", 2))
 			dt->file->ceiling_file = identifier_skipper(dt, dt->file->file[i]);
 		else
-			free_and_exit(dt, "Error: Invalid identifier\n");
+			free_and_exit(dt, "Error: Invalid identifier\n", 1);
 	}
 	if (!dt->file->ceiling_file || !dt->file->floor_file
-			|| !dt->file->west_file || !dt->file->north_file
-			|| !dt->file->east_file || !dt->file->south_file)
-		free_and_exit(dt, "Error: Doubled identifier\n");
+		|| !dt->file->west_file || !dt->file->north_file
+		|| !dt->file->east_file || !dt->file->south_file)
+		free_and_exit(dt, "Error: Doubled identifier\n", 1);
 }
