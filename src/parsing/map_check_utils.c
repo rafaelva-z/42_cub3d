@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   map_check_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:34:12 by fda-estr          #+#    #+#             */
 /*   Updated: 2024/01/25 21:31:23 by rvaz             ###   ########.fr       */
@@ -48,5 +48,6 @@ void	map_and_player_init(t_data *data)
 	data->player.pos.x = coordinate_finder(data->map.map, c, 'x') + 0.5;
 	data->player.pos.y = coordinate_finder(data->map.map, c, 'y') + 0.5;
 	dir_init(data, c);
-	printf("starting position: %f, %f\n", data->player.pos.x, data->player.pos.y);
+	data->map.map[coordinate_finder(data->map.map, c, 'y')]
+		[coordinate_finder(data->map.map, c, 'x')] = '0';
 }

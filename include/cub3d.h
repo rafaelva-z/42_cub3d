@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
 /*   Updated: 2024/01/25 21:41:50 by rvaz             ###   ########.fr       */
@@ -122,6 +122,9 @@ typedef struct s_data
 	void		*east_img;				//	pointer to east image
 	void		*south_img;				//	pointer to south image
 	void		*west_img;				//	pointer to west image
+	void		*mm_wall_img;				//	pointer to west image
+	void		*mm_floor_img;				//	pointer to west image
+	void		*mm_vacum_img;				//	pointer to west image
 	t_file		*file;					//	pointer to the file struct
 	t_map		map;					//	pointer to map
 	t_player	player;					//	pointer to player's struct
@@ -163,6 +166,9 @@ double	dda(t_2d_point *start, t_2d_point *dir, t_data *data);
 
 //		raycat.c
 void	raycast(t_data *data);
+
+//		minimap.c
+void	minimap(t_data *data);
 
 void	move_player(int keycode, t_data *data);
 void	adjust_fov(int keycode, t_data *data);

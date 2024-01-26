@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:34:35 by rvaz              #+#    #+#             */
 /*   Updated: 2024/01/25 21:46:18 by rvaz             ###   ########.fr       */
@@ -20,6 +20,8 @@ int	main(int argc, char **argv)
 		return (1);			// Error handling
 	initializer(&data);
 	parser(&data, argv[1]);
+	minimap(&data);
+	// raycast(&data);	
 	mlx_key_hook(data.mlx_win, key_reader, &data);
 	mlx_hook(data.mlx_win, 17, 0L, close_pgm, &data);
 	mlx_loop(data.mlx);

@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+         #
+#    By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by rvaz              #+#    #+#              #
 #    Updated: 2024/01/25 19:04:26 by rvaz             ###   ########.fr        #
