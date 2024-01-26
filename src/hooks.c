@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:44:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/26 02:19:00 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/26 03:44:59 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,23 @@ void	move_player(int keycode, t_data *data)
 
 void	adjust_fov(int keycode, t_data *data)
 {
+	double adjust_amount;
+	adjust_amount = 3;
 	if (keycode == ZOOM_IN)
-		data->player.fov -= 3;
+		data->player.fov -= adjust_amount;
 	else if (keycode == ZOOM_OUT)
-		data->player.fov += 3;
+		data->player.fov += adjust_amount;
 }
 
 void	rotate_player(int keycode, t_data *data)
 {
+	double rot_amount;
+
+	rot_amount = 10;
 	if (keycode == ROT)
-		rotate_point(&data->player.dir, 2);
+		rotate_point(&data->player.dir, rot_amount);
 	else if (keycode == RROT)
-		rotate_point(&data->player.dir, -2);
+		rotate_point(&data->player.dir, -rot_amount);
 }
 
 int	key_reader(int keycode, t_data *data)
@@ -52,8 +57,8 @@ int	key_reader(int keycode, t_data *data)
 		adjust_fov(keycode, data);
 	else if (keycode == ROT || keycode == RROT)
 		rotate_player(keycode, data);
-	// ft_bzero(data->img->addr, (WIN_WIDTH * WIN_HEIGHT)
-	// 	* sizeof(data->img->bits_per_pixel));
+	ft_bzero(data->img->addr, (WIN_WIDTH * WIN_HEIGHT)
+		* sizeof(data->img->bits_per_pixel));
 	raycast(data);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img->img, 0, 0);
 	return (0);

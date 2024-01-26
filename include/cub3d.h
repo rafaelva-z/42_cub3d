@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/26 01:58:59 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/26 03:20:31 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define ERR_MLX_WIN	"cub3d: mlx_new_window() failed\n"
 # define ERR_MAP		"cub3d: invalid map\n"
 
-# define MSG_EXIT		"cub3d: Thank you for testing!"
+# define MSG_EXIT		"cub3d: Thank you for testing!\n"
 
 
 
@@ -184,7 +184,9 @@ void	map_and_player_init(t_data *data);
 void	initializer(t_data *data);
 int		coordinate_finder(char **mtx, char c, char axle);
 void	rotate_point(t_2d_point *point, double angle);
-int	display_error(char *str);
+int		display_error(char *str);
+int		is_inside_map(t_2d_point point, t_2d_point map_size);
+int		is_wall(t_2d_point point, t_data *data);
 
 //		dda.c
 double	dda(t_2d_point *start, t_ray *ray, t_data *data);
