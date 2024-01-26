@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:34:12 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/25 18:52:54 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/25 21:31:23 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	dir_init(t_data *data, char c)
 		data->player.dir = (t_2d_point){0, 1};
 	else if (c == 'W')
 		data->player.dir = (t_2d_point){-1, 0};
-	else if (c == 'N')
+	else if (c == 'E')
 		data->player.dir = (t_2d_point){1, 0};
 }
 

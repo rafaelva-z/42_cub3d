@@ -6,7 +6,7 @@
 #    By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by rvaz              #+#    #+#              #
-#    Updated: 2024/01/25 17:31:14 by fda-estr         ###   ########.fr        #
+#    Updated: 2024/01/25 19:04:26 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 NAME		=	cub3d
 
 CC			=	cc
-CFLAGS		=	-g #-Wall -Wextra -Werror #-fsanitize=address 
+CFLAGS		=	-g -Wall -Wextra -Werror #-fsanitize=address 
 RM			=	/bin/rm -f
 
 LIBFLAGS	=	-L$(LIBFT_PATH) -L$(MLX_PATH) -lft -lmlx -lXext -lX11 -lm -lz
@@ -26,16 +26,21 @@ MLX			=	$(MLX_PATH)libmlx.a
 
 SRCS		=	$(addprefix ./src/,				\
 				main.c							\
-				utils.c							\
-				$(addprefix /raycast/,			\
-				dda.c							\
-				raycast.c						\
-				)								\
+				hooks.c							\
 				$(addprefix /parsing/,			\
 				parser.c						\
 				parser_2.c						\
 				map_check.c						\
 				map_check_utils.c				\
+				)								\
+				$(addprefix /raycast/,			\
+				dda.c							\
+				raycast.c						\
+				)								\
+				$(addprefix /utils/,			\
+				initializer.c					\
+				utils.c							\
+				free.c							\
 				)								\
 				$(addprefix /minimap/,			\
 				minimap.c						\
@@ -84,6 +89,6 @@ run: all
 
 runvg: all
 	@clear
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes  --track-origins=yes ./$(NAME) maps/test.cub	
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes  --track-origins=yes ./$(NAME) maps/test.cub
 
 .PHONY: all clean fclean re run runvg

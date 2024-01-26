@@ -6,13 +6,13 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 17:06:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/25 16:15:47 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/25 18:41:13 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-static t_2d_point	dda_def_step_ray(t_player *player, t_2d_point *step_size,
+static void	dda_def_step_ray(t_player *player, t_2d_point *step_size,
 		t_2d_point *ray, t_2d_point *step)
 {
 	if (player->dir.x < 0)
