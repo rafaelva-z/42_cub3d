@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:44:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/26 15:40:33 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/26 16:36:17 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void	move_player(int keycode, t_data *data)
 {
-	double	move_amt = 0.1;
+	double	move_amt;
+
+	move_amt = 0.1;
 	if (keycode == MOVE_FORWARD)
 		data->player.pos = (t_2d_point){data->player.pos.x + data->player.dir.x * (move_amt * !is_wall((t_2d_point){data->player.pos.x + data->player.dir.x * move_amt, data->player.pos.y}, data)), 
 										data->player.pos.y + data->player.dir.y * (move_amt * !is_wall((t_2d_point){data->player.pos.x, data->player.pos.y + data->player.dir.y * move_amt}, data))};
@@ -30,7 +32,8 @@ void	move_player(int keycode, t_data *data)
 
 void	adjust_fov(int keycode, t_data *data)
 {
-	double adjust_amount;
+	double	adjust_amount;
+
 	adjust_amount = 3;
 	if (keycode == ZOOM_IN)
 		data->player.fov -= adjust_amount;
@@ -40,13 +43,24 @@ void	adjust_fov(int keycode, t_data *data)
 
 void	rotate_player(int keycode, t_data *data)
 {
-	double rot_amount;
+	double	rot_amount;
 
 	rot_amount = 10;
 	if (keycode == ROT)
 		rotate_point(&data->player.dir, rot_amount);
 	else if (keycode == RROT)
 		rotate_point(&data->player.dir, -rot_amount);
+}
+
+void vertical_movement(int keycode, t_data *data)
+{
+	int	adjust_amount;
+
+	adjust_amount = 10;
+	if (keycode == LOOK_UP)
+		data->player.vertical += adjust_amount;
+	else if (keycode == LOOK_DOWN)
+		data->player.vertical -= adjust_amount;
 }
 
 int	key_reader(int keycode, t_data *data)
@@ -60,6 +74,8 @@ int	key_reader(int keycode, t_data *data)
 		adjust_fov(keycode, data);
 	else if (keycode == ROT || keycode == RROT)
 		rotate_player(keycode, data);
+	else if (keycode == LOOK_UP || keycode == LOOK_DOWN)
+		vertical_movement(keycode, data);
 	ft_bzero(data->img->addr, (WIN_WIDTH * WIN_HEIGHT)
 		* sizeof(data->img->bits_per_pixel));
 	raycast(data);

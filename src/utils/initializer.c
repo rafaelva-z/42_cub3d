@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/26 02:05:06 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/26 16:30:32 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,5 @@ void	initializer(t_data *data)
 	data->player.pos = (t_2d_point){1, 1};
 	data->player.dir = (t_2d_point){0, 1};
 	data->player.fov = START_FOV;
+	data->player.vertical = 0;
 }

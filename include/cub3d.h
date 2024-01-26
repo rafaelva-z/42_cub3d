@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/26 15:36:09 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/26 16:33:05 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@
 # define ZOOM_OUT		KEY_MINUS
 # define ROT			KEY_E
 # define RROT			KEY_Q
+# define LOOK_UP		KEY_UP
+# define LOOK_DOWN		KEY_DOWN
 
 typedef struct s_2d_point
 {
@@ -93,6 +95,7 @@ typedef struct s_player
 	t_2d_point	pos;
 	t_2d_point	dir;
 	double		fov;
+	int			vertical;
 }				t_player;
 
 typedef struct s_map
