@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:44:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/25 21:44:57 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/26 00:08:14 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	rotate_player(int keycode, t_data *data)
 
 int	key_reader(int keycode, t_data *data)
 {
-	matrix_printer(data->map.map);
 	if (keycode == KEY_ESC)
 		close_pgm(data->mlx);
 	else if (keycode == MOVE_FORWARD || keycode == MOVE_BACK || keycode == MOVE_LEFT 
@@ -60,7 +59,6 @@ int	key_reader(int keycode, t_data *data)
 int	close_pgm(t_data *data)
 {
 	printf("Program closing\n");
-	(void)data;
 	free_and_exit(data, MSG_EXIT);
 	return (1);
 }
