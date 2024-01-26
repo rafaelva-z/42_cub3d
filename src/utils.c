@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:16:32 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/26 21:11:32 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/26 22:45:54 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ void	initializer(t_data *data)
 {
 	data->mlx = NULL;
 	data->mlx_win = NULL;
-	data->img.north_img = NULL;
-	data->img.east_img = NULL;
-	data->img.south_img = NULL;
-	data->img.west_img = NULL;
-	data->img.mm_floor_img = NULL;
-	data->img.mm_vacum_img = NULL;
-	data->img.mm_wall_img = NULL;
-	data->img.frame_x = NULL;
-	data->img.frame_y = NULL;
+	data->ig.north_img = NULL;
+	data->ig.east_img = NULL;
+	data->ig.south_img = NULL;
+	data->ig.west_img = NULL;
+	data->ig.mm_floor_img = NULL;
+	data->ig.mm_vacum_img = NULL;
+	data->ig.mm_wall_img = NULL;
+	data->ig.frame_x = NULL;
+	data->ig.frame_y = NULL;
 	data->map.map = NULL;
 	data->file = malloc(sizeof(t_file));
 	if (!data->file)
