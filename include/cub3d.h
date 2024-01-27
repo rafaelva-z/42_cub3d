@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/27 16:00:13 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/27 16:06:20 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,8 @@ typedef struct s_data
 {
 	void		*mlx;					//	pointer to mlx
 	void		*mlx_win;				//	pointer to the mlx window
+	void		*mlx_mm;					//	for testing
+	void		*mlx_win_mm;				//	for testing
 	t_img		*img;
 	t_file		*file;					//	pointer to the file struct
 	t_map		map;					//	pointer to map

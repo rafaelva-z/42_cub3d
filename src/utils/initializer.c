@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initializer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/26 16:30:32 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/27 16:48:53 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ static void	init_data(t_data *data)
 {
 	data->mlx = NULL;
 	data->mlx_win = NULL;
-	data->north_img = NULL;
-	data->east_img = NULL;
-	data->south_img = NULL;
-	data->west_img = NULL;
+	data->ig.north_img = NULL;
+	data->ig.east_img = NULL;
+	data->ig.south_img = NULL;
+	data->ig.west_img = NULL;
 	data->map.map = NULL;
 	data->file = malloc(sizeof(t_file));
 	if (!data->file)
@@ -31,6 +31,24 @@ static void	init_data(t_data *data)
 	data->file->west_file = NULL;
 	data->file->floor_file = NULL;
 	data->file->ceiling_file = NULL;
+}
+
+static void	init_mlx_minimap(t_data *data)
+{
+	int size;
+	int size2;
+
+
+	size = 32;
+	size2 = 320;
+	data->mlx_mm = mlx_init();			//	ONLY FOR TESTING
+	data->mlx_win_mm = mlx_new_window(data->mlx_mm, 352, 352, "test");
+	data->ig.mm_floor_img = mlx_xpm_file_to_image(data->mlx_mm, "./textures/minimap/mm_floor.xpm", &size, &size);
+	data->ig.mm_vacum_img = mlx_xpm_file_to_image(data->mlx_mm, "./textures/minimap/mm_vacum.xpm", &size2, &size2);
+	data->ig.mm_wall_img = mlx_xpm_file_to_image(data->mlx_mm, "./textures/minimap/mm_wall.xpm", &size, &size);
+	size2 = 352;
+	data->ig.frame_x = mlx_xpm_file_to_image(data->mlx_mm, "./textures/minimap/frame_x.xpm", &size2, &size);
+	data->ig.frame_y = mlx_xpm_file_to_image(data->mlx_mm, "./textures/minimap/frame_y.xpm", &size, &size2);
 }
 
 static void	init_mlx(t_data *data)
@@ -48,6 +66,7 @@ static void	init_mlx(t_data *data)
 	data->img->addr = mlx_get_data_addr(data->img->img, 
 			&(data->img->bits_per_pixel), &(data->img->line_length),
 			&(data->img->endian));
+	init_mlx_minimap(data);
 }
 
 void	initializer(t_data *data)
