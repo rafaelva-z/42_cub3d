@@ -12,6 +12,21 @@
 
 #include "../../include/cub3d.h"
 
+static t_2d_point	pixel_offset(t_data *data)
+{
+	t_2d_point	offset;
+	int			x;
+	int			y;
+
+	x = data->player.pos.x;
+	y = data->player.pos.y;
+	offset.x = data->player.pos.x - x;
+	offset.y = data->player.pos.y - y;
+	offset.x *= 32;
+	offset.y *= 32;
+	return (offset);
+}
+
 static void draw_cursor(t_data *data)
 {
 	int	i;
@@ -40,7 +55,7 @@ static void draw_cursor(t_data *data)
 	}
 }
 
-static void	print_tile(t_data *data, t_2d_point print, t_2d_point offset)
+static void	print_tile(t_data *data, t_2d_point print, t_2d_point offset, t_2d_point pix_os)
 {
 	void	*tile;
 	int		x;
@@ -56,8 +71,8 @@ static void	print_tile(t_data *data, t_2d_point print, t_2d_point offset)
 	else if (data->map.map[y - 1][x - 1] == '1')
 		tile = data->ig.mm_wall_img;
 	if (tile)
-		mlx_put_image_to_window(data->mlx_mm, data->mlx_win_mm, tile, 32 * (print.x - offset.x),
-		32 * (print.y - offset.y));
+		mlx_put_image_to_window(data->mlx_mm, data->mlx_win_mm, tile, (32 * (print.x - offset.x)) - pix_os.x,
+		(32 * (print.y - offset.y)) - pix_os.y);
 }
 
 static void	draw_minimap(t_data *data)
@@ -66,8 +81,10 @@ static void	draw_minimap(t_data *data)
 	int j;
 	t_2d_point print;
 	t_2d_point offset;
+	t_2d_point pix_os;		//pixel offset
 
-	offset = (t_2d_point) {data->player.pos.x - 3.5, data->player.pos.y - 3.5};
+	pix_os = pixel_offset(data);
+	offset = (t_2d_point) {data->player.pos.x - 4, data->player.pos.y - 4};
 	i = -7;
 	mlx_put_image_to_window(data->mlx_mm, data->mlx_win_mm, data->ig.mm_vacum_img, 0, 0);
 	while (++i < 5)
@@ -76,7 +93,7 @@ static void	draw_minimap(t_data *data)
 		while (++j < 5)
 		{
 			print = (t_2d_point) {data->player.pos.x - j, data->player.pos.y - i};
-			print_tile(data, print, offset);
+			print_tile(data, print, offset, pix_os);
 		}
 	}
 	draw_cursor(data);
