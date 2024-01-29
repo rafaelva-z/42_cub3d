@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/28 23:53:06 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/29 19:18:56 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 # ifndef DEBUG
-#  define DEBUG 2
+#  define DEBUG 0
 # endif
 
 # define SKY_COLOR		0x005274ff
@@ -24,6 +24,8 @@
 
 # include "../lib/libft/libft.h"
 # include "../lib/minilibx-linux/mlx.h"
+# include <X11/keysym.h>
+# include <X11/X.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
@@ -211,5 +213,5 @@ void	move_player(int keycode, t_data *data);
 void	adjust_fov(int keycode, t_data *data);
 void	rotate_player(int keycode, t_data *data);
 void	draw_pixel(t_img *img, int x, int y, int color);
-void	draw_line(t_vector line, t_img *img, int color);
+void	draw_line(t_2d_point start, int size, t_img *img, int color);
 #endif

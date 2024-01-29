@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:44:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/29 00:10:00 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/29 18:57:41 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ void	move_player(int keycode, t_data *data)
 {
 	double	move_amt;
 
-	move_amt = 0.5;
+	// problem: if a corner is pointing at player and player walks into it, the player goes through wall. Because
+	//			even though the path is not clear, the sliding cells to the left and right are free. So it "slides"
+	//			both ways going into the wall.
+	move_amt = 0.01;
 	if (keycode == MOVE_FORWARD)
 		data->player.pos = (t_2d_point){data->player.pos.x + data->player.dir.x * (move_amt * !is_wall((t_2d_point){data->player.pos.x + data->player.dir.x * move_amt, data->player.pos.y}, data)), 
 										data->player.pos.y + data->player.dir.y * (move_amt * !is_wall((t_2d_point){data->player.pos.x, data->player.pos.y + data->player.dir.y * move_amt}, data))};
@@ -37,9 +40,9 @@ void	adjust_fov(int keycode, t_data *data)
 	double	adjust_amount;
 
 	adjust_amount = 3;
-	if (keycode == ZOOM_IN)
+	if (keycode == ZOOM_IN && data->player.fov > 10)
 		data->player.fov -= adjust_amount;
-	else if (keycode == ZOOM_OUT)
+	else if (keycode == ZOOM_OUT && data->player.fov < 180)
 		data->player.fov += adjust_amount;
 }
 
@@ -47,7 +50,7 @@ void	rotate_player(int keycode, t_data *data)
 {
 	double	rot_amount;
 
-	rot_amount = 22.5;
+	rot_amount = 3;
 	if (keycode == ROT)
 		rotate_point(&data->player.dir, rot_amount);
 	else if (keycode == RROT)
@@ -83,7 +86,7 @@ int	key_reader(int keycode, t_data *data)
 	ft_bzero(data->img->addr, (WIN_WIDTH * WIN_HEIGHT)
 		* sizeof(data->img->bits_per_pixel));
 	raycast(data);
-	minimap(data);
+	//minimap(data);
 	return (0);
 }
 

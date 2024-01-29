@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 17:06:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/28 23:56:02 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/29 19:18:49 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ double	dda(t_2d_point *start, t_ray *ray, t_data *data)
 		//printf("start: %f, %f\n", start->x, start->y);
 		//printf("ray_len: %f, %f | ", ray_len.x, ray_len.y);
 		//printf("step_size: %f, %f\n", step_size.x, step_size.y);
-		//printf("Dist: %f (x)%f (y)%f [%d, %d]\n====================================\n", ray->distance, current.x, current.y, (int)current.x, (int)current.y);
+		printf("Dist: %f (x)%f (y)%f [%d, %d]\n====================================\n", ray->distance, current.x, current.y, (int)current.x, (int)current.y);
 	}
 	return (ray->distance);
 }
