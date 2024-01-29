@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:16:32 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/26 03:20:05 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/28 22:42:05 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	rotate_point(t_2d_point *point, double angle)
 {
 	t_2d_point	rot;
 
+	if (angle == 0)
+		return ;
 	angle *= M_PI / 180;
 	rot.x = point->x * cos(angle) - point->y * sin(angle);
 	rot.y = point->y * cos(angle) + point->x * sin(angle);
