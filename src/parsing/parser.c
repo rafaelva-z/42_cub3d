@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:08:06 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/26 02:08:50 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/31 21:05:56 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,8 @@ void	parser(t_data *data, char *str)
 	map_check(data);
 	if (DEBUG == 1)
 		printf("\nVALID MAP!\n");
-	free(data->file);
+	image_init(data, 64);
+	image_to_color_grid(data);
+	free_file(data->file);
 	data->file = NULL;
 }
