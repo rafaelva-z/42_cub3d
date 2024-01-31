@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/28 23:53:06 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/31 21:05:25 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,19 +98,6 @@ typedef struct s_player
 	int			vertical;
 }				t_player;
 
-typedef struct s_image
-{
-	void		*north_img;				//	ponter to north image
-	void		*east_img;				//	pointer to east image
-	void		*south_img;				//	pointer to south image
-	void		*west_img;				//	pointer to west image
-	void		*mm_wall_img;				//	pointer to west image
-	void		*mm_floor_img;				//	pointer to west image
-	void		*mm_vacum_img;				//	pointer to west image
-	void		*frame_x;
-	void		*frame_y;
-}				t_image;
-
 typedef struct s_map
 {
 	char		**map;
@@ -132,7 +119,21 @@ typedef struct s_img
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	int		**color_grid;
 }				t_img;
+
+typedef struct s_image
+{
+	t_img		north_img;
+	t_img		east_img;
+	t_img		south_img;
+	t_img		west_img;
+	void		*mm_wall_img;
+	void		*mm_floor_img;
+	void		*mm_vacum_img;
+	void		*frame_x;
+	void		*frame_y;
+}				t_image;
 
 /**
  * @brief Structure that holds file content and file names
@@ -161,7 +162,7 @@ typedef struct s_data
 	t_file		*file;					//	pointer to the file struct
 	t_map		map;					//	pointer to map
 	t_player	player;					//	pointer to player's struct
-	t_image		ig;
+	t_image		image;
 }				t_data;
 
 //		initializer.c
@@ -173,6 +174,7 @@ int		close_pgm(t_data *data);
 
 //		free.c
 void	free_data(t_data *data);
+void	free_file(t_file *file);
 void	free_and_exit(t_data *data, char *msg, int exit_status);
 
 //		parser.c
@@ -180,6 +182,8 @@ void	parser(t_data *data, char *str);
 
 //		parser_2.c
 void	identifier_init(t_data *data);
+void	image_to_color_grid(t_data *data);
+void	image_init(t_data *data, int size);
 
 //		map_check.c
 void	map_check(t_data *data);
