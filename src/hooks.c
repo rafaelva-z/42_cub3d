@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:44:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/27 16:56:30 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/29 00:10:00 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,20 @@ void	move_player(int keycode, t_data *data)
 {
 	double	move_amt;
 
-	move_amt = 0.1;
+	move_amt = 0.5;
 	if (keycode == MOVE_FORWARD)
 		data->player.pos = (t_2d_point){data->player.pos.x + data->player.dir.x * (move_amt * !is_wall((t_2d_point){data->player.pos.x + data->player.dir.x * move_amt, data->player.pos.y}, data)), 
 										data->player.pos.y + data->player.dir.y * (move_amt * !is_wall((t_2d_point){data->player.pos.x, data->player.pos.y + data->player.dir.y * move_amt}, data))};
 	else if (keycode == MOVE_BACK)
 		data->player.pos = (t_2d_point){data->player.pos.x - data->player.dir.x * (move_amt * !is_wall((t_2d_point){data->player.pos.x - data->player.dir.x * move_amt, data->player.pos.y}, data)),
 										data->player.pos.y - data->player.dir.y * (move_amt * !is_wall((t_2d_point){data->player.pos.x, data->player.pos.y - data->player.dir.y * move_amt}, data))};
-	else if (keycode == MOVE_LEFT && !is_wall((t_2d_point){data->player.pos.x - data->player.dir.y * move_amt, data->player.pos.y - data->player.dir.x * move_amt}, data))
-		data->player.pos = (t_2d_point){data->player.pos.x - data->player.dir.y * move_amt, data->player.pos.y - data->player.dir.x * move_amt};
-	else if (keycode == MOVE_RIGHT && !is_wall((t_2d_point){data->player.pos.x + data->player.dir.y * move_amt, data->player.pos.y + data->player.dir.x * move_amt}, data))
-		data->player.pos = (t_2d_point){data->player.pos.x + data->player.dir.y * move_amt, data->player.pos.y + data->player.dir.x * move_amt};
-	printf("newpos: %f %f, dir %f %f\n", data->player.pos.x, data->player.pos.y * move_amt, data->player.dir.x, data->player.dir.y * move_amt);
+	else if (keycode == MOVE_LEFT)
+		data->player.pos = (t_2d_point){data->player.pos.x + data->player.dir.y * (move_amt * !is_wall((t_2d_point){data->player.pos.x + data->player.dir.y * move_amt, data->player.pos.y}, data)),
+										data->player.pos.y - data->player.dir.x * (move_amt * !is_wall((t_2d_point){data->player.pos.x, data->player.pos.y - data->player.dir.x * move_amt}, data))};
+	else if (keycode == MOVE_RIGHT)
+		data->player.pos = (t_2d_point){data->player.pos.x - data->player.dir.y * move_amt * !is_wall((t_2d_point){data->player.pos.x - data->player.dir.y * move_amt, data->player.pos.y}, data),
+										data->player.pos.y + data->player.dir.x * move_amt * !is_wall((t_2d_point){data->player.pos.x, data->player.pos.y + data->player.dir.x * move_amt}, data)};
+	//printf("newpos: %f %f, dir %f %f\n", data->player.pos.x, data->player.pos.y * move_amt, data->player.dir.x, data->player.dir.y * move_amt);
 }
 
 void	adjust_fov(int keycode, t_data *data)
@@ -45,7 +47,7 @@ void	rotate_player(int keycode, t_data *data)
 {
 	double	rot_amount;
 
-	rot_amount = 10;
+	rot_amount = 22.5;
 	if (keycode == ROT)
 		rotate_point(&data->player.dir, rot_amount);
 	else if (keycode == RROT)
@@ -76,10 +78,11 @@ int	key_reader(int keycode, t_data *data)
 		rotate_player(keycode, data);
 	else if (keycode == LOOK_UP || keycode == LOOK_DOWN)
 		vertical_movement(keycode, data);
+	else
+		return (0);
 	ft_bzero(data->img->addr, (WIN_WIDTH * WIN_HEIGHT)
 		* sizeof(data->img->bits_per_pixel));
 	raycast(data);
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img->img, 0, 0);
 	minimap(data);
 	return (0);
 }

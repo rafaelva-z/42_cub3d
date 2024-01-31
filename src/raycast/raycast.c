@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:41:12 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/26 20:38:09 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/29 00:26:16 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	raycast(t_data *data)
 	while (r < WIN_WIDTH)
 	{
 		rotate_point(&ray.dir, angle_step);
-		//printf("ray dir %.2f \n", atan2(ray.dir.y, ray.dir.x) * 180 / M_PI);
 		int	sky_size;
 		int	wall_height;
 			//	The '* cos(...)' is to fix the curvy lines 
@@ -68,4 +67,5 @@ void	raycast(t_data *data)
 			(t_2d_point){r, WIN_HEIGHT}}, data->img, FLOOR_COLOR);
 		r++;
 	}
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img->img, 0, 0);
 }

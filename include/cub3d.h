@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/27 16:06:20 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/28 23:53:06 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 # ifndef DEBUG
-#  define DEBUG 0
+#  define DEBUG 2
 # endif
 
 # define SKY_COLOR		0x005274ff
@@ -42,8 +42,8 @@
 # define M_PI			3.14159265358979323846
 
 //	Screen Resolution
-# define WIN_WIDTH		750
-# define WIN_HEIGHT		500
+# define WIN_WIDTH		900
+# define WIN_HEIGHT		600
 
 //	Keyboard
 # define KEY_ESC		65307
