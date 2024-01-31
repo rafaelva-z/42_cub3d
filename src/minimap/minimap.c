@@ -64,7 +64,7 @@ static void	print_tile(t_data *data, t_2d_point print, t_2d_point offset, t_2d_p
 	x = (int) print.x;
 	y = (int) print.y;
 	tile = NULL;
-	if (print.x < 0 || print.y < 0 || print.x >= data->map.size.x + 1 || print.y >= data->map.size.y + 1|| data->map.map[y - 1][x - 1] == ' ')
+	if (print.x < 1 || print.y < 1 || print.x >= data->map.size.x + 1 || print.y >= data->map.size.y + 1|| data->map.map[y - 1][x - 1] == ' ')
 		return;
 	else if (data->map.map[y - 1][x - 1] == '0')
 		tile = data->ig.mm_floor_img;
