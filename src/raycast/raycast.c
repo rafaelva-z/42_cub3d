@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:41:12 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/31 16:50:29 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/02 20:58:18 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,7 @@ void	raycast(t_data *data)
 		camera_x = 2 * r / (double)WIN_WIDTH - 1;
 		ray.dir.x = data->player.dir.x + data->player.plane.x * camera_x;
 		ray.dir.y = data->player.dir.y + data->player.plane.y * camera_x;
-			//	The '* cos(...)' is to fix the curvy lines 
-			//	before -> wall_height = get_wall_height(dda(&data->player.pos, &ray, data));
-		wall_height = get_wall_height(dda(&ray, data));
-		//wall_height = get_wall_height(dda(&data->player.pos, &ray, data) * cos(atan2(ray.dir.y, ray.dir.x) - atan2(data->player.dir.y, data->player.dir.x))) / (data->player.fov * 0.0151);
+		wall_height = get_wall_height(dda(&ray, data) / (data->player.fov * 0.0151));
 		draw_column(data, r, wall_height);
 		r++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:44:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/31 12:40:34 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/02 21:16:01 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,21 @@ void	move_player(int keycode, t_data *data)
 {
 	double	move_amt;
 
-	// problem: if a corner is pointing at player and player walks into it, the player goes through wall. Because
-	//			even though the path is not clear, the sliding cells to the left and right are free. So it "slides"
-	//			both ways going into the wall.
-	move_amt = 0.01;
-	if (keycode == MOVE_FORWARD)
+	// This needs some work
+	move_amt = 0.3;
+	if (keycode == MOVE_FORWARD && !is_wall((t_2d_point){data->player.pos.x + data->player.dir.x * move_amt, data->player.pos.y + data->player.dir.y * move_amt}, data))
 		data->player.pos = (t_2d_point){data->player.pos.x + data->player.dir.x * (move_amt * !is_wall((t_2d_point){data->player.pos.x + data->player.dir.x * move_amt, data->player.pos.y}, data)), 
 										data->player.pos.y + data->player.dir.y * (move_amt * !is_wall((t_2d_point){data->player.pos.x, data->player.pos.y + data->player.dir.y * move_amt}, data))};
-	else if (keycode == MOVE_BACK)
+	else if (keycode == MOVE_BACK && !is_wall((t_2d_point){data->player.pos.x - data->player.dir.x * move_amt, data->player.pos.y - data->player.dir.y * move_amt}, data))
 		data->player.pos = (t_2d_point){data->player.pos.x - data->player.dir.x * (move_amt * !is_wall((t_2d_point){data->player.pos.x - data->player.dir.x * move_amt, data->player.pos.y}, data)),
 										data->player.pos.y - data->player.dir.y * (move_amt * !is_wall((t_2d_point){data->player.pos.x, data->player.pos.y - data->player.dir.y * move_amt}, data))};
-	else if (keycode == MOVE_LEFT)
+	else if (keycode == MOVE_LEFT && !is_wall((t_2d_point){data->player.pos.x + data->player.dir.y * move_amt, data->player.pos.y - data->player.dir.x * move_amt}, data))
 		data->player.pos = (t_2d_point){data->player.pos.x + data->player.dir.y * (move_amt * !is_wall((t_2d_point){data->player.pos.x + data->player.dir.y * move_amt, data->player.pos.y}, data)),
 										data->player.pos.y - data->player.dir.x * (move_amt * !is_wall((t_2d_point){data->player.pos.x, data->player.pos.y - data->player.dir.x * move_amt}, data))};
-	else if (keycode == MOVE_RIGHT)
+	else if (keycode == MOVE_RIGHT && !is_wall((t_2d_point){data->player.pos.x - data->player.dir.y * move_amt, data->player.pos.y + data->player.dir.y * move_amt}, data))
 		data->player.pos = (t_2d_point){data->player.pos.x - data->player.dir.y * move_amt * !is_wall((t_2d_point){data->player.pos.x - data->player.dir.y * move_amt, data->player.pos.y}, data),
 										data->player.pos.y + data->player.dir.x * move_amt * !is_wall((t_2d_point){data->player.pos.x, data->player.pos.y + data->player.dir.x * move_amt}, data)};
-	//printf("newpos: %f %f, dir %f %f\n", data->player.pos.x, data->player.pos.y * move_amt, data->player.dir.x, data->player.dir.y * move_amt);
+	printf("newpos: %f %f, dir %f %f\n", data->player.pos.x, data->player.pos.y, data->player.dir.x, data->player.dir.y);
 }
 
 void	adjust_fov(int keycode, t_data *data)

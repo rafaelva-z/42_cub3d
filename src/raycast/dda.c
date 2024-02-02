@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 17:06:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/31 15:00:14 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/02 21:19:11 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ double	dda(t_ray *ray, t_data *data)
 	ray->distance = 0;
 	step_size.x = fabs(1.0 / ray->dir.x);
     step_size.y = fabs(1.0 / ray->dir.y);
-	//printf("step_size: %f, %f\n", step_size.x, step_size.y);
 	current = (t_2d_point){data->player.pos.x, data->player.pos.y};
 	dda_def_step_ray(&data->player, &step_size, &ray_len, &step, ray);
 	while (is_inside_map(current, data->map.size) && !is_wall(current, data))
@@ -56,14 +55,12 @@ double	dda(t_ray *ray, t_data *data)
 		if (ray_len.x < ray_len.y)
 		{
 			current.x += step.x;
-			//ray->distance = ray_len.x;
 			ray_len.x += step_size.x;
 			side = 0;
 		}
 		else
 		{
 			current.y += step.y;
-			//ray->distance = ray_len.y;
 			ray_len.y += step_size.y;
 			side = 1;
 		}
@@ -82,5 +79,5 @@ double	dda(t_ray *ray, t_data *data)
 		printf("step_size: %f, %f\n", step_size.x, step_size.y);
 		printf("Dist: %f (x)%f (y)%f [%d, %d]\n====================================\n", ray->distance, current.x, current.y, (int)current.x, (int)current.y);
 	}
-	return (fabs(ray->distance));
+	return (ray->distance);
 }
