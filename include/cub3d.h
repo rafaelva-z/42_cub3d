@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/29 19:18:56 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/31 14:36:10 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 # ifndef DEBUG
-#  define DEBUG 0
+#  define DEBUG 2
 # endif
 
 # define SKY_COLOR		0x005274ff
@@ -96,6 +96,7 @@ typedef struct s_player
 {
 	t_2d_point	pos;
 	t_2d_point	dir;
+	t_2d_point	plane;
 	double		fov;
 	int			vertical;
 }				t_player;
@@ -201,7 +202,7 @@ int		is_inside_map(t_2d_point point, t_2d_point map_size);
 int		is_wall(t_2d_point point, t_data *data);
 
 //		dda.c
-double	dda(t_2d_point *start, t_ray *ray, t_data *data);
+double	dda(t_ray *ray, t_data *data);
 
 //		raycat.c
 void	raycast(t_data *data);
@@ -213,5 +214,5 @@ void	move_player(int keycode, t_data *data);
 void	adjust_fov(int keycode, t_data *data);
 void	rotate_player(int keycode, t_data *data);
 void	draw_pixel(t_img *img, int x, int y, int color);
-void	draw_line(t_2d_point start, int size, t_img *img, int color);
+void	draw_vertical_line(t_2d_point start, int size, t_img *img, int color);
 #endif

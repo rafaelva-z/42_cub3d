@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:44:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/29 18:57:41 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/31 12:40:34 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,15 @@ void	rotate_player(int keycode, t_data *data)
 
 	rot_amount = 3;
 	if (keycode == ROT)
+	{
 		rotate_point(&data->player.dir, rot_amount);
+		rotate_point(&data->player.plane, rot_amount);
+	}
 	else if (keycode == RROT)
+	{
 		rotate_point(&data->player.dir, -rot_amount);
+		rotate_point(&data->player.plane, -rot_amount);
+	}
 }
 
 void vertical_movement(int keycode, t_data *data)
