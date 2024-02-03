@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:41:12 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/02 20:58:18 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/03 01:37:31 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,9 @@ void	raycast(t_data *data)
 		camera_x = 2 * r / (double)WIN_WIDTH - 1;
 		ray.dir.x = data->player.dir.x + data->player.plane.x * camera_x;
 		ray.dir.y = data->player.dir.y + data->player.plane.y * camera_x;
-		wall_height = get_wall_height(dda(&ray, data) / (data->player.fov * 0.0151));
+		wall_height = get_wall_height(dda(&ray, data) * (data->player.fov * 0.0151));
 		draw_column(data, r, wall_height);
 		r++;
 	}
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img->img, 0, 0);
 }
-
-/** NOTE 
-*	- Looks like it is possible to enter a wall trough the corner
-*/

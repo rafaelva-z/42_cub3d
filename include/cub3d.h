@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/02 21:00:26 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/03 01:51:55 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define WALL_COLOR		0x00aeb5d1
 # define FLOOR_COLOR	0x000c1126
 # define START_FOV		66
+# define MOVE_SPD		0.3
 
 # include "../lib/libft/libft.h"
 # include "../lib/minilibx-linux/mlx.h"
@@ -200,6 +201,7 @@ void	rotate_point(t_2d_point *point, double angle);
 int		display_error(char *str);
 int		is_inside_map(t_2d_point point, t_2d_point map_size);
 int		is_wall(t_2d_point point, t_data *data);
+void	update_view(t_data *data);
 
 //		dda.c
 double	dda(t_ray *ray, t_data *data);
@@ -210,9 +212,10 @@ void	raycast(t_data *data);
 //		minimap.c
 void	minimap(t_data *data);
 
-void	move_player(int keycode, t_data *data);
-void	adjust_fov(int keycode, t_data *data);
-void	rotate_player(int keycode, t_data *data);
+int		move_player(int keycode, t_data *data);
+int		adjust_fov(int keycode, t_data *data);
+int		rotate_player(int keycode, t_data *data);
 void	draw_pixel(t_img *img, int x, int y, int color);
 void	draw_vertical_line(t_2d_point start, int size, t_img *img, int color);
+
 #endif

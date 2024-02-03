@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initializer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/02 19:48:50 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/03 01:34:55 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ void	initializer(t_data *data)
 {
 	init_data(data);
 	init_mlx(data);
-	data->player.pos = (t_2d_point){1, 1};
+	data->player.pos = (t_2d_point){1, 1}; 
 	data->player.dir = (t_2d_point){0, -1};
+	data->player.plane = (t_2d_point){(double)START_FOV / 100, 0};
 	data->player.fov = START_FOV;
 	data->player.vertical = 0;
-	data->player.plane = (t_2d_point){0.66, 0};  // 0.66 is the FOV? change this to variables
 }
