@@ -6,7 +6,7 @@
 #    By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by rvaz              #+#    #+#              #
-#    Updated: 2024/01/26 01:36:29 by rvaz             ###   ########.fr        #
+#    Updated: 2024/02/03 15:13:15 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,25 +26,29 @@ MLX			=	$(MLX_PATH)libmlx.a
 
 SRCS		=	$(addprefix ./src/,				\
 				main.c							\
+				$(addprefix controls/,			\
+				actions.c						\
+				controls.c						\
 				hooks.c							\
-				$(addprefix /parsing/,			\
+				)								\
+				$(addprefix parsing/,			\
 				parser.c						\
 				parser_2.c						\
 				map_check.c						\
 				map_check_utils.c				\
 				)								\
-				$(addprefix /raycast/,			\
+				$(addprefix raycast/,			\
 				dda.c							\
 				raycast.c						\
 				)								\
-				$(addprefix /utils/,			\
+				$(addprefix utils/,				\
 				draw_pixel.c					\
 				draw_line.c						\
 				initializer.c					\
 				utils.c							\
 				free.c							\
 				)								\
-				$(addprefix /minimap/,			\
+				$(addprefix minimap/,			\
 				minimap.c						\
 				)								\
 				)
