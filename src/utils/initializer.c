@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initializer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/03 16:39:04 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/03 16:58:06 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	initializer(t_data *data)
 {
 	init_data(data);
 	init_mlx(data);
-	mlx_mouse_hide(data->mlx, data->mlx_win); // test this
+	mlx_mouse_hide(data->mlx, data->mlx_win);
 	data->player.pos = (t_2d_point){1, 1};
 	data->player.dir = (t_2d_point){0, -1};
 	data->player.plane = (t_2d_point){(double)START_FOV / 100, 0};

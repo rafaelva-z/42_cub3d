@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:44:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/03 16:43:59 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/03 17:07:35 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@
 */
 int	game_update(t_data *data)
 {
-	mlx_mouse_move(data->mlx, data->mlx_win, WIN_WIDTH / 2, WIN_HEIGHT / 2); // Test this
-	if (!data->player.move && !data->player.move_cam)
-		return (1);
 	if (data->player.move)
 		move_player(data);
 	if (data->player.move_cam)
@@ -28,8 +25,8 @@ int	game_update(t_data *data)
 		vertical_movement(data);
 		adjust_fov(data);
 	}
-	data->player.mouse = (t_2d_point){0, 0};
 	update_view(data);
+	mlx_mouse_move(data->mlx, data->mlx_win, WIN_WIDTH / 2, WIN_HEIGHT / 2);
 	return (0);
 }
 
@@ -80,14 +77,21 @@ int	key_release(int keycode, t_data *data)
 
 int	mouse_reader(int x, int y, t_data *data)
 {
-	(void)x;
-	(void)y;
-	(void)data;
-	// if (x > WIN_WIDTH / 2)
-	// 	data->player.move_cam |= 1 << ROT_B;
-	// else if (x < WIN_WIDTH / 2)
-	// 	data->player.move_cam |= 1 << RROT_B;
-	// data->player.mouse.x = x;
+	if (x > WIN_WIDTH / 2)
+	{
+		rotate_point(&data->player.dir, ROT_SPD / 2.2);
+		rotate_point(&data->player.plane, ROT_SPD / 2.2);
+	}
+	else if (x < WIN_WIDTH / 2)
+	{
+		rotate_point(&data->player.dir, -ROT_SPD / 2.2);
+		rotate_point(&data->player.plane, -ROT_SPD / 2.2);
+	}
+	if (y > WIN_HEIGHT / 2 && data->player.vertical < 250)
+		data->player.vertical -= VERTICAL_SPD;
+	else if (y < WIN_HEIGHT / 2 && data->player.vertical > -250)
+		data->player.vertical += VERTICAL_SPD;
+	data->player.mouse.x = x;
 	return (0);
 }
 
