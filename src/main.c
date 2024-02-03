@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:34:35 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/31 21:08:40 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/03 01:16:52 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,11 @@ int	main(int argc, char **argv)
 		return (display_error(ERR_ARGC));
 	initializer(&data);
 	parser(&data, argv[1]);
-	minimap(&data);
-	raycast(&data);
 	// test(&data);
-	mlx_put_image_to_window(data.mlx, data.mlx_win, data.img->img, 0, 0);
-	mlx_hook(data.mlx_win, 2, 1L << 0, key_reader, &data);
+	//mlx_put_image_to_window(data.mlx, data.mlx_win, data.img->img, 0, 0);
+	update_view(&data);
 	mlx_hook(data.mlx_win, 17, 0L, close_pgm, &data);
+	mlx_hook(data.mlx_win, 2, 1L << 0, key_reader, &data);
 	mlx_loop(data.mlx);
 	free_and_exit(&data, NULL, 0);
 }

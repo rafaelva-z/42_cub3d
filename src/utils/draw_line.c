@@ -6,19 +6,33 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 17:45:18 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/26 15:46:14 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/31 13:11:22 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-void	draw_line(t_vector line, t_img *img, int color)
+void	draw_vertical_line(t_2d_point start, int size, t_img *img, int color)
 {
-	while (line.point_a.y != line.point_b.y)
+	int	y_pos;
+
+	if (start.x >= WIN_WIDTH || start.y >= WIN_HEIGHT || size <= 0)
+		return ;
+	y_pos = start.y;
+	if (color == 0)
 	{
-		if (line.point_a.x > 0 && line.point_a.y > 0
-			&& line.point_a.x < WIN_WIDTH && line.point_a.y < WIN_HEIGHT)
-			draw_pixel(img, line.point_a.x, line.point_a.y, color);
-		line.point_a.y++;
+		if (size < WIN_HEIGHT * 0.7)
+			color = WALL_COLOR - size / 5;
+		else
+			color = WALL_COLOR - (WIN_HEIGHT * 0.7) / 5;
+	}
+	while (size > 0)
+	{
+		//printf("c: %x startx: %f ypos: %d\n", color, start.x, y_pos);
+		if (start.x >= 0 && y_pos >= 0
+			&& y_pos < WIN_HEIGHT && start.x < WIN_WIDTH)
+			draw_pixel(img, start.x, y_pos, color);
+		y_pos++;
+		size--;
 	}
 }
