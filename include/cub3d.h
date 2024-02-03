@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/03 16:23:34 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/03 16:43:29 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ typedef struct s_player
 {
 	int					move;
 	long long			move_cam;
+	t_2d_point			mouse;
 	struct s_2d_point	pos;
 	struct s_2d_point	dir;
 	struct s_2d_point	plane;
@@ -158,6 +159,7 @@ int		move_player(t_data *data);
 int		game_update(t_data *data);
 int		key_reader(int keycode, t_data *data);
 int		key_release(int keycode, t_data *data);
+int		mouse_reader(int x, int y, t_data *data);
 int		close_pgm(t_data *data);
 
 /* =====================================================================*

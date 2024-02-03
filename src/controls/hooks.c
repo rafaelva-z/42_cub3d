@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:44:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/03 15:31:07 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/03 16:43:59 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 */
 int	game_update(t_data *data)
 {
+	mlx_mouse_move(data->mlx, data->mlx_win, WIN_WIDTH / 2, WIN_HEIGHT / 2); // Test this
 	if (!data->player.move && !data->player.move_cam)
 		return (1);
 	if (data->player.move)
@@ -27,6 +28,7 @@ int	game_update(t_data *data)
 		vertical_movement(data);
 		adjust_fov(data);
 	}
+	data->player.mouse = (t_2d_point){0, 0};
 	update_view(data);
 	return (0);
 }
@@ -73,6 +75,19 @@ int	key_release(int keycode, t_data *data)
 		data->player.move_cam &= data->player.move_cam ^ 1 << LOOK_UP_B;
 	else if (keycode == LOOK_DOWN)
 		data->player.move_cam &= data->player.move_cam ^ 1 << LOOK_DOWN_B;
+	return (0);
+}
+
+int	mouse_reader(int x, int y, t_data *data)
+{
+	(void)x;
+	(void)y;
+	(void)data;
+	// if (x > WIN_WIDTH / 2)
+	// 	data->player.move_cam |= 1 << ROT_B;
+	// else if (x < WIN_WIDTH / 2)
+	// 	data->player.move_cam |= 1 << RROT_B;
+	// data->player.mouse.x = x;
 	return (0);
 }
 
