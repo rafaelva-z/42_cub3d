@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:34:35 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/03 02:11:35 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/03 15:14:01 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,15 @@ int	main(int argc, char **argv)
 	// mlx_put_image_to_window(data.mlx, data.mlx_win, data.img->img, 0, 0);
 	update_view(&data);
 	mlx_hook(data.mlx_win, 17, 0L, close_pgm, &data);
+	// KEY DOWN
 	mlx_hook(data.mlx_win, 2, 1L << 0, key_reader, &data);
-	//mlx_hook(data.mlx_win, 3, (1L << 1), key_release, &data);
+	// KEY UP
+	mlx_hook(data.mlx_win, 3, (1L << 1), key_release, &data);
+	// MOUSE MOVEMENT
 	//mlx_hook(data.mlx_win, 6, (1L << 6), mouse_reader, &data);
 	//mlx_do_key_autorepeatoff(data.mlx);
+	// UPDATE EVERY FRAME
+	mlx_loop_hook(data.mlx, game_update, &data);
 	mlx_loop(data.mlx);
 	free_and_exit(&data, NULL, 0);
 }
