@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 17:45:18 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/31 13:11:22 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/03 02:13:29 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	draw_vertical_line(t_2d_point start, int size, t_img *img, int color)
 	}
 	while (size > 0)
 	{
-		//printf("c: %x startx: %f ypos: %d\n", color, start.x, y_pos);
 		if (start.x >= 0 && y_pos >= 0
 			&& y_pos < WIN_HEIGHT && start.x < WIN_WIDTH)
 			draw_pixel(img, start.x, y_pos, color);

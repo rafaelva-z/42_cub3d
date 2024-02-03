@@ -3,14 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 17:06:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/02 21:19:11 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/03 02:24:18 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
+
+static void	raycast_loop(t_2d_point *current, t_2d_point *raylen,
+		t_2d_point *step, int *side, t_2d_point *step_size)
+{
+	if (raylen->x < raylen->y)
+	{
+		raylen->x += step_size->x;
+		current->x += step->x;
+		*side = 0;
+	}
+	else
+	{
+		raylen->y += step_size->y;
+		current->y += step->y;
+		*side = 1;
+	}
+}
 
 static void	dda_def_step_ray(t_player *player, t_2d_point *step_size,
 		t_2d_point *raylen, t_2d_point *step, t_ray *ray)
@@ -51,33 +68,11 @@ double	dda(t_ray *ray, t_data *data)
 	current = (t_2d_point){data->player.pos.x, data->player.pos.y};
 	dda_def_step_ray(&data->player, &step_size, &ray_len, &step, ray);
 	while (is_inside_map(current, data->map.size) && !is_wall(current, data))
-	{
-		if (ray_len.x < ray_len.y)
-		{
-			current.x += step.x;
-			ray_len.x += step_size.x;
-			side = 0;
-		}
-		else
-		{
-			current.y += step.y;
-			ray_len.y += step_size.y;
-			side = 1;
-		}
-	}
+		raycast_loop(&current, &ray_len, &step, &side, &step_size);
 	ray->last_hit = current;
 	if (side == 0)
 		ray->distance = ray_len.x - step_size.x;
 	else
 		ray->distance = ray_len.y - step_size.y;
-	if (DEBUG == 2)
-	{
-		printf("ray_dir: %f, %f | ", ray->dir.x, ray->dir.y);
-		printf("hit wall: %f, %f\n", current.x, current.y);
-		printf("start: %f, %f\n", data->player.pos.x, data->player.pos.y);
-		printf("ray_len: %f, %f | ", ray_len.x, ray_len.y);
-		printf("step_size: %f, %f\n", step_size.x, step_size.y);
-		printf("Dist: %f (x)%f (y)%f [%d, %d]\n====================================\n", ray->distance, current.x, current.y, (int)current.x, (int)current.y);
-	}
 	return (ray->distance);
 }
