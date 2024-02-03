@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:08:06 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/31 21:05:56 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/03 17:13:57 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,16 @@
 
 static void	extension(t_data *data, char *str)
 {
-	char	*temp;
+	int		i;
 
-	temp = str;
-	while (*temp && *temp != '.')
-		temp++;
-	if (ft_strncmp(temp, ".cub", 5))
+	i = 0;
+	printf("str: %s\n", str);
+	while (str[i])
+		i++;
+	while (--i > 0 && str[i] != '.')
+		printf("i: %d\n", i);
+	printf("str: %s\ti: %d\n ext: %s\n", str, i , str + i);
+	if (ft_strncmp(str + i, ".cub", 5))
 		free_and_exit(data, "Error: invalid file extension", 1);
 }
 
