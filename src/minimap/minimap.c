@@ -64,12 +64,12 @@ static void	print_tile(t_data *data, t_2d_point print, t_2d_point offset, t_2d_p
 	x = (int) print.x;
 	y = (int) print.y;
 	tile = NULL;
-	if (print.x < 0 || print.y < 0 || print.x >= data->map.size.x + 1 || print.y >= data->map.size.y + 1|| data->map.map[y - 1][x - 1] == ' ')
+	if (print.x < 1 || print.y < 1 || print.x >= data->map.size.x + 1 || print.y >= data->map.size.y + 1|| data->map.map[y - 1][x - 1] == ' ')
 		return;
 	else if (data->map.map[y - 1][x - 1] == '0')
-		tile = data->ig.mm_floor_img;
+		tile = data->image.mm_floor_img;
 	else if (data->map.map[y - 1][x - 1] == '1')
-		tile = data->ig.mm_wall_img;
+		tile = data->image.mm_wall_img;
 	if (tile)
 		mlx_put_image_to_window(data->mlx_mm, data->mlx_win_mm, tile, (32 * (print.x - offset.x)) - pix_os.x,
 		(32 * (print.y - offset.y)) - pix_os.y);
@@ -86,7 +86,7 @@ static void	draw_minimap(t_data *data)
 	pix_os = pixel_offset(data);
 	offset = (t_2d_point) {data->player.pos.x - 4, data->player.pos.y - 4};
 	i = -7;
-	mlx_put_image_to_window(data->mlx_mm, data->mlx_win_mm, data->ig.mm_vacum_img, 0, 0);
+	mlx_put_image_to_window(data->mlx_mm, data->mlx_win_mm, data->image.mm_vacum_img, 0, 0);
 	while (++i < 5)
 	{
 		j = -7;
@@ -97,8 +97,8 @@ static void	draw_minimap(t_data *data)
 		}
 	}
 	draw_cursor(data);
-	mlx_put_image_to_window(data->mlx_mm, data->mlx_win_mm, data->ig.frame_x, 0, 320);
-	mlx_put_image_to_window(data->mlx_mm, data->mlx_win_mm, data->ig.frame_y, 320, 0);
+	mlx_put_image_to_window(data->mlx_mm, data->mlx_win_mm, data->image.frame_x, 0, 320);
+	mlx_put_image_to_window(data->mlx_mm, data->mlx_win_mm, data->image.frame_y, 320, 0);
 }
 
 // static int	ft_hooks(int keycode, t_data *data)

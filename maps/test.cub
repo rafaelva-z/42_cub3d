@@ -1,13 +1,13 @@
 
 
 
-       NO                                     north_file    
+       NO                                     ./textures/map/north_wall.xpm    
 
-   SO south_file        
+   SO ./textures/map/south_wall.xpm        
 
-                WE         west_file    
+                WE         ./textures/map/west_wall.xpm    
 
- EA                                                                                                              east_file 
+ EA                                                                                                              ./textures/map/east_wall.xpm 
 
 
 
