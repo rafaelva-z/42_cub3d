@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/03 01:51:55 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/03 16:43:29 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,7 @@
 #  define DEBUG 0
 # endif
 
-# define SKY_COLOR		0x005274ff
-# define WALL_COLOR		0x00aeb5d1
-# define FLOOR_COLOR	0x000c1126
-# define START_FOV		66
-# define MOVE_SPD		0.3
-
+# include "player.h"
 # include "../lib/libft/libft.h"
 # include "../lib/minilibx-linux/mlx.h"
 # include <X11/keysym.h>
@@ -48,38 +43,11 @@
 # define WIN_WIDTH		900
 # define WIN_HEIGHT		600
 
-//	Keyboard
-# define KEY_ESC		65307
-# define KEY_LEFT		65361
-# define KEY_UP			65362
-# define KEY_RIGHT		65363
-# define KEY_DOWN		65364
-# define KEY_PLUS		65451
-# define KEY_MINUS		65453
-# define KEY_A			97
-# define KEY_C			99
-# define KEY_D			100
-# define KEY_E			101
-# define KEY_F			102
-# define KEY_Q			113
-# define KEY_R			114
-# define KEY_S			115
-# define KEY_V			118
-# define KEY_W			119
-# define KEY_X			120
-# define KEY_Z			122
+//	Colors
 
-//	Controls
-# define MOVE_FORWARD	KEY_W
-# define MOVE_LEFT		KEY_A
-# define MOVE_BACK		KEY_S
-# define MOVE_RIGHT		KEY_D
-# define ZOOM_IN		KEY_PLUS
-# define ZOOM_OUT		KEY_MINUS
-# define ROT			KEY_E
-# define RROT			KEY_Q
-# define LOOK_UP		KEY_UP
-# define LOOK_DOWN		KEY_DOWN
+# define SKY_COLOR		0x005274ff
+# define WALL_COLOR		0x00aeb5d1
+# define FLOOR_COLOR	0x000c1126
 
 typedef struct s_2d_point
 {
@@ -92,15 +60,6 @@ typedef struct s_vector
 	t_2d_point	point_a;
 	t_2d_point	point_b;
 }	t_vector;
-
-typedef struct s_player
-{
-	t_2d_point	pos;
-	t_2d_point	dir;
-	t_2d_point	plane;
-	double		fov;
-	int			vertical;
-}				t_player;
 
 typedef struct s_map
 {
@@ -153,6 +112,18 @@ typedef struct s_file
 	char	*floor_file;
 }				t_file;
 
+typedef struct s_player
+{
+	int					move;
+	long long			move_cam;
+	t_2d_point			mouse;
+	struct s_2d_point	pos;
+	struct s_2d_point	dir;
+	struct s_2d_point	plane;
+	double				fov;
+	int					vertical;
+}				t_player;
+
 /**
  * @brief Structure that holds all the data needed for the program
 */
@@ -169,34 +140,66 @@ typedef struct s_data
 	t_image		image;
 }				t_data;
 
-//		initializer.c
-void	initializer(t_data *data);
+
+/* =====================================================================*
+ *		/src/controls/													*
+ * =====================================================================*/
+
+//		controls.c
+void	set_move(int keycode, t_data *data);
+void	set_move_cam(int keycode, t_data *data);
+
+//		actions.c
+int		vertical_movement(t_data *data);
+int		rotate_player(t_data *data);
+int		adjust_fov(t_data *data);
+int		move_player(t_data *data);
 
 //		hooks.c
+int		game_update(t_data *data);
 int		key_reader(int keycode, t_data *data);
+int		key_release(int keycode, t_data *data);
+int		mouse_reader(int x, int y, t_data *data);
 int		close_pgm(t_data *data);
 
-//		free.c
-void	free_data(t_data *data);
-void	free_file(t_file *file);
-void	free_and_exit(t_data *data, char *msg, int exit_status);
+/* =====================================================================*
+ *		/src/minimap/													*
+ * =====================================================================*/
 
-//		parser.c
-void	parser(t_data *data, char *str);
+//		minimap.c
+void	minimap(t_data *data);
+
+/* =====================================================================*
+ *		/src/parsing/													*
+ * =====================================================================*/
+
+//		map_check_utils
+void	map_and_player_init(t_data *data);
+
+//		map_check.c
+void	map_check(t_data *data);
 
 //		parser_2.c
 void	identifier_init(t_data *data);
 void	image_to_color_grid(t_data *data);
 void	image_init(t_data *data, int size);
 
-//		map_check.c
-void	map_check(t_data *data);
+//		parser.c
+void	parser(t_data *data, char *str);
 
-//		map_check_utils
-void	map_and_player_init(t_data *data);
+/* =====================================================================*
+ *		/src/raycast/													*
+ * =====================================================================*/
 
-//		map_check_utils
-void	map_and_player_init(t_data *data);
+//		dda.c
+double	dda(t_ray *ray, t_data *data);
+
+//		raycat.c
+void	raycast(t_data *data);
+
+/* =====================================================================*
+ *		/src/utils/														*
+ * =====================================================================*/
 
 //		utils.c
 void	initializer(t_data *data);
@@ -207,19 +210,18 @@ int		is_inside_map(t_2d_point point, t_2d_point map_size);
 int		is_wall(t_2d_point point, t_data *data);
 void	update_view(t_data *data);
 
-//		dda.c
-double	dda(t_ray *ray, t_data *data);
-
-//		raycat.c
-void	raycast(t_data *data);
-
-//		minimap.c
-void	minimap(t_data *data);
-
-int		move_player(int keycode, t_data *data);
-int		adjust_fov(int keycode, t_data *data);
-int		rotate_player(int keycode, t_data *data);
-void	draw_pixel(t_img *img, int x, int y, int color);
+//		draw_line.c
 void	draw_vertical_line(t_2d_point start, int size, t_img *img, int color);
+
+//		draw_pixel.c
+void	draw_pixel(t_img *img, int x, int y, int color);
+
+//		free.c
+void	free_data(t_data *data);
+void	free_file(t_file *file);
+void	free_and_exit(t_data *data, char *msg, int exit_status);
+
+//		initializer.c
+void	initializer(t_data *data);
 
 #endif
