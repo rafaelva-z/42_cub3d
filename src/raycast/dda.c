@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 17:06:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/03 02:24:18 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/03 20:22:49 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	dda_def_step_ray(t_player *player, t_2d_point *step_size,
 	}
 }
 
-double	dda(t_ray *ray, t_data *data)
+void	dda(t_ray *ray, t_data *data)
 {
 	t_2d_point	current;
 	t_2d_point	step_size;
@@ -74,5 +74,4 @@ double	dda(t_ray *ray, t_data *data)
 		ray->distance = ray_len.x - step_size.x;
 	else
 		ray->distance = ray_len.y - step_size.y;
-	return (ray->distance);
 }
