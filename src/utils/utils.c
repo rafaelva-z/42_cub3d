@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:16:32 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/28 22:42:05 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/03 01:17:14 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,12 @@ int	is_wall(t_2d_point point, t_data *data)
 	if (data->map.map[(int)point.y][(int)point.x] == '1')
 		return (1);
 	return (0);
+}
+
+void	update_view(t_data *data)
+{
+	raycast(data);
+	minimap(data);
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img->img, 0, 0);
+	mlx_do_sync(data->mlx);
 }
