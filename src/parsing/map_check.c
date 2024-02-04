@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 12:03:00 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/26 02:06:00 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/04 16:27:46 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	character_check(t_data *data)
 	int	size;
 
 	size = matrix_sizer(data->map.map, 'c');
-	if (size != matrix_finder(data->map.map, "10 NSEW"))
+	if (size != matrix_finder(data->map.map, "10 NSEWDM"))
 		free_and_exit(data, "cub3d: Map Error: invalid character\n", 1);
 	if (matrix_finder(data->map.map, "NSEW") != 1)
 		free_and_exit(data, "cub3d: Map Error: invalid starting coordinate\n", 1);
@@ -84,8 +84,8 @@ void	borther_check(t_data *data)
 				flag = 1;
 		}
 	}
-	if (flag == 1 || str_finder(data->map.map[0], "0NSEW")
-		|| str_finder(data->map.map[i], "0NSEW"))
+	if (flag == 1 || str_finder(data->map.map[0], "0NSWEM")
+		|| str_finder(data->map.map[i], "0SEWNM"))
 		free_and_exit(data, "cub3d: Error: invalid map borders\n", 1);
 }
 
