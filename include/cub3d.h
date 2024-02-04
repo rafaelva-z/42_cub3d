@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/03 17:02:26 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/03 19:50:04 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@
 # define WIN_WIDTH		900
 # define WIN_HEIGHT		600
 
+# define TEXTURE_WIDTH	64
+# define TEXTURE_HEIGHT	64
+
 //	Colors
 
 # define SKY_COLOR		0x005274ff
@@ -72,6 +75,8 @@ typedef struct s_ray
 	t_2d_point	dir;
 	t_2d_point	last_hit;
 	double		distance;
+	int			wall_height;
+	int			side;
 }				t_ray;
 
 // this one may be provisory
@@ -192,7 +197,7 @@ void	parser(t_data *data, char *str);
  * =====================================================================*/
 
 //		dda.c
-double	dda(t_ray *ray, t_data *data);
+void	dda(t_ray *ray, t_data *data);
 
 //		raycat.c
 void	raycast(t_data *data);
@@ -212,6 +217,7 @@ void	update_view(t_data *data);
 
 //		draw_line.c
 void	draw_vertical_line(t_2d_point start, int size, t_img *img, int color);
+void	draw_vertical_line_texture(t_2d_point start, t_img *texture, t_data *data, t_ray *ray);
 
 //		draw_pixel.c
 void	draw_pixel(t_img *img, int x, int y, int color);
