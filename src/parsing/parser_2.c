@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 23:05:31 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/31 20:59:27 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/05 17:36:46 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,13 +123,13 @@ void	image_init(t_data *d, int size)
 	d->image.south_img.addr = mlx_get_data_addr(d->image.south_img.img, &d->image.south_img.bits_per_pixel,
 		&d->image.south_img.line_length, &d->image.south_img.endian);
 	d->image.east_img.img = mlx_xpm_file_to_image(d->mlx,
-		d->file->north_file, &size, &size);
+		d->file->east_file, &size, &size);
 	if (!d->image.east_img.img)
 		free_and_exit(d, ERR_MALLOC, 1);
 	d->image.east_img.addr = mlx_get_data_addr(d->image.east_img.img, &d->image.east_img.bits_per_pixel,
 		&d->image.east_img.line_length, &d->image.east_img.endian);
 	d->image.west_img.img = mlx_xpm_file_to_image(d->mlx,
-		d->file->north_file, &size, &size);
+		d->file->west_file, &size, &size);
 	if (!d->image.west_img.img)
 		free_and_exit(d, ERR_MALLOC, 1);
 	d->image.west_img.addr = mlx_get_data_addr(d->image.west_img.img, &d->image.west_img.bits_per_pixel,
