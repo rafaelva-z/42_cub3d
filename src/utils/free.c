@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:32:59 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/31 21:15:56 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/05 12:29:48 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	free_file(t_file *file)
 
 void	free_and_exit(t_data *data, char *msg, int exit_status)
 {
+	mlx_do_key_autorepeaton(data->mlx);
 	if (msg)
 		ft_putstr_fd(msg, 2);
 	if (data)

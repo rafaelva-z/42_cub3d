@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:08:06 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/03 17:13:57 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/05 12:09:07 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,10 @@ static void	extension(t_data *data, char *str)
 	int		i;
 
 	i = 0;
-	printf("str: %s\n", str);
 	while (str[i])
 		i++;
 	while (--i > 0 && str[i] != '.')
-		printf("i: %d\n", i);
-	printf("str: %s\ti: %d\n ext: %s\n", str, i , str + i);
+		;
 	if (ft_strncmp(str + i, ".cub", 5))
 		free_and_exit(data, "Error: invalid file extension", 1);
 }

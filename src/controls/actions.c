@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 14:59:53 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/03 16:19:12 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/05 19:08:12 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,50 +73,61 @@ int	move_player(t_data *data)
 	return (0);
 }
 
-int	adjust_fov(t_data *data)
+int	adjust_fov(t_player *player)
 {
-	if (data->player.move_cam & 1 << ZOOM_IN_B && data->player.fov > 40)
+	// find a better way to actually change fov
+	if (player->move_cam & 1 << ZOOM_IN_B && player->plane.x < 10)
 	{
-		data->player.fov -= FOV_SPD;
-		data->player.plane = (t_2d_point){data->player.plane.x * 0.9, data->player.plane.y * 0.9};
+		player->fov -= FOV_SPD;
+		player->plane = (t_2d_point){player->plane.x * 0.9, player->plane.y * 0.9};
 		return (1);
 	}
-	else if (data->player.move_cam & 1 << ZOOM_OUT_B && data->player.fov < 150)
+	else if (player->move_cam & 1 << ZOOM_OUT_B && player->fov < 150)
 	{
-		data->player.fov += FOV_SPD;
-		data->player.plane = (t_2d_point){data->player.plane.x * 1.111111111, data->player.plane.y * 1.111111111};
+		player->fov += FOV_SPD;
+		player->plane = (t_2d_point){player->plane.x * 1.111111111, player->plane.y * 1.111111111};
 		return (1);
 	}
 	return (0);
 }
 
-int	rotate_player(t_data *data)
+int	rotate_player(t_player *player)
 {
-	if (data->player.move_cam & 1 << ROT_B)
+	if (player->move_cam & 1 << ROT_B)
 	{
-		rotate_point(&data->player.dir, ROT_SPD);
-		rotate_point(&data->player.plane, ROT_SPD);
+		rotate_point(&player->dir, ROT_SPD);
+		rotate_point(&player->plane, ROT_SPD);
 	}
-	else if (data->player.move_cam & 1 << RROT_B)
+	else if (player->move_cam & 1 << RROT_B)
 	{
-		rotate_point(&data->player.dir, -ROT_SPD);
-		rotate_point(&data->player.plane, -ROT_SPD);
+		rotate_point(&player->dir, -ROT_SPD);
+		rotate_point(&player->plane, -ROT_SPD);
 	}
 	return (1);
 }
 
-int	vertical_movement(t_data *data)
+int	vertical_movement(t_player *player)
 {
-	if (data->player.move_cam & 1 << LOOK_UP_B && data->player.vertical < 250)
+	if (player->move_cam & 1 << LOOK_UP_B && player->vertical < 250)
 	{
-		data->player.vertical += VERTICAL_SPD;
+		player->vertical += VERTICAL_SPD;
 		return (1);
 	}
-	else if (data->player.move_cam & 1 << LOOK_DOWN_B
-		&& data->player.vertical > -250)
+	else if (player->move_cam & 1 << LOOK_DOWN_B
+		&& player->vertical > -250)
 	{
-		data->player.vertical -= VERTICAL_SPD;
+		player->vertical -= VERTICAL_SPD;
 		return (1);
 	}
 	return (0);
 }
+
+void	toggle_mouse(t_data *data)
+{
+	if (data->player.mouse_toggle)
+		mlx_mouse_hide(data->mlx, data->mlx_win);
+	else
+		mlx_mouse_show(data->mlx, data->mlx_win);
+	data->player.mouse_toggle = !data->player.mouse_toggle;
+}
+
