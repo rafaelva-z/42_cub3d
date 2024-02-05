@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initializer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/03 19:15:05 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/05 12:05:18 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,16 +75,22 @@ static void	init_mlx(t_data *data)
 	data->img->addr = mlx_get_data_addr(data->img->img, 
 			&(data->img->bits_per_pixel), &(data->img->line_length),
 			&(data->img->endian));
+	mlx_do_key_autorepeatoff(data->mlx);
+}
+
+static void init_player(t_data *data)
+{
+	data->player.fov = START_FOV;
+	data->player.vertical = 0;
+	data->player.move = 0;
+	data->player.move_cam = 0;
+	data->player.mouse = (t_2d_point){0, 0};
+	data->player.mouse_toggle = 1;
 }
 
 void	initializer(t_data *data)
 {
 	init_data(data);
 	init_mlx(data);
-	mlx_mouse_hide(data->mlx, data->mlx_win);
-	data->player.fov = START_FOV;
-	data->player.vertical = 0;
-	data->player.move = 0;
-	data->player.move_cam = 0;
-	data->player.mouse = (t_2d_point){0, 0};
+	init_player(data);
 }

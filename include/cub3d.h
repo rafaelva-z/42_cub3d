@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/03 19:50:04 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/05 18:22:49 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,9 @@ typedef struct s_file
 typedef struct s_player
 {
 	int					move;
-	long long			move_cam;
+	int					move_cam;
 	t_2d_point			mouse;
+	int					mouse_toggle;
 	struct s_2d_point	pos;
 	struct s_2d_point	dir;
 	struct s_2d_point	plane;
@@ -155,16 +156,17 @@ void	set_move(int keycode, t_data *data);
 void	set_move_cam(int keycode, t_data *data);
 
 //		actions.c
-int		vertical_movement(t_data *data);
-int		rotate_player(t_data *data);
-int		adjust_fov(t_data *data);
+int		vertical_movement(t_player *player);
+int		rotate_player(t_player *player);
+int		adjust_fov(t_player *player);
 int		move_player(t_data *data);
+void	toggle_mouse(t_data *data);
 
 //		hooks.c
 int		game_update(t_data *data);
 int		key_reader(int keycode, t_data *data);
-int		key_release(int keycode, t_data *data);
-int		mouse_reader(int x, int y, t_data *data);
+int		key_release(int keycode, t_player *player);
+int		mouse_reader(int x, int y, t_player *player);
 int		close_pgm(t_data *data);
 
 /* =====================================================================*
@@ -218,6 +220,7 @@ void	update_view(t_data *data);
 //		draw_line.c
 void	draw_vertical_line(t_2d_point start, int size, t_img *img, int color);
 void	draw_vertical_line_texture(t_2d_point start, t_img *texture, t_data *data, t_ray *ray);
+void	draw_vert_line_grad_center(t_img *img, int x, int vertical);
 
 //		draw_pixel.c
 void	draw_pixel(t_img *img, int x, int y, int color);

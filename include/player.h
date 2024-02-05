@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 15:38:11 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/03 16:21:14 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/05 18:59:34 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define KEY_DOWN		65364
 # define KEY_PLUS		65451
 # define KEY_MINUS		65453
+# define KEY_CTRL       65507
 # define KEY_A			97
 # define KEY_C			99
 # define KEY_D			100
@@ -45,6 +46,7 @@
 # define RROT			KEY_Q
 # define LOOK_UP		KEY_UP
 # define LOOK_DOWN		KEY_DOWN
+# define TOGGLE_MOUSE   KEY_CTRL
 
 // 	Controls bits
 
@@ -62,8 +64,9 @@
 
 //	Player Constants
 
+# define MOUSE_SENS     2
 # define START_FOV		66
-# define FOV_SPD		0.1
+# define FOV_SPD		0.001
 # define MOVE_SPD		0.008
 # define ROT_SPD		0.4
 # define VERTICAL_SPD	1

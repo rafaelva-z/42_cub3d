@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:34:35 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/03 19:55:40 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/05 19:09:20 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
+
+static void mlx_hooks(t_data *data)
+{
+	mlx_hook(data->mlx_win, 17, 0L, close_pgm, data);
+	mlx_hook(data->mlx_win, 2, 1L << 0, key_reader, data);
+	mlx_hook(data->mlx_win, 3, 1L << 1, key_release, &data->player);
+	mlx_hook(data->mlx_win, 6, (1L << 6), mouse_reader, &data->player);
+	mlx_loop_hook(data->mlx, game_update, data);
+}
 
 int	main(int argc, char **argv)
 {
@@ -21,12 +30,7 @@ int	main(int argc, char **argv)
 	initializer(&data);
 	parser(&data, argv[1]);
 	update_view(&data);
-	mlx_hook(data.mlx_win, 17, 0L, close_pgm, &data);
-	mlx_hook(data.mlx_win, 2, 1L << 0, key_reader, &data);
-	mlx_hook(data.mlx_win, 3, 1L << 1, key_release, &data);
-	mlx_hook(data.mlx_win, 6, (1L << 6), mouse_reader, &data);
-	mlx_do_key_autorepeatoff(data.mlx);
-	mlx_loop_hook(data.mlx, game_update, &data);
+	mlx_hooks(&data);
 	mlx_loop(data.mlx);
 	free_and_exit(&data, NULL, 0);
 }
