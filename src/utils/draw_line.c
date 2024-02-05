@@ -6,13 +6,12 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 17:45:18 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/05 18:37:03 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/05 20:43:08 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-extern int r;
 void	draw_vertical_line_texture(t_2d_point print_pos, t_img *texture, t_data *data, t_ray *ray)
 {
 	t_2d_point	t_pos;

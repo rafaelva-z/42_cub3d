@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:41:12 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/05 18:58:46 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/05 20:44:54 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static void	draw_column(t_data *data, int r, t_ray *ray)
 	if (ray->side == 0)
 	{
 		if (ray->dir.x < 0)
-			texture = &data->image.north_img;
+			texture = &data->image.west_img;
 		else
-			texture = &data->image.north_img;
+			texture = &data->image.east_img;
 	}
 	else
 	{
