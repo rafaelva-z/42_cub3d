@@ -3,33 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 17:06:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/03 20:22:49 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/05 18:46:49 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-static void	raycast_loop(t_2d_point *current, t_2d_point *raylen,
-		t_2d_point *step, int *side, t_2d_point *step_size)
-{
-	if (raylen->x < raylen->y)
-	{
-		raylen->x += step_size->x;
-		current->x += step->x;
-		*side = 0;
-	}
-	else
-	{
-		raylen->y += step_size->y;
-		current->y += step->y;
-		*side = 1;
-	}
-}
-
-static void	dda_def_step_ray(t_player *player, t_2d_point *step_size,
+/**
+ *	@brief	Initializes "step" based on the ray direction, and "raylen" to the
+ *			ray starting position based on the current map cell.
+*/
+static void	dda_start(t_player *player, t_2d_point *step_size,
 		t_2d_point *raylen, t_2d_point *step, t_ray *ray)
 {
 	if (ray->dir.x < 0)
@@ -54,23 +41,41 @@ static void	dda_def_step_ray(t_player *player, t_2d_point *step_size,
 	}
 }
 
+static void	raycast_loop(t_2d_point *current, t_2d_point *raylen,
+		t_2d_point *step, int *side, t_2d_point *step_size)
+{
+	if (raylen->x < raylen->y)
+	{
+		raylen->x += step_size->x;
+		current->x += step->x;
+		*side = 0;
+	}
+	else
+	{
+		raylen->y += step_size->y;
+		current->y += step->y;
+		*side = 1;
+	}
+}
+/**
+ *	@brief	Digital Differential Analyzer - This algorithm calculates the
+ 			length from the starting point to the nearest wall in a straight
+			line.
+*/
 void	dda(t_ray *ray, t_data *data)
 {
 	t_2d_point	current;
 	t_2d_point	step_size;
 	t_2d_point	step;
 	t_2d_point	ray_len;
-	int			side;
 
-	ray->distance = 0;
 	step_size.x = fabs(1.0 / ray->dir.x);
     step_size.y = fabs(1.0 / ray->dir.y);
 	current = (t_2d_point){data->player.pos.x, data->player.pos.y};
-	dda_def_step_ray(&data->player, &step_size, &ray_len, &step, ray);
+	dda_start(&data->player, &step_size, &ray_len, &step, ray);
 	while (is_inside_map(current, data->map.size) && !is_wall(current, data))
-		raycast_loop(&current, &ray_len, &step, &side, &step_size);
-	ray->last_hit = current;
-	if (side == 0)
+		raycast_loop(&current, &ray_len, &step, &ray->side, &step_size);
+	if (ray->side == 0)
 		ray->distance = ray_len.x - step_size.x;
 	else
 		ray->distance = ray_len.y - step_size.y;

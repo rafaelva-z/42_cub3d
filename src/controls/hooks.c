@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:44:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/03 17:07:35 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/05 18:21:52 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,23 @@
 */
 int	game_update(t_data *data)
 {
-	if (data->player.move)
-		move_player(data);
-	if (data->player.move_cam)
+	t_player	*player;
+	int			update;
+
+	update = 0;
+	player = &data->player;
+	if (player->move)
+		update += move_player(data);
+	if (player->move_cam || !player->mouse_toggle)
 	{
-		rotate_player(data);
-		vertical_movement(data);
-		adjust_fov(data);
+		update += rotate_player(&data->player);
+		update += vertical_movement(&data->player);
+		update += adjust_fov(&data->player);
 	}
-	update_view(data);
-	mlx_mouse_move(data->mlx, data->mlx_win, WIN_WIDTH / 2, WIN_HEIGHT / 2);
+	if (update)
+		update_view(data);
+	if (!player->mouse_toggle)
+		mlx_mouse_move(data->mlx, data->mlx_win, WIN_WIDTH / 2, WIN_HEIGHT / 2);
 	return (0);
 }
 
@@ -44,54 +51,58 @@ int	key_reader(int keycode, t_data *data)
 		|| keycode == RROT || keycode == ZOOM_IN || keycode == ZOOM_OUT
 		|| keycode == LOOK_UP || keycode == LOOK_DOWN)
 		set_move_cam(keycode, data);
+	else if (keycode == TOGGLE_MOUSE)
+		toggle_mouse(data);
 	return (0);
 }
 
 /**
  * @brief Detects when a key is released
 */
-int	key_release(int keycode, t_data *data)
+int	key_release(int keycode, t_player *player)
 {
 	if (keycode == MOVE_FORWARD)
-		data->player.move &= data->player.move ^ 1 << MOVE_FORWARD_B;
+		player->move &= player->move ^ 1 << MOVE_FORWARD_B;
 	else if (keycode == MOVE_BACK)
-		data->player.move &= data->player.move ^ (1 << MOVE_BACK_B);
+		player->move &= player->move ^ (1 << MOVE_BACK_B);
 	else if (keycode == MOVE_LEFT)
-		data->player.move &= data->player.move ^ (1 << MOVE_LEFT_B);
+		player->move &= player->move ^ (1 << MOVE_LEFT_B);
 	else if (keycode == MOVE_RIGHT)
-		data->player.move &= data->player.move ^ (1 << MOVE_RIGHT_B);
+		player->move &= player->move ^ (1 << MOVE_RIGHT_B);
 	else if (keycode == ROT)
-		data->player.move_cam &= data->player.move_cam ^ 1 << ROT_B;
+		player->move_cam &= player->move_cam ^ 1 << ROT_B;
 	else if (keycode == RROT)
-		data->player.move_cam &= data->player.move_cam ^ 1 << RROT_B;
+		player->move_cam &= player->move_cam ^ 1 << RROT_B;
 	else if (keycode == ZOOM_OUT)
-		data->player.move_cam &= data->player.move_cam ^ 1 << ZOOM_OUT_B;
+		player->move_cam &= player->move_cam ^ 1 << ZOOM_OUT_B;
 	else if (keycode == ZOOM_IN)
-		data->player.move_cam &= data->player.move_cam ^ 1 << ZOOM_IN_B;
+		player->move_cam &= player->move_cam ^ 1 << ZOOM_IN_B;
 	else if (keycode == LOOK_UP)
-		data->player.move_cam &= data->player.move_cam ^ 1 << LOOK_UP_B;
+		player->move_cam &= player->move_cam ^ 1 << LOOK_UP_B;
 	else if (keycode == LOOK_DOWN)
-		data->player.move_cam &= data->player.move_cam ^ 1 << LOOK_DOWN_B;
+		player->move_cam &= player->move_cam ^ 1 << LOOK_DOWN_B;
 	return (0);
 }
 
-int	mouse_reader(int x, int y, t_data *data)
+int	mouse_reader(int x, int y, t_player *player)
 {
+	if (player->mouse_toggle)
+		return (0);
 	if (x > WIN_WIDTH / 2)
 	{
-		rotate_point(&data->player.dir, ROT_SPD / 2.2);
-		rotate_point(&data->player.plane, ROT_SPD / 2.2);
+		rotate_point(&player->dir, ROT_SPD * MOUSE_SENS);
+		rotate_point(&player->plane, ROT_SPD * MOUSE_SENS);
 	}
 	else if (x < WIN_WIDTH / 2)
 	{
-		rotate_point(&data->player.dir, -ROT_SPD / 2.2);
-		rotate_point(&data->player.plane, -ROT_SPD / 2.2);
+		rotate_point(&player->dir, -ROT_SPD * MOUSE_SENS);
+		rotate_point(&player->plane, -ROT_SPD * MOUSE_SENS);
 	}
-	if (y > WIN_HEIGHT / 2 && data->player.vertical < 250)
-		data->player.vertical -= VERTICAL_SPD;
-	else if (y < WIN_HEIGHT / 2 && data->player.vertical > -250)
-		data->player.vertical += VERTICAL_SPD;
-	data->player.mouse.x = x;
+	if (y > WIN_HEIGHT / 2 && player->vertical < 250)
+		player->vertical -= VERTICAL_SPD * MOUSE_SENS;
+	else if (y < WIN_HEIGHT / 2 && player->vertical > -250)
+		player->vertical += VERTICAL_SPD * MOUSE_SENS;
+	player->mouse.x = x;
 	return (0);
 }
 
