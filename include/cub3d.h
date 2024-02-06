@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/05 18:22:49 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/06 19:36:48 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ typedef struct s_player
 	int					mouse_toggle;
 	struct s_2d_point	pos;
 	struct s_2d_point	dir;
+	struct s_2d_point	mov_dir;
 	struct s_2d_point	plane;
 	double				fov;
 	int					vertical;
@@ -209,13 +210,16 @@ void	raycast(t_data *data);
  * =====================================================================*/
 
 //		utils.c
-void	initializer(t_data *data);
-int		coordinate_finder(char **mtx, char c, char axle);
-void	rotate_point(t_2d_point *point, double angle);
-int		display_error(char *str);
-int		is_inside_map(t_2d_point point, t_2d_point map_size);
-int		is_wall(t_2d_point point, t_data *data);
-void	update_view(t_data *data);
+void		initializer(t_data *data);
+int			coordinate_finder(char **mtx, char c, char axle);
+int			display_error(char *str);
+int			is_inside_map(t_2d_point point, t_2d_point map_size);
+int			is_wall(t_2d_point point, t_data *data);
+void		update_view(t_data *data);
+
+t_2d_point	vector_add(t_2d_point v1, t_2d_point v2);
+void		vector_norm(t_2d_point *vector);
+void		rotate_point(t_2d_point *point, double angle);
 
 //		draw_line.c
 void	draw_vertical_line(t_2d_point start, int size, t_img *img, int color);

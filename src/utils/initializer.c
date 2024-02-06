@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/05 12:05:18 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/06 19:23:48 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ static void init_player(t_data *data)
 	data->player.move = 0;
 	data->player.move_cam = 0;
 	data->player.mouse = (t_2d_point){0, 0};
+	data->player.mov_dir = (t_2d_point){0, 0};
 	data->player.mouse_toggle = 1;
 }
 

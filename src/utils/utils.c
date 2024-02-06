@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:16:32 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/03 01:17:14 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/06 19:37:44 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,19 @@ void	update_view(t_data *data)
 	minimap(data);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img->img, 0, 0);
 	mlx_do_sync(data->mlx);
+}
+
+t_2d_point	vector_add(t_2d_point v1, t_2d_point v2)
+{
+	return ((t_2d_point){v1.x + v2.x, v1.y + v2.y});
+}
+
+void	vector_norm(t_2d_point *vector)
+{
+	double length;
+
+	length = sqrt((vector->x * vector->x) + (vector->y * vector->y));
+	vector->x /= length;
+	vector->y /= length;
+	
 }
