@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:08:06 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/05 12:09:07 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/07 16:00:21 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ static void	file_extractor(t_data *data, char *str)
 	if (!data->file->file)
 		free_and_exit(data, ERR_MALLOC, 1);
 	free(join_s);
+	close (fd);
 }
 
 static void	trimmer(t_data *data)
@@ -132,6 +133,7 @@ void	parser(t_data *data, char *str)
 		printf("\nVALID MAP!\n");
 	image_init(data, 64);
 	image_to_color_grid(data);
+	enemy_parser(data);
 	free_file(data->file);
 	data->file = NULL;
 }
