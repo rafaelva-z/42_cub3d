@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initializer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/05 12:05:18 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/06 20:15:27 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ static void	init_data(t_data *data)
 	data->file->west_file = NULL;
 	data->file->floor_file = NULL;
 	data->file->ceiling_file = NULL;
+	beggining_time_stamp(data);
+	data->enemy_indx = 0;
 }
 
 static void	init_mlx_minimap(t_data *data)
@@ -93,4 +95,5 @@ void	initializer(t_data *data)
 	init_data(data);
 	init_mlx(data);
 	init_player(data);
+	data->enemy_list = NULL;
 }

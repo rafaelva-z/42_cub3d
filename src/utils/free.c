@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:32:59 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/05 12:29:48 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/07 16:23:33 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,18 @@ void	free_file(t_file *file)
 	free (file);
 }
 
+static void	delete_list(t_enemy *node)
+{
+	t_enemy *temp;
+
+	while (node)
+	{
+		temp = node->next_enemy;
+		free (node);
+		node = temp;
+	}
+}
+
 void	free_and_exit(t_data *data, char *msg, int exit_status)
 {
 	mlx_do_key_autorepeaton(data->mlx);
@@ -106,6 +118,7 @@ void	free_and_exit(t_data *data, char *msg, int exit_status)
 	if (data)
 	{
 		destroy_images(data);
+		delete_list(data->enemy_list);
 		free_data(data);
 	}
 	exit(exit_status);

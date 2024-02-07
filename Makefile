@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+         #
+#    By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by rvaz              #+#    #+#              #
-#    Updated: 2024/02/03 15:13:15 by rvaz             ###   ########.fr        #
+#    Updated: 2024/02/07 16:19:22 by fda-estr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,10 @@ MLX			=	$(MLX_PATH)libmlx.a
 
 SRCS		=	$(addprefix ./src/,				\
 				main.c							\
+				$(addprefix enemy/,				\
+				enemy.c							\
+				enemy_utils.c					\
+				)								\
 				$(addprefix controls/,			\
 				actions.c						\
 				controls.c						\
@@ -34,6 +38,7 @@ SRCS		=	$(addprefix ./src/,				\
 				$(addprefix parsing/,			\
 				parser.c						\
 				parser_2.c						\
+				enemy_parser.c					\
 				map_check.c						\
 				map_check_utils.c				\
 				)								\
@@ -45,6 +50,7 @@ SRCS		=	$(addprefix ./src/,				\
 				draw_pixel.c					\
 				draw_line.c						\
 				initializer.c					\
+				initializer_textures.c			\
 				utils.c							\
 				free.c							\
 				)								\
