@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 14:59:53 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/06 19:36:29 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/07 13:58:18 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,28 @@ int	move_player(t_data *data)
 {
 	// Implementing new movement system with movement vector
 
-	t_2d_point	new_dir;
 	t_player	*player;
 
 	player = &data->player;
-	new_dir = player->mov_dir;
+	if (!player->move)
+		return (0);
+	player->mov_dir = (t_2d_point){0, 0};
 	if (player->move & 1 << MOVE_FORWARD_B)
-	{
 		player->mov_dir = player->dir;
-		// vector_norm(&player->mov_dir);
-		player->mov_dir = (t_2d_point){player->mov_dir.x * 0.5, player->mov_dir.x * 0.5};
-		// if (!is_wall(vector_add(player->pos, player->mov_dir), data))
-			player->pos = vector_add(player->pos, player->mov_dir);
-	}
-	else if (player->move & 1 << MOVE_BACK_B)
+	if (player->move & 1 << MOVE_BACK_B)
+		player->mov_dir = vector_add(player->mov_dir, vector_rotate(player->dir, 180));
+	if (player->move & 1 << MOVE_RIGHT_B)
+		player->mov_dir = vector_add(player->mov_dir, vector_rotate(player->dir, 90));
+	if (player->move & 1 << MOVE_LEFT_B)
+		player->mov_dir = vector_add(player->mov_dir, vector_rotate(player->dir, -90));
+	vector_norm(&player->mov_dir);
+	player->mov_dir = (t_2d_point){player->mov_dir.x * MOVE_SPD, player->mov_dir.y * MOVE_SPD};
+	if (!is_wall(vector_add(player->mov_dir, vector_add(player->pos, player->mov_dir)), data))
 	{
-		new_dir = player->mov_dir;
-		rotate_point(&new_dir, 90);
-		// player->mov_dir = vector_add(player->mov_dir, );
+		player->pos = vector_add(player->pos, player->mov_dir);
+		return (1);
 	}
-	return (1);
-
+	return (0);
 	// OLD
 
 	// This needs some work

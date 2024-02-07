@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/06 19:36:48 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/07 15:41:53 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <math.h>
+# include <time.h>
 
 //	Messages
 # define ERR_ARGC		"cub3d: wrong number of arguments. Use only a map path\n"
@@ -219,6 +220,7 @@ void		update_view(t_data *data);
 
 t_2d_point	vector_add(t_2d_point v1, t_2d_point v2);
 void		vector_norm(t_2d_point *vector);
+t_2d_point	vector_rotate(t_2d_point vector, double angle);
 void		rotate_point(t_2d_point *point, double angle);
 
 //		draw_line.c

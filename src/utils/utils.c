@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:16:32 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/06 19:37:44 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/07 12:51:12 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,18 @@ void	rotate_point(t_2d_point *point, double angle)
 	rot.y = point->y * cos(angle) + point->x * sin(angle);
 	point->x = rot.x;
 	point->y = rot.y;
+}
+
+t_2d_point	vector_rotate(t_2d_point point, double angle)
+{
+	t_2d_point	rot;
+
+	if (angle == 0)
+		return (point);
+	angle *= M_PI / 180;
+	rot.x = point.x * cos(angle) - point.y * sin(angle);
+	rot.y = point.y * cos(angle) + point.x * sin(angle);
+	return (rot);
 }
 
 int	coordinate_finder(char **mtx, char c, char axle)

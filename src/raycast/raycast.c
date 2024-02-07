@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:41:12 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/05 20:44:54 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/07 14:29:07 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,7 @@ static void	draw_column(t_data *data, int r, t_ray *ray)
 			texture = &data->image.south_img;
 	}
 	sky_size = ((WIN_HEIGHT - ray->wall_height) / 2) + data->player.vertical;
-	// if (sky_size + ray->wall_height > WIN_HEIGHT)
-	// 	sky_size = WIN_HEIGHT - ray->wall_height;
 	draw_vert_line_grad_center(data->img, r, data->player.vertical);
-	// draw_vertical_line((t_2d_point){r, 0},
-	// 	sky_size, data->img, SKY_COLOR);
-	// draw_vertical_line((t_2d_point){r, sky_size + ray->wall_height},
-	// 	WIN_HEIGHT - (sky_size + ray->wall_height), data->img, FLOOR_COLOR);
-	// draw_vertical_line((t_2d_point){r, sky_size},
-	// 	ray->wall_height, data->img, -1);
 	draw_vertical_line_texture((t_2d_point){r, sky_size}, texture, data, ray);
 }
 
