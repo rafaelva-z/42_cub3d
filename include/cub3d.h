@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/07 15:41:53 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/07 15:54:22 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,6 @@ typedef struct s_data
 {
 	void		*mlx;					//	pointer to mlx
 	void		*mlx_win;				//	pointer to the mlx window
-	void		*mlx_mm;					//	for testing
 	void		*mlx_win_mm;				//	for testing
 	t_img		*img;
 	t_file		*file;					//	pointer to the file struct

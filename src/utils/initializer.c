@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/07 15:47:36 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/07 15:50:24 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,14 @@ static void	init_mlx_minimap(t_data *data)
 
 	size = 32;
 	size2 = 320;
-	data->mlx_mm = mlx_init();			//	ONLY FOR TESTING
-	data->mlx_win_mm = mlx_new_window(data->mlx_mm, 352, 352, "test");
-	data->image.mm_floor_img = mlx_xpm_file_to_image(data->mlx_mm, "./textures/minimap/mm_floor.xpm", &size, &size);
-	data->image.mm_vacum_img = mlx_xpm_file_to_image(data->mlx_mm, "./textures/minimap/mm_vacum.xpm", &size2, &size2);
-	data->image.mm_wall_img = mlx_xpm_file_to_image(data->mlx_mm, "./textures/minimap/mm_wall.xpm", &size, &size);
+	// data->mlx = mlx_init();			//	ONLY FOR TESTING
+	data->mlx_win_mm = mlx_new_window(data->mlx, 352, 352, "test");
+	data->image.mm_floor_img = mlx_xpm_file_to_image(data->mlx, "./textures/minimap/mm_floor.xpm", &size, &size);
+	data->image.mm_vacum_img = mlx_xpm_file_to_image(data->mlx, "./textures/minimap/mm_vacum.xpm", &size2, &size2);
+	data->image.mm_wall_img = mlx_xpm_file_to_image(data->mlx, "./textures/minimap/mm_wall.xpm", &size, &size);
 	size2 = 352;
-	data->image.frame_x = mlx_xpm_file_to_image(data->mlx_mm, "./textures/minimap/frame_x.xpm", &size2, &size);
-	data->image.frame_y = mlx_xpm_file_to_image(data->mlx_mm, "./textures/minimap/frame_y.xpm", &size, &size2);
+	data->image.frame_x = mlx_xpm_file_to_image(data->mlx, "./textures/minimap/frame_x.xpm", &size2, &size);
+	data->image.frame_y = mlx_xpm_file_to_image(data->mlx, "./textures/minimap/frame_y.xpm", &size, &size2);
 }
 
 static void	init_mlx(t_data *data)

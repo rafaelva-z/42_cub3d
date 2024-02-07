@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:32:59 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/05 12:29:48 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/07 15:55:14 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,14 @@ void	free_data(t_data *data)
 		mlx_destroy_image(data->mlx, data->img->img);
 		free(data->img);
 	}
+	if (data->mlx_win_mm)
+		mlx_destroy_window(data->mlx, data->mlx_win_mm);
 	if (data->mlx_win)
 		mlx_destroy_window(data->mlx, data->mlx_win);
 	if (data->mlx)
 	{
 		mlx_destroy_display(data->mlx);
 		free(data->mlx);
-	}
-	if (data->mlx_win_mm)
-		mlx_destroy_window(data->mlx_mm, data->mlx_win_mm);
-	if (data->mlx_mm)
-	{
-		mlx_destroy_display(data->mlx_mm);
-		free(data->mlx_mm);
 	}
 	free_data_aux(data);
 }
