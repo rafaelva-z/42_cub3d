@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:08:06 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/07 16:00:21 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/08 19:56:09 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	file_extractor(t_data *data, char *str)
 	join_s = NULL;
 	fd = open(str, O_RDONLY);
 	if (fd == -1)
-		printf("Error\n");	//	Error handling
+		free_and_exit(data, ERR_FD, 1);
 	while (1)
 	{
 		s = get_next_line(fd);
@@ -131,8 +131,7 @@ void	parser(t_data *data, char *str)
 	map_check(data);
 	if (DEBUG == 1)
 		printf("\nVALID MAP!\n");
-	image_init(data, 64);
-	image_to_color_grid(data);
+	texture_parser(data);
 	enemy_parser(data);
 	free_file(data->file);
 	data->file = NULL;
