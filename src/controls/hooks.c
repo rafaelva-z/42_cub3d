@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:44:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/05 18:21:52 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/08 11:26:33 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,4 +110,20 @@ int	close_pgm(t_data *data)
 {
 	free_and_exit(data, MSG_EXIT, 0);
 	return (0);
+}
+
+int	automation(t_data *data)
+{
+	static uint64_t	texture_change;
+
+	if (texture_change == 0)
+		texture_change = time_stamp + 200;
+	if (time_stamp > texture_change)
+	{
+		if (data->enemy_indx < 6)
+			data->enemy_indx++;
+		else
+			data->enemy_indx = 0;
+	}
+	enemy(data);
 }

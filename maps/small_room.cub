@@ -1,18 +1,18 @@
-NO north_file    
-SO south_file
-WE west_file    
-EA east_file
-C  ceiling_file
-F  floor_file
+NO ./textures/map/north_wall.xpm
+SO ./textures/map/south_wall.xpm
+WE ./textures/map/west_wall.xpm
+EA ./textures/map/east_wall.xpm 
+C ceiling_file                     
+F floor_file  
 
 
 111111111111111
+10M000000000001
 100000000000001
-100000000000001
-100000000000001
+1000000000M0001
 100000000000001
 1000000N0000001
 100000000000001
-100000000000001
+1000000000M0001
 100000000000001
 111111111111111

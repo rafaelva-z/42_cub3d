@@ -26,6 +26,10 @@ MLX			=	$(MLX_PATH)libmlx.a
 
 SRCS		=	$(addprefix ./src/,				\
 				main.c							\
+				$(addprefix enemy/,				\
+				enemy.c							\
+				enemy_utils.c					\
+				)								\
 				$(addprefix controls/,			\
 				actions.c						\
 				controls.c						\
@@ -34,6 +38,7 @@ SRCS		=	$(addprefix ./src/,				\
 				$(addprefix parsing/,			\
 				parser.c						\
 				parser_2.c						\
+				enemy_parser.c					\
 				map_check.c						\
 				map_check_utils.c				\
 				)								\
@@ -45,6 +50,7 @@ SRCS		=	$(addprefix ./src/,				\
 				draw_pixel.c					\
 				draw_line.c						\
 				initializer.c					\
+				initializer_textures.c			\
 				utils.c							\
 				free.c							\
 				)								\

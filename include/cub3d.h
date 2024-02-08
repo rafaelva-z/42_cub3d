@@ -27,7 +27,9 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <math.h>
+# include <stdint.h>
 # include <time.h>
+# include <sys/time.h>
 
 //	Messages
 # define ERR_ARGC		"cub3d: wrong number of arguments. Use only a map path\n"
@@ -35,8 +37,10 @@
 # define ERR_MLX_INIT	"cub3d: mlx_init() failed\n"
 # define ERR_MLX_WIN	"cub3d: mlx_new_window() failed\n"
 # define ERR_MAP		"cub3d: invalid map\n"
+# define ERR_TIME		"cub3d: timestamp failed\n"
 
 # define MSG_EXIT		"cub3d: Thank you for testing!\n"
+# define MSG_LOSE		"cub3d: You lost!\n"
 
 # define M_PI			3.14159265358979323846
 
@@ -98,6 +102,11 @@ typedef struct s_image
 	t_img		east_img;
 	t_img		south_img;
 	t_img		west_img;
+	t_img		**enemy_front;
+	t_img		**enemy_back;
+	t_img		**enemy_left;
+	t_img		**enemy_right;
+	t_img		**door;
 	void		*mm_wall_img;
 	void		*mm_floor_img;
 	void		*mm_vacum_img;
@@ -118,6 +127,15 @@ typedef struct s_file
 	char	*ceiling_file;
 	char	*floor_file;
 }				t_file;
+
+typedef struct s_enemy
+{
+	t_2d_point		pos;
+	t_2d_point		dir;
+	int				follow;
+	int				move;
+	struct s_enemy	*next_enemy; 
+}				t_enemy;
 
 typedef struct s_player
 {
@@ -146,6 +164,9 @@ typedef struct s_data
 	t_map		map;
 	t_player	player;
 	t_image		image;
+	t_enemy		*enemy_list;
+	int			enemy_indx;
+	uint64_t			start_time;
 }				t_data;
 
 
@@ -196,6 +217,10 @@ void		image_init(t_data *data, int size);
 //			parser.c
 void		parser(t_data *data, char *str);
 
+//		enemy_parser.c
+
+void	enemy_parser(t_data *data);
+
 /* =====================================================================*
  *		/src/raycast/													*
  * =====================================================================*/
@@ -205,6 +230,15 @@ void		dda(t_ray *ray, t_data *data);
 
 //			raycat.c
 void		raycast(t_data *data);
+
+/* =====================================================================*
+ *		/src/enemy/														*
+ * =====================================================================*/
+
+//		enemy.c
+void	enemy(t_data *data);
+
+//		enemy_utils.c
 
 /* =====================================================================*
  *		/src/utils/														*
@@ -217,6 +251,8 @@ int			display_error(char *str);
 int			is_inside_map(t_2d_point point, t_2d_point map_size);
 int			is_wall(t_2d_point point, t_data *data);
 void		update_view(t_data *data);
+void		beggining_time_stamp(t_data *data);
+uint64_t	time_stamp(t_data *data);
 
 t_2d_point	vector_add(t_2d_point v1, t_2d_point v2);
 void		vector_norm(t_2d_point *vector);
@@ -240,5 +276,6 @@ void		free_and_exit(t_data *data, char *msg, int exit_status);
 
 //			initializer.c
 void		initializer(t_data *data);
+
 
 #endif
