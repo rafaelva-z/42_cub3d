@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/07 15:54:22 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/08 12:38:02 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_ray
 	double		distance;
 	int			wall_height;
 	int			side;
+	// linked list of hit points
 }				t_ray;
 
 // this one may be provisory
@@ -137,13 +138,13 @@ typedef struct s_player
 */
 typedef struct s_data
 {
-	void		*mlx;					//	pointer to mlx
-	void		*mlx_win;				//	pointer to the mlx window
+	void		*mlx;
+	void		*mlx_win;
 	void		*mlx_win_mm;				//	for testing
 	t_img		*img;
-	t_file		*file;					//	pointer to the file struct
-	t_map		map;					//	pointer to map
-	t_player	player;					//	pointer to player's struct
+	t_file		*file;
+	t_map		map;
+	t_player	player;
 	t_image		image;
 }				t_data;
 
@@ -152,64 +153,64 @@ typedef struct s_data
  *		/src/controls/													*
  * =====================================================================*/
 
-//		controls.c
-void	set_move(int keycode, t_data *data);
-void	set_move_cam(int keycode, t_data *data);
+//			controls.c
+void		set_move(int keycode, t_data *data);
+void		set_move_cam(int keycode, t_data *data);
 
-//		actions.c
-int		vertical_movement(t_player *player);
-int		rotate_player(t_player *player);
-int		adjust_fov(t_player *player);
-int		move_player(t_data *data);
-void	toggle_mouse(t_data *data);
+//			actions.c
+int			vertical_movement(t_player *player);
+int			rotate_player(t_player *player);
+int			adjust_fov(t_player *player);
+int			move_player(t_data *data);
+void		toggle_mouse(t_data *data);
 
-//		hooks.c
-int		game_update(t_data *data);
-int		key_reader(int keycode, t_data *data);
-int		key_release(int keycode, t_player *player);
-int		mouse_reader(int x, int y, t_player *player);
-int		close_pgm(t_data *data);
+//			hooks.c
+int			game_update(t_data *data);
+int			key_reader(int keycode, t_data *data);
+int			key_release(int keycode, t_player *player);
+int			mouse_reader(int x, int y, t_player *player);
+int			close_pgm(t_data *data);
 
 /* =====================================================================*
  *		/src/minimap/													*
  * =====================================================================*/
 
-//		minimap.c
-void	minimap(t_data *data);
+//			minimap.c
+void		minimap(t_data *data);
 
 /* =====================================================================*
  *		/src/parsing/													*
  * =====================================================================*/
 
-//		map_check_utils
-void	map_and_player_init(t_data *data);
+//			map_check_utils
+void		map_and_player_init(t_data *data);
 
-//		map_check.c
-void	map_check(t_data *data);
+//			map_check.c
+void		map_check(t_data *data);
 
-//		parser_2.c
-void	identifier_init(t_data *data);
-void	image_to_color_grid(t_data *data);
-void	image_init(t_data *data, int size);
+//			parser_2.c
+void		identifier_init(t_data *data);
+void		image_to_color_grid(t_data *data);
+void		image_init(t_data *data, int size);
 
-//		parser.c
-void	parser(t_data *data, char *str);
+//			parser.c
+void		parser(t_data *data, char *str);
 
 /* =====================================================================*
  *		/src/raycast/													*
  * =====================================================================*/
 
-//		dda.c
-void	dda(t_ray *ray, t_data *data);
+//			dda.c
+void		dda(t_ray *ray, t_data *data);
 
-//		raycat.c
-void	raycast(t_data *data);
+//			raycat.c
+void		raycast(t_data *data);
 
 /* =====================================================================*
  *		/src/utils/														*
  * =====================================================================*/
 
-//		utils.c
+//			utils.c
 void		initializer(t_data *data);
 int			coordinate_finder(char **mtx, char c, char axle);
 int			display_error(char *str);
@@ -222,20 +223,22 @@ void		vector_norm(t_2d_point *vector);
 t_2d_point	vector_rotate(t_2d_point vector, double angle);
 void		rotate_point(t_2d_point *point, double angle);
 
-//		draw_line.c
-void	draw_vertical_line(t_2d_point start, int size, t_img *img, int color);
-void	draw_vertical_line_texture(t_2d_point start, t_img *texture, t_data *data, t_ray *ray);
-void	draw_vert_line_grad_center(t_img *img, int x, int vertical);
+//			draw_line.c
+void		draw_vertical_line(t_2d_point start, int size, t_img *img,
+				int color);
+void		draw_vertical_line_texture(t_2d_point start, t_img *texture,
+				t_data *data, t_ray *ray);
+void		draw_vert_line_grad_center(t_img *img, int x, int vertical);
 
-//		draw_pixel.c
-void	draw_pixel(t_img *img, int x, int y, int color);
+//			draw_pixel.c
+void		draw_pixel(t_img *img, int x, int y, int color);
 
-//		free.c
-void	free_data(t_data *data);
-void	free_file(t_file *file);
-void	free_and_exit(t_data *data, char *msg, int exit_status);
+//			free.c
+void		free_data(t_data *data);
+void		free_file(t_file *file);
+void		free_and_exit(t_data *data, char *msg, int exit_status);
 
-//		initializer.c
-void	initializer(t_data *data);
+//			initializer.c
+void		initializer(t_data *data);
 
 #endif

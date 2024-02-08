@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:16:32 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/07 12:51:12 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/08 11:45:32 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,11 @@ t_2d_point	vector_add(t_2d_point v1, t_2d_point v2)
 
 void	vector_norm(t_2d_point *vector)
 {
-	double length;
+	double	length;
 
+	if (vector->x == 0 && vector->y == 0)
+		return ;
 	length = sqrt((vector->x * vector->x) + (vector->y * vector->y));
 	vector->x /= length;
 	vector->y /= length;
-	
 }

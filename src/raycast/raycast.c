@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:41:12 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/07 14:29:07 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/08 12:35:31 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,32 @@ void	raycast(t_data *data)
 		dda(&ray, data);
 		ray.wall_height = WIN_HEIGHT / (ray.distance * (data->player.fov * 0.0151));
 		draw_column(data, r, &ray);
+		r++;
+	}
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img->img, 0, 0);
+}
+
+void	enemy_raycast(t_data *data, t_enemy *enemy)
+{
+	t_ray		ray;
+
+	double		camera_x;
+	int			r;
+
+	r = 0;
+	while (r < 30) // define a macro for enemy rays
+	{
+		camera_x = 2 * r / (double)30 - 1;
+		ray.dir.x = enemy->dir.x + enemy->plane.x * camera_x;
+		ray.dir.y = enemy->dir.y + enemy->plane.y * camera_x;
+		dda(&ray, data);
+		// check if player was found on ray hit linked list then:
+		/*
+		if (playerfound())
+			follow = 1
+		else
+			follow = 0
+		*/
 		r++;
 	}
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img->img, 0, 0);

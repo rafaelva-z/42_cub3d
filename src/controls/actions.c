@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 14:59:53 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/07 13:58:18 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/08 12:40:36 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,76 +22,24 @@ int	move_player(t_data *data)
 	if (!player->move)
 		return (0);
 	player->mov_dir = (t_2d_point){0, 0};
-	if (player->move & 1 << MOVE_FORWARD_B)
+	if (player->move & 1 << MOVE_FORWARD_B && !(player->move & 1 << MOVE_BACK_B))
 		player->mov_dir = player->dir;
-	if (player->move & 1 << MOVE_BACK_B)
+	if (player->move & 1 << MOVE_BACK_B && !(player->move & 1 << MOVE_FORWARD_B))
 		player->mov_dir = vector_add(player->mov_dir, vector_rotate(player->dir, 180));
-	if (player->move & 1 << MOVE_RIGHT_B)
+	if (player->move & 1 << MOVE_RIGHT_B && !(player->move & 1 << MOVE_LEFT_B))
 		player->mov_dir = vector_add(player->mov_dir, vector_rotate(player->dir, 90));
-	if (player->move & 1 << MOVE_LEFT_B)
+	if (player->move & 1 << MOVE_LEFT_B && !(player->move & 1 << MOVE_RIGHT_B))
 		player->mov_dir = vector_add(player->mov_dir, vector_rotate(player->dir, -90));
 	vector_norm(&player->mov_dir);
 	player->mov_dir = (t_2d_point){player->mov_dir.x * MOVE_SPD, player->mov_dir.y * MOVE_SPD};
+	//printf("player->pos: %f %f\n", player->pos.x, player->pos.y);
+	//printf("result: %f %f\n", vector_add(player->mov_dir, vector_add(player->pos, player->mov_dir)));
 	if (!is_wall(vector_add(player->mov_dir, vector_add(player->pos, player->mov_dir)), data))
 	{
 		player->pos = vector_add(player->pos, player->mov_dir);
 		return (1);
 	}
 	return (0);
-	// OLD
-
-	// This needs some work
-	// if (player->move & 1 << MOVE_FORWARD_B)
-	// {
-	// 	if (!is_wall((t_2d_point){player->pos.x + player->dir.x * MOVE_SPD, player->pos.y}, data))
-	// 		newpos.x = MOVE_SPD;
-	// 	if (!is_wall((t_2d_point){player->pos.x, player->pos.y + player->dir.y * MOVE_SPD}, data))
-	// 		newpos.y = MOVE_SPD;
-	// 	if ((newpos.x && newpos.y) && is_wall((t_2d_point){player->pos.x + player->dir.x * newpos.x, player->pos.y + player->dir.y * newpos.y}, data))
-	// 		return (0);
-	// 	else
-	// 		player->pos = (t_2d_point){player->pos.x + player->dir.x * newpos.x, 
-	// 										player->pos.y + player->dir.y * newpos.y};
-	// }
-	// else if (player->move & 1 << MOVE_BACK_B)
-	// {
-	// 	if (!is_wall((t_2d_point){player->pos.x - player->dir.x * MOVE_SPD, player->pos.y}, data))
-	// 		newpos.x = MOVE_SPD;
-	// 	if (!is_wall((t_2d_point){player->pos.x, player->pos.y - player->dir.y * MOVE_SPD}, data))
-	// 		newpos.y = MOVE_SPD;
-	// 	if ((newpos.x && newpos.y) && is_wall((t_2d_point){player->pos.x - player->dir.x * MOVE_SPD, player->pos.y - player->dir.y * MOVE_SPD}, data))
-	// 		return (0);
-	// 	else
-	// 		player->pos = (t_2d_point){player->pos.x - player->dir.x * newpos.x,
-	// 										player->pos.y - player->dir.y * newpos.y};
-	// }
-	// else if (player->move & 1 << MOVE_LEFT_B)
-	// {
-	// 	if (!is_wall((t_2d_point){player->pos.x + player->dir.y * MOVE_SPD, player->pos.y}, data))
-	// 		newpos.x = MOVE_SPD;
-	// 	if (!is_wall((t_2d_point){player->pos.x, player->pos.y - player->dir.x * MOVE_SPD}, data))
-	// 		newpos.y = MOVE_SPD;
-	// 	if ((newpos.x && newpos.y) && is_wall((t_2d_point){player->pos.x + player->dir.y * MOVE_SPD, player->pos.y - player->dir.x * MOVE_SPD}, data))
-	// 		return (0);
-	// 	else
-	// 		player->pos = (t_2d_point){player->pos.x + player->dir.y * newpos.x,
-	// 										player->pos.y - player->dir.x * newpos.y};
-	// }
-	// else if (player->move & 1 << MOVE_RIGHT_B)
-	// {
-	// 	if (!is_wall((t_2d_point){player->pos.x - player->dir.y * MOVE_SPD, player->pos.y}, data))
-	// 		newpos.x = MOVE_SPD;
-	// 	if (!is_wall((t_2d_point){player->pos.x, player->pos.y + player->dir.x * MOVE_SPD}, data))
-	// 		newpos.y = MOVE_SPD;
-	// 	if ((newpos.x && newpos.y) && is_wall((t_2d_point){player->pos.x - player->dir.y * MOVE_SPD, player->pos.y + player->dir.y * MOVE_SPD}, data))
-	// 		return (0);
-	// 	else
-	// 		player->pos = (t_2d_point){player->pos.x - player->dir.y * newpos.x,
-	// 										player->pos.y + player->dir.x * newpos.y};
-	// }
-	// if (newpos.x || newpos.y)
-	// 	return (1);
-	// return (0);
 }
 
 int	adjust_fov(t_player *player)
