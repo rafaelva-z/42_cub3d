@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 14:59:53 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/08 12:40:36 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/08 13:21:13 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,13 @@ int	rotate_player(t_player *player)
 
 int	vertical_movement(t_player *player)
 {
-	if (player->move_cam & 1 << LOOK_UP_B && player->vertical < 250)
+	if (player->move_cam & 1 << LOOK_UP_B && player->vertical < 100)
 	{
 		player->vertical += VERTICAL_SPD;
 		return (1);
 	}
 	else if (player->move_cam & 1 << LOOK_DOWN_B
-		&& player->vertical > -250)
+		&& player->vertical > -100)
 	{
 		player->vertical -= VERTICAL_SPD;
 		return (1);

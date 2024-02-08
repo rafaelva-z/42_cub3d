@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 17:45:18 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/07 14:22:39 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/08 12:55:39 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	draw_vertical_line_texture(t_2d_point print_pos, t_img *texture, t_data *da
 	int			size;
 	int			t_start_x;
 	int			color;
-	double	wallX;
+	double		wallX;
 	
 	if (ray->side == 0)
 		wallX = data->player.pos.y + ray->distance * ray->dir.y;
