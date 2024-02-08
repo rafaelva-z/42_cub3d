@@ -37,21 +37,21 @@ static void draw_cursor(t_data *data)
 	{
 		j = -1;
 		while (++j <= 10)
-			mlx_pixel_put(data->mlx_mm, data->mlx_win_mm, 159 + i, 155 + j, 0xff0000);
+			mlx_pixel_put(data->mlx, data->mlx_win_mm, 159 + i, 155 + j, 0xff0000);
 	}
 	i = -1;
 	while (++i < 3)
 	{
 		j = -1;
 		while (++j <= 10)
-			mlx_pixel_put(data->mlx_mm, data->mlx_win_mm, 155 + j, 159 + i, 0xff0000);
+			mlx_pixel_put(data->mlx, data->mlx_win_mm, 155 + j, 159 + i, 0xff0000);
 	}
 	i = -3;
 	while (++i < 3)
 	{
 		j = -3;
 		while (++j < 3)
-			mlx_pixel_put(data->mlx_mm, data->mlx_win_mm, 160 + (25 * data->player.dir.x) + i, 160 + (25 * data->player.dir.y) + j, 0xff0000);
+			mlx_pixel_put(data->mlx, data->mlx_win_mm, 160 + (25 * data->player.dir.x) + i, 160 + (25 * data->player.dir.y) + j, 0xff0000);
 	}
 }
 
@@ -71,7 +71,7 @@ static void	print_tile(t_data *data, t_2d_point print, t_2d_point offset, t_2d_p
 	else if (data->map.map[y - 1][x - 1] == '1')
 		tile = data->image.mm_wall_img;
 	if (tile)
-		mlx_put_image_to_window(data->mlx_mm, data->mlx_win_mm, tile, (32 * (print.x - offset.x)) - pix_os.x,
+		mlx_put_image_to_window(data->mlx, data->mlx_win_mm, tile, (32 * (print.x - offset.x)) - pix_os.x,
 		(32 * (print.y - offset.y)) - pix_os.y);
 }
 
@@ -86,7 +86,7 @@ static void	draw_minimap(t_data *data)
 	pix_os = pixel_offset(data);
 	offset = (t_2d_point) {data->player.pos.x - 4, data->player.pos.y - 4};
 	i = -7;
-	mlx_put_image_to_window(data->mlx_mm, data->mlx_win_mm, data->image.mm_vacum_img, 0, 0);
+	mlx_put_image_to_window(data->mlx, data->mlx_win_mm, data->image.mm_vacum_img, 0, 0);
 	while (++i < 5)
 	{
 		j = -7;
@@ -97,8 +97,8 @@ static void	draw_minimap(t_data *data)
 		}
 	}
 	draw_cursor(data);
-	mlx_put_image_to_window(data->mlx_mm, data->mlx_win_mm, data->image.frame_x, 0, 320);
-	mlx_put_image_to_window(data->mlx_mm, data->mlx_win_mm, data->image.frame_y, 320, 0);
+	mlx_put_image_to_window(data->mlx, data->mlx_win_mm, data->image.frame_x, 0, 320);
+	mlx_put_image_to_window(data->mlx, data->mlx_win_mm, data->image.frame_y, 320, 0);
 }
 
 // static int	ft_hooks(int keycode, t_data *data)

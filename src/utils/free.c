@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:32:59 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/07 16:23:33 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/08 13:19:35 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,14 @@ void	free_data(t_data *data)
 		mlx_destroy_image(data->mlx, data->img->img);
 		free(data->img);
 	}
+	if (data->mlx_win_mm)
+		mlx_destroy_window(data->mlx, data->mlx_win_mm);
 	if (data->mlx_win)
 		mlx_destroy_window(data->mlx, data->mlx_win);
 	if (data->mlx)
 	{
 		mlx_destroy_display(data->mlx);
 		free(data->mlx);
-	}
-	if (data->mlx_win_mm)
-		mlx_destroy_window(data->mlx_mm, data->mlx_win_mm);
-	if (data->mlx_mm)
-	{
-		mlx_destroy_display(data->mlx_mm);
-		free(data->mlx_mm);
 	}
 	free_data_aux(data);
 }
@@ -113,6 +108,7 @@ static void	delete_list(t_enemy *node)
 void	free_and_exit(t_data *data, char *msg, int exit_status)
 {
 	mlx_do_key_autorepeaton(data->mlx);
+	mlx_mouse_show(data->mlx, data->mlx_win);
 	if (msg)
 		ft_putstr_fd(msg, 2);
 	if (data)

@@ -3,32 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:16:32 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/07 14:50:38 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/08 13:06:16 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
-
-/**
- * @brief rotates the given point around {0, 0} by "angle" degrees.
- * @note The angle is converted to radians in order to be used with the
- * cos/sin functions from the math.h lib
-*/
-void	rotate_point(t_2d_point *point, double angle)
-{
-	t_2d_point	rot;
-
-	if (angle == 0)
-		return ;
-	angle *= M_PI / 180;
-	rot.x = point->x * cos(angle) - point->y * sin(angle);
-	rot.y = point->y * cos(angle) + point->x * sin(angle);
-	point->x = rot.x;
-	point->y = rot.y;
-}
 
 int	coordinate_finder(char **mtx, char c, char axle)
 {
@@ -82,9 +64,9 @@ void	update_view(t_data *data)
 	mlx_do_sync(data->mlx);
 }
 
-void	beggining_time_stamp(t_data *data)
+void	begining_time_stamp(t_data *data)
 {
-	struct timeval time;
+	struct timeval	time;
 
 	if (gettimeofday(&time, NULL) < 0)
 		free_and_exit(data, ERR_TIME, 1);
