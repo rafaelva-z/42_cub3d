@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:34:35 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/05 19:09:20 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/08 16:20:58 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-static void mlx_hooks(t_data *data)
+static void	mlx_hooks(t_data *data)
 {
 	mlx_hook(data->mlx_win, 17, 0L, close_pgm, data);
 	mlx_hook(data->mlx_win, 2, 1L << 0, key_reader, data);

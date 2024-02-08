@@ -6,13 +6,13 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:41:12 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/08 12:56:11 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/08 16:21:18 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-static void	draw_column(t_data *data, int r, t_ray *ray)
+static void	draw_wall(t_data *data, int r, t_ray *ray)
 {
 	int		sky_size;
 	t_img	*texture;
@@ -32,8 +32,58 @@ static void	draw_column(t_data *data, int r, t_ray *ray)
 			texture = &data->image.south_img;
 	}
 	sky_size = ((WIN_HEIGHT - ray->wall_height) / 2) + data->player.vertical;
-	draw_vert_line_grad_center(data->img, r, data->player.vertical);
 	draw_vertical_line_texture((t_2d_point){r, sky_size}, texture, data, ray);
+}
+
+void	draw_floor_and_ceiling(t_data *data)
+{
+	t_2d_point	r;				// current ray position
+	t_2d_point	raydir0;		// leftmost ray
+	t_2d_point	raydir1;		// rightmost ray
+	int			y; 				// y position relative to center of the screen
+	double		pos_z;			// camera height
+	double		distance;		// distance from the camera to the floor
+	t_2d_point	t_step;			// distance between each x ray
+	t_2d_point	real_pos;	// current position x and y
+	t_img		*floor_texture;
+	t_img		*ceiling_texture;
+	int			color_c;
+	int			color_f;
+	t_2d_point	t_pos;
+
+	floor_texture = &data->image.west_img;
+	ceiling_texture = &data->image.east_img;
+
+	raydir0.x = data->player.dir.x - data->player.plane.x;
+	raydir0.y = data->player.dir.y - data->player.plane.y;
+	raydir1.x = data->player.dir.x + data->player.plane.x;
+	raydir1.y = data->player.dir.y + data->player.plane.y;
+
+	r.y = 0;
+	while (r.y < WIN_HEIGHT)
+	{
+		y = r.y - WIN_HEIGHT / 2;
+		pos_z = 0.5 * WIN_HEIGHT;
+		distance = pos_z / y;
+		t_step.x = distance * (raydir1.x - raydir0.x) / WIN_WIDTH;
+		t_step.y = distance * (raydir1.y - raydir0.y) / WIN_WIDTH;
+		real_pos.x = data->player.pos.x + distance * raydir0.x;
+		real_pos.y = data->player.pos.y + distance * raydir0.y;
+		r.x = 0;
+		while (++r.x < WIN_WIDTH)
+		{
+			t_pos.x = (int)(TEXTURE_WIDTH * (real_pos.x - (int)real_pos.x)) & (TEXTURE_WIDTH - 1);
+			t_pos.y = (int)(TEXTURE_HEIGHT * (real_pos.y - (int)real_pos.y)) & (TEXTURE_HEIGHT - 1);
+			real_pos.x += t_step.x;
+			real_pos.y += t_step.y;
+			color_f = floor_texture->color_grid[(int)t_pos.y][(int)t_pos.x];
+			draw_pixel(data->img, (int)r.x, (int)r.y, color_f);
+			color_c = ceiling_texture->color_grid[(int)t_pos.y][(int)t_pos.x];
+			draw_pixel(data->img, (int)r.x, WIN_HEIGHT - (int)r.y, color_c);
+		}
+		r.y++;
+	}
+
 }
 
 /**
@@ -44,8 +94,9 @@ void	raycast(t_data *data)
 	t_ray		ray;
 	double		camera_x;
 	int			r;
-	
+
 	r = 0;
+	draw_floor_and_ceiling(data);
 	while (r < WIN_WIDTH)
 	{
 		camera_x = 2 * r / (double)WIN_WIDTH - 1;
@@ -54,7 +105,8 @@ void	raycast(t_data *data)
 		dda(&ray, data);
 		ray.wall_height = WIN_HEIGHT
 			/ (ray.distance * (data->player.fov * 0.0151));
-		draw_column(data, r, &ray);
+		//draw_vert_line_grad_center(data->img, r, data->player.vertical);
+		draw_wall(data, r, &ray);
 		r++;
 	}
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img->img, 0, 0);
