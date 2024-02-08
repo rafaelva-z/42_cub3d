@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+         #
+#    By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by rvaz              #+#    #+#              #
-#    Updated: 2024/02/07 14:46:18 by rvaz             ###   ########.fr        #
+#    Updated: 2024/02/08 13:08:35 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ SRCS		=	$(addprefix ./src/,				\
 				initializer_textures.c			\
 				utils.c							\
 				free.c							\
+				vectors.c						\
 				)								\
 				$(addprefix minimap/,			\
 				minimap.c						\

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:32:59 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/07 15:55:14 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/08 13:19:35 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ static void	delete_list(t_enemy *node)
 void	free_and_exit(t_data *data, char *msg, int exit_status)
 {
 	mlx_do_key_autorepeaton(data->mlx);
+	mlx_mouse_show(data->mlx, data->mlx_win);
 	if (msg)
 		ft_putstr_fd(msg, 2);
 	if (data)

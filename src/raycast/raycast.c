@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:41:12 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/08 12:35:31 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/08 12:56:11 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ void	raycast(t_data *data)
 		ray.dir.x = data->player.dir.x + data->player.plane.x * camera_x;
 		ray.dir.y = data->player.dir.y + data->player.plane.y * camera_x;
 		dda(&ray, data);
-		ray.wall_height = WIN_HEIGHT / (ray.distance * (data->player.fov * 0.0151));
+		ray.wall_height = WIN_HEIGHT
+			/ (ray.distance * (data->player.fov * 0.0151));
 		draw_column(data, r, &ray);
 		r++;
 	}
@@ -62,10 +63,10 @@ void	raycast(t_data *data)
 void	enemy_raycast(t_data *data, t_enemy *enemy)
 {
 	t_ray		ray;
-
 	double		camera_x;
 	int			r;
 
+	(void)enemy;
 	r = 0;
 	while (r < 30) // define a macro for enemy rays
 	{

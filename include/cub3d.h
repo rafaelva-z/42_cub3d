@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/08 12:38:02 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/08 13:05:04 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,20 @@
 # include <time.h>
 # include <sys/time.h>
 
-//	Messages
+//	Messages & Errors
 # define ERR_ARGC		"cub3d: wrong number of arguments. Use only a map path\n"
 # define ERR_MALLOC		"cub3d: malloc() failed\n"
 # define ERR_MLX_INIT	"cub3d: mlx_init() failed\n"
 # define ERR_MLX_WIN	"cub3d: mlx_new_window() failed\n"
 # define ERR_MAP		"cub3d: invalid map\n"
 # define ERR_TIME		"cub3d: timestamp failed\n"
-
 # define MSG_EXIT		"cub3d: Thank you for testing!\n"
 # define MSG_LOSE		"cub3d: You lost!\n"
-
-# define M_PI			3.14159265358979323846
 
 //	Screen Resolution
 # define WIN_WIDTH		900
 # define WIN_HEIGHT		600
+# define WIN_TITLE		 "Cub3D - fda-est & rvaz"
 
 # define TEXTURE_WIDTH	64
 # define TEXTURE_HEIGHT	64
@@ -56,6 +54,8 @@
 # define SKY_COLOR		0x005274ff
 # define WALL_COLOR		0x00aeb5d1
 # define FLOOR_COLOR	0x000c1126
+
+# define M_PI			3.14159265358979323846
 
 typedef struct s_2d_point
 {
@@ -132,23 +132,24 @@ typedef struct s_enemy
 {
 	t_2d_point		pos;
 	t_2d_point		dir;
+	t_2d_point		plane;
 	int				follow;
 	int				move;
-	struct s_enemy	*next_enemy; 
+	struct s_enemy	*next_enemy;
 }				t_enemy;
 
 typedef struct s_player
 {
-	int					move;
-	int					move_cam;
-	t_2d_point			mouse;
-	int					mouse_toggle;
-	struct s_2d_point	pos;
-	struct s_2d_point	dir;
-	struct s_2d_point	mov_dir;
-	struct s_2d_point	plane;
-	double				fov;
-	int					vertical;
+	int			move;
+	int			move_cam;
+	t_2d_point	mouse;
+	int			mouse_toggle;
+	t_2d_point	pos;
+	t_2d_point	dir;
+	t_2d_point	mov_dir;
+	t_2d_point	plane;
+	double		fov;
+	int			vertical;
 }				t_player;
 
 /**
@@ -219,7 +220,7 @@ void		parser(t_data *data, char *str);
 
 //		enemy_parser.c
 
-void	enemy_parser(t_data *data);
+void		enemy_parser(t_data *data);
 
 /* =====================================================================*
  *		/src/raycast/													*
@@ -251,9 +252,10 @@ int			display_error(char *str);
 int			is_inside_map(t_2d_point point, t_2d_point map_size);
 int			is_wall(t_2d_point point, t_data *data);
 void		update_view(t_data *data);
-void		beggining_time_stamp(t_data *data);
+void		begining_time_stamp(t_data *data);
 uint64_t	time_stamp(t_data *data);
 
+//			utils_2.c
 t_2d_point	vector_add(t_2d_point v1, t_2d_point v2);
 void		vector_norm(t_2d_point *vector);
 t_2d_point	vector_rotate(t_2d_point vector, double angle);
