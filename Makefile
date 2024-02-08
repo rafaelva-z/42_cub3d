@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+         #
+#    By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by rvaz              #+#    #+#              #
-#    Updated: 2024/02/07 16:19:22 by fda-estr         ###   ########.fr        #
+#    Updated: 2024/02/07 14:46:18 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 NAME		=	cub3d
 
 CC			=	cc
-CFLAGS		=	-g -Wall -Wextra -Werror #-fsanitize=address 
+CFLAGS		=	-g #-Wall -Wextra -Werror #-fsanitize=address 
 RM			=	/bin/rm -f
 
 LIBFLAGS	=	-L$(LIBFT_PATH) -L$(MLX_PATH) -lft -lmlx -lXext -lX11 -lm -lz

@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:16:32 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/07 14:50:38 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/08 11:45:32 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,18 @@ void	rotate_point(t_2d_point *point, double angle)
 	rot.y = point->y * cos(angle) + point->x * sin(angle);
 	point->x = rot.x;
 	point->y = rot.y;
+}
+
+t_2d_point	vector_rotate(t_2d_point point, double angle)
+{
+	t_2d_point	rot;
+
+	if (angle == 0)
+		return (point);
+	angle *= M_PI / 180;
+	rot.x = point.x * cos(angle) - point.y * sin(angle);
+	rot.y = point.y * cos(angle) + point.x * sin(angle);
+	return (rot);
 }
 
 int	coordinate_finder(char **mtx, char c, char axle)
@@ -98,4 +110,20 @@ uint64_t	time_stamp(t_data *data)
 	if (gettimeofday(&time, NULL) < 0)
 		free_and_exit(data, ERR_TIME, 1);
 	return((time.tv_sec * 1000) + (time.tv_usec / 1000) - data->start_time);
+}
+
+t_2d_point	vector_add(t_2d_point v1, t_2d_point v2)
+{
+	return ((t_2d_point){v1.x + v2.x, v1.y + v2.y});
+}
+
+void	vector_norm(t_2d_point *vector)
+{
+	double	length;
+
+	if (vector->x == 0 && vector->y == 0)
+		return ;
+	length = sqrt((vector->x * vector->x) + (vector->y * vector->y));
+	vector->x /= length;
+	vector->y /= length;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 17:06:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/05 18:46:49 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/08 11:50:12 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static void	raycast_loop(t_2d_point *current, t_2d_point *raylen,
 		*side = 1;
 	}
 }
+
 /**
  *	@brief	Digital Differential Analyzer - This algorithm calculates the
  			length from the starting point to the nearest wall in a straight
@@ -70,7 +71,7 @@ void	dda(t_ray *ray, t_data *data)
 	t_2d_point	ray_len;
 
 	step_size.x = fabs(1.0 / ray->dir.x);
-    step_size.y = fabs(1.0 / ray->dir.y);
+	step_size.y = fabs(1.0 / ray->dir.y);
 	current = (t_2d_point){data->player.pos.x, data->player.pos.y};
 	dda_start(&data->player, &step_size, &ray_len, &step, ray);
 	while (is_inside_map(current, data->map.size) && !is_wall(current, data))

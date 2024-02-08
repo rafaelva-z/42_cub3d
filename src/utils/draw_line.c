@@ -6,12 +6,15 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 17:45:18 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/05 20:43:08 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/07 14:22:39 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
+/**
+ * This function needs to be optimized
+*/
 void	draw_vertical_line_texture(t_2d_point print_pos, t_img *texture, t_data *data, t_ray *ray)
 {
 	t_2d_point	t_pos;
@@ -19,15 +22,13 @@ void	draw_vertical_line_texture(t_2d_point print_pos, t_img *texture, t_data *da
 	int			size;
 	int			t_start_x;
 	int			color;
-
-	// Exact Place in wall that hits
 	double	wallX;
+	
 	if (ray->side == 0)
 		wallX = data->player.pos.y + ray->distance * ray->dir.y;
 	else
 		wallX = data->player.pos.x + ray->distance * ray->dir.x;
 	wallX -= floor(wallX);
-
 	size = ray->wall_height;
 	t_start_x = wallX * TEXTURE_WIDTH;
 	t_step = (double)TEXTURE_HEIGHT / (double)ray->wall_height;
@@ -35,19 +36,25 @@ void	draw_vertical_line_texture(t_2d_point print_pos, t_img *texture, t_data *da
 
 	if (print_pos.x >= WIN_WIDTH || print_pos.y >= WIN_HEIGHT || size <= 0)
 		return ;
+	if (print_pos.y < 0)
+	{
+		t_pos.y += t_step * -print_pos.y;
+		size += print_pos.y;
+		print_pos.y -= print_pos.y;
+	}
 	while (size > 0)
 	{
 		color = texture->color_grid[(int)t_pos.y][(int)t_pos.x];
 		for (int i = ray->distance; i > 2.5 ; i -= 2)
 			color = (color & 0xfefefefe) >> 1;
-		if (print_pos.x >= 0 && print_pos.y >= 0
-			&& print_pos.y < WIN_HEIGHT && print_pos.x < WIN_WIDTH)
+		if (print_pos.x < 0 || print_pos.y > WIN_HEIGHT || print_pos.x > WIN_WIDTH)
+			return ;
+		if (print_pos.y >= 0)
 			draw_pixel(data->img, print_pos.x, print_pos.y, color);
 		print_pos.y++;
 		size--;
 		t_pos.y += t_step;
 	}
-	//printf("last hit: %f %f | t_pos_x: %f | t_pos_y: %f\n", ray->last_hit.x, ray->last_hit.y, t_pos.x, t_pos.y);
 }
 
 void	draw_vertical_line(t_2d_point start, int size, t_img *img, int color)
