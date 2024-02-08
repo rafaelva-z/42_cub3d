@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/08 13:05:04 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/08 16:20:24 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ typedef struct s_data
 	t_image		image;
 	t_enemy		*enemy_list;
 	int			enemy_indx;
-	uint64_t			start_time;
+	uint64_t	start_time;
 }				t_data;
 
 
@@ -237,7 +237,7 @@ void		raycast(t_data *data);
  * =====================================================================*/
 
 //		enemy.c
-void	enemy(t_data *data);
+void		enemy(t_data *data);
 
 //		enemy_utils.c
 

@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 17:45:18 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/08 12:55:39 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/08 16:08:28 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	draw_vertical_line_texture(t_2d_point print_pos, t_img *texture, t_data *da
 	wallX -= floor(wallX);
 	size = ray->wall_height;
 	t_start_x = wallX * TEXTURE_WIDTH;
+	if ((ray->dir.x < 0 && ray->side == 0) || (ray->dir.y > 0 && ray->side == 1))
+		t_start_x = TEXTURE_WIDTH - t_start_x - 1;
 	t_step = (double)TEXTURE_HEIGHT / (double)ray->wall_height;
 	t_pos = (t_2d_point){t_start_x, 0};
 
