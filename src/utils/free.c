@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:32:59 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/08 13:19:35 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/08 19:43:35 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,21 @@ static void	free_color_grid(int **grid)
 	free (grid);
 }
 
-static void	free_data_aux(t_data *data)
+static void	free_textures(t_data *data)
 {
-	if (data->image.north_img.color_grid)
-		free_color_grid(data->image.north_img.color_grid);
-	if (data->image.east_img.color_grid)
-		free_color_grid(data->image.east_img.color_grid);
-	if (data->image.south_img.color_grid)
-		free_color_grid(data->image.south_img.color_grid);
-	if (data->image.west_img.color_grid)
-		free_color_grid(data->image.west_img.color_grid);
+	int	i;
+
+	if (!data->textures)
+		return ;
+	i = -1;
+	while (++i < 44)
+	{
+		if (!data->textures[i])
+			continue ;
+		free_color_grid(data->textures[i]->color_grid);
+		mlx_destroy_image(data->mlx, data->textures[i]);
+		free (data->textures[i]);
+	}
 }
 
 void	free_data(t_data *data)
@@ -64,28 +69,6 @@ void	free_data(t_data *data)
 	free_data_aux(data);
 }
 
-static void destroy_images(t_data *data)
-{
-	if (data->image.north_img.img)
-		mlx_destroy_image(data->mlx, data->image.north_img.img);
-	if (data->image.east_img.img)
-		mlx_destroy_image(data->mlx, data->image.east_img.img);
-	if (data->image.south_img.img)
-		mlx_destroy_image(data->mlx, data->image.south_img.img);
-	if (data->image.west_img.img)
-		mlx_destroy_image(data->mlx, data->image.west_img.img);
-	if (data->image.mm_wall_img)
-		mlx_destroy_image(data->mlx, data->image.mm_wall_img);
-	if (data->image.mm_floor_img)
-		mlx_destroy_image(data->mlx, data->image.mm_floor_img);
-	if (data->image.mm_vacum_img)
-		mlx_destroy_image(data->mlx, data->image.mm_vacum_img);
-	if (data->image.frame_x)
-		mlx_destroy_image(data->mlx, data->image.frame_x);
-	if (data->image.frame_y)
-		mlx_destroy_image(data->mlx, data->image.frame_y);
-}
-
 void	free_file(t_file *file)
 {
 	if (file->file)
@@ -113,8 +96,8 @@ void	free_and_exit(t_data *data, char *msg, int exit_status)
 		ft_putstr_fd(msg, 2);
 	if (data)
 	{
-		destroy_images(data);
 		delete_list(data->enemy_list);
+		free_textures(data);
 		free_data(data);
 	}
 	exit(exit_status);

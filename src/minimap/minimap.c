@@ -112,7 +112,8 @@ static void	draw_minimap(t_data *data)
 
 void	minimap(t_data *data)
 {
-	draw_minimap(data);
+	(void) data;
+	// draw_minimap(data);
 	// int size;
 	// int size2;
 
