@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 22:26:46 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/07 21:44:24 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/08 11:18:55 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	direction_change(t_data *data, t_enemy *enemy)
 	if (ran == 0)
 	{
 		ran = (180 / 8) * ((rand() % 16) - 8);
-		rotate_enemy();			/////////////////////////////
+		rotate_point(&enemy->dir, ran);			/////////////////////////////
 	}
 }
 
@@ -49,6 +49,7 @@ static void	player_in_sight(t_data *data, t_enemy *enemy)
 
 	//	if player is in sight
 
+	// vector_norm
 	enemy->follow = 1;
 	enemy->dir.x = data->player.pos.x - enemy->pos.x;
 	enemy->dir.y = data->player.pos.y - enemy->pos.y;
