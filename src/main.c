@@ -12,7 +12,7 @@
 
 #include "../include/cub3d.h"
 
-static void mlx_hooks(t_data *data)
+static void	mlx_hooks(t_data *data)
 {
 	mlx_hook(data->mlx_win, 17, 0L, close_pgm, data);
 	mlx_hook(data->mlx_win, 2, 1L << 0, key_reader, data);

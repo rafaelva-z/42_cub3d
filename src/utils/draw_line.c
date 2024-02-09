@@ -31,9 +31,10 @@ void	draw_vertical_line_texture(t_2d_point print_pos, t_img *texture, t_data *da
 	wallX -= floor(wallX);
 	size = ray->wall_height;
 	t_start_x = wallX * texture->width;
+	if ((ray->dir.x < 0 && ray->side == 0) || (ray->dir.y > 0 && ray->side == 1))
+		t_start_x = texture->width - t_start_x - 1;
 	t_step = (double)texture->hight / (double)ray->wall_height;
 	t_pos = (t_2d_point){t_start_x, 0};
-
 	if (print_pos.x >= WIN_WIDTH || print_pos.y >= WIN_HEIGHT || size <= 0)
 		return ;
 	if (print_pos.y < 0)

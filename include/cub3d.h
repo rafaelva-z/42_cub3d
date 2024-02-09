@@ -272,7 +272,7 @@ void		raycast(t_data *data);
  * =====================================================================*/
 
 //		enemy.c
-void	enemy(t_data *data);
+void		enemy(t_data *data);
 
 //		enemy_utils.c
 
