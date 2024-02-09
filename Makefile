@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+         #
+#    By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by rvaz              #+#    #+#              #
-#    Updated: 2024/02/08 13:08:35 by rvaz             ###   ########.fr        #
+#    Updated: 2024/02/08 18:06:53 by fda-estr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRCS		=	$(addprefix ./src/,				\
 				parser.c						\
 				parser_2.c						\
 				enemy_parser.c					\
+				texture_parser.c					\
 				map_check.c						\
 				map_check_utils.c				\
 				)								\
