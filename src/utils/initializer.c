@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/08 20:12:26 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/09 14:42:08 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	init_data(t_data *data)
 {
 	data->mlx = NULL;
 	data->mlx_win = NULL;
+	data->mlx_win_mm = NULL;
 	data->map.map = NULL;
 	data->file = malloc(sizeof(t_file));
 	if (!data->file)

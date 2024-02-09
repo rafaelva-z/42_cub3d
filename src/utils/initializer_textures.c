@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:22:12 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/08 19:54:39 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/09 13:26:52 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	texture_array_init(t_data *data)
 		data->textures[i]->endian = 0;
 		data->textures[i]->hight = 0;
 		data->textures[i]->width = 0;
+		data->textures[i]->columns_created = 0;
 		data->textures[i]->color_grid = NULL;
 	}	
 }

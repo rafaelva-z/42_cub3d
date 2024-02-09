@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:05:40 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/08 20:09:03 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/09 15:15:06 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ static void	get_size(t_data *data, char	*path, t_img *img)
 {
 	char	*str;
 	int		fd;
+	char	*temp;
 
 	fd = open(path, O_RDONLY);
+	printf("file: %s\n", path);
 	if (fd == -1)
 		free_and_exit(data, ERR_FD, 1);
 	while (1)
@@ -29,13 +31,14 @@ static void	get_size(t_data *data, char	*path, t_img *img)
 			break ;
 		free (str);
 	}
+	temp = str;
 	while (*str && !ft_isdigit(*str))
 		str++;
 	img->width = ft_atoi(str);
 	while (*str && ft_isdigit(*str))
 		str++;
 	img->hight = ft_atoi(str);
-	free (str);
+	free (temp);
 	close (fd);
 }
 
@@ -58,8 +61,9 @@ static void	colors_to_grid(t_data *data, t_img *img)
 	while (++i < img->width)
 	{
 		img->color_grid[i] = malloc(sizeof(int) * img->hight);
-		if (!img->color_grid[i]);
+		if (!img->color_grid[i])
 			free_and_exit(data, ERR_MALLOC, 1);
+		img->columns_created++;
 	}
 	i = -1;
 	while (++i < img->width)
@@ -112,9 +116,9 @@ void	texture_parser(t_data *data)
 	image_init(data, data->textures[WE_IMG], data->file->west_file);
 	image_init(data, data->textures[F_IMG], data->file->floor_file);
 	image_init(data, data->textures[C_IMG], data->file->ceiling_file);
-	image_init(data, data->textures[MMW_IMG], "./textures/minimap/wall.xpm");
-	image_init(data, data->textures[MMF_IMG], "./textures/minimap/floor.xpm");
-	image_init(data, data->textures[MMV_IMG], "./textures/minimap/vacum.xpm");
+	image_init(data, data->textures[MMW_IMG], "./textures/minimap/mm_wall.xpm");
+	image_init(data, data->textures[MMF_IMG], "./textures/minimap/mm_floor.xpm");
+	image_init(data, data->textures[MMV_IMG], "./textures/minimap/mm_vacum.xpm");
 	image_init(data, data->textures[EF0_IMG], "./textures/enemy/enemy_0.xpm");
 	image_init(data, data->textures[EF1_IMG], "./textures/enemy/enemy_1.xpm");
 	image_init(data, data->textures[EF2_IMG], "./textures/enemy/enemy_2.xpm");

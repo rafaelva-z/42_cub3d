@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 17:45:18 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/08 12:55:39 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/09 16:29:24 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	draw_vertical_line_texture(t_2d_point print_pos, t_img *texture, t_data *da
 		wallX = data->player.pos.x + ray->distance * ray->dir.x;
 	wallX -= floor(wallX);
 	size = ray->wall_height;
-	t_start_x = wallX * TEXTURE_WIDTH;
-	t_step = (double)TEXTURE_HEIGHT / (double)ray->wall_height;
+	t_start_x = wallX * texture->width;
+	t_step = (double)texture->hight / (double)ray->wall_height;
 	t_pos = (t_2d_point){t_start_x, 0};
 
 	if (print_pos.x >= WIN_WIDTH || print_pos.y >= WIN_HEIGHT || size <= 0)

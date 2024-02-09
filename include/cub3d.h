@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/08 20:10:00 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/09 13:26:40 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ typedef struct s_img
 	int		hight;
 	int		width;
 	int		**color_grid;
+	int		columns_created;
 }				t_img;
 
 /**

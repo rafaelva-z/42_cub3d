@@ -6,20 +6,20 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:32:59 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/08 19:43:35 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/09 14:41:08 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-static void	free_color_grid(int **grid)
+static void	free_color_grid(t_img *img)
 {
 	int i;
 
 	i = -1;
-	while (++i < 64)
-		free (grid[i]);
-	free (grid);
+	while (++i < img->columns_created)
+		free (img->color_grid[i]);
+	free (img->color_grid);
 }
 
 static void	free_textures(t_data *data)
@@ -33,10 +33,14 @@ static void	free_textures(t_data *data)
 	{
 		if (!data->textures[i])
 			continue ;
-		free_color_grid(data->textures[i]->color_grid);
-		mlx_destroy_image(data->mlx, data->textures[i]);
+		if (data->textures[i]->color_grid)
+			free_color_grid(data->textures[i]);
+		printf("texture pointer[%d]: %p\n", i, data->textures[i]);
+		if (data->textures[i]->img)
+			mlx_destroy_image(data->mlx, data->textures[i]->img);
 		free (data->textures[i]);
 	}
+		free (data->textures);
 }
 
 void	free_data(t_data *data)
@@ -66,7 +70,6 @@ void	free_data(t_data *data)
 		mlx_destroy_display(data->mlx);
 		free(data->mlx);
 	}
-	free_data_aux(data);
 }
 
 void	free_file(t_file *file)
