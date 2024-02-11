@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/09 13:26:40 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/10 23:02:01 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,12 @@
 
 # define TEXTURE_WIDTH	64
 # define TEXTURE_HEIGHT	64
+
+# define MM_WIDTH	320
+# define MM_HEIGHT	320
+
+# define MM_TILE_WIDTH	32
+# define MM_TILE_HEIGHT	32
 
 //	Colors
 
@@ -122,6 +128,7 @@ typedef struct s_vector
 typedef struct s_map
 {
 	char		**map;
+	char		**minimap;
 	t_2d_point	size;
 }				t_map;
 
@@ -196,6 +203,7 @@ typedef struct s_data
 	void		*mlx_win;
 	void		*mlx_win_mm;				//	for testing
 	t_img		*img;
+	t_img		*img_mm;
 	t_file		*file;
 	t_map		map;
 	t_player	player;
