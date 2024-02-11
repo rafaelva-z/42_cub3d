@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:41:12 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/09 16:19:20 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/09 16:50:27 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	draw_floor_and_ceiling(t_data *data)
 	int			color_f;
 	t_2d_point	t_pos;
 
-	floor_texture = &data->image.west_img;
-	ceiling_texture = &data->image.east_img;
+	floor_texture = data->textures[F_IMG];
+	ceiling_texture = data->textures[C_IMG];
 
 	raydir0.x = data->player.dir.x - data->player.plane.x;
 	raydir0.y = data->player.dir.y - data->player.plane.y;

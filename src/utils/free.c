@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:32:59 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/09 14:41:08 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/10 17:46:43 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	free_data(t_data *data)
 	}
 	if (data->map.map)
 		matrix_deleter(&data->map.map);
+	if (data->map.minimap)
+		matrix_deleter(&data->map.minimap);
 	if (data->img)
 	{
 		mlx_destroy_image(data->mlx, data->img->img);
