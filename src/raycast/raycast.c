@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:41:12 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/08 16:21:18 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/09 16:50:27 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@ static void	draw_wall(t_data *data, int r, t_ray *ray)
 	if (ray->side == 0)
 	{
 		if (ray->dir.x < 0)
-			texture = &data->image.west_img;
+			texture = data->textures[WE_IMG];			// data->image.west_img;
 		else
-			texture = &data->image.east_img;
+			texture = data->textures[EA_IMG];			// data->image.east_img;
 	}
 	else
 	{
 		if (ray->dir.y < 0)
-			texture = &data->image.north_img;
+			texture = data->textures[NO_IMG];			// data->image.north_img;
 		else
-			texture = &data->image.south_img;
+			texture = data->textures[SO_IMG];			// data->image.south_img;
 	}
 	sky_size = ((WIN_HEIGHT - ray->wall_height) / 2) + data->player.vertical;
 	draw_vertical_line_texture((t_2d_point){r, sky_size}, texture, data, ray);
@@ -51,8 +51,8 @@ void	draw_floor_and_ceiling(t_data *data)
 	int			color_f;
 	t_2d_point	t_pos;
 
-	floor_texture = &data->image.west_img;
-	ceiling_texture = &data->image.east_img;
+	floor_texture = data->textures[F_IMG];
+	ceiling_texture = data->textures[C_IMG];
 
 	raydir0.x = data->player.dir.x - data->player.plane.x;
 	raydir0.y = data->player.dir.y - data->player.plane.y;

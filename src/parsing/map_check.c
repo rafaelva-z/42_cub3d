@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 12:03:00 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/04 16:27:46 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/10 23:37:00 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,37 @@ void	borther_check(t_data *data)
 		free_and_exit(data, "cub3d: Error: invalid map borders\n", 1);
 }
 
+static void	minimap_negative(char **minimap)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (minimap[++i])
+	{
+		j = -1;
+		while (minimap[i][++j])
+		{
+			if (minimap[i][j] != '1' && minimap[i][j] != ' ')
+				minimap[i][j] = '0' * -1;
+			else
+				minimap[i][j] *= -1;
+		}
+	}
+}
+
 void	map_check(t_data *data)
 {
 	int	i;
 
 	i = -1;
 	data->map.map = map_dup(data->file->file + 6);
+	if (!data->map.map)
+		free_and_exit(data, ERR_MALLOC, 1);
+	data->map.minimap = map_dup(data->file->file + 6);
+	if (!data->map.map)
+		free_and_exit(data, ERR_MALLOC, 1);
+	minimap_negative(data->map.minimap);
 	character_check(data);
 	borther_check(data);
 	while (data->map.map[++i])

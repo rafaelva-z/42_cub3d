@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/08 16:20:24 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/10 23:02:01 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@
 # define ERR_ARGC		"cub3d: wrong number of arguments. Use only a map path\n"
 # define ERR_MALLOC		"cub3d: malloc() failed\n"
 # define ERR_MLX_INIT	"cub3d: mlx_init() failed\n"
+# define ERR_FD			"cub3d: file opening failed\n"
 # define ERR_MLX_WIN	"cub3d: mlx_new_window() failed\n"
 # define ERR_MAP		"cub3d: invalid map\n"
+# define ERR_IMG		"cub3d: Image failed loading\n"
 # define ERR_TIME		"cub3d: timestamp failed\n"
 # define MSG_EXIT		"cub3d: Thank you for testing!\n"
 # define MSG_LOSE		"cub3d: You lost!\n"
@@ -49,6 +51,12 @@
 # define TEXTURE_WIDTH	64
 # define TEXTURE_HEIGHT	64
 
+# define MM_WIDTH	320
+# define MM_HEIGHT	320
+
+# define MM_TILE_WIDTH	32
+# define MM_TILE_HEIGHT	32
+
 //	Colors
 
 # define SKY_COLOR		0x005274ff
@@ -56,6 +64,54 @@
 # define FLOOR_COLOR	0x000c1126
 
 # define M_PI			3.14159265358979323846
+
+typedef enum	s_image_arr
+{
+	NO_IMG,
+	EA_IMG,
+	SO_IMG,
+	WE_IMG,
+	F_IMG,
+	C_IMG,
+	MMW_IMG,
+	MMF_IMG,
+	MMV_IMG,
+	EF0_IMG,
+	EF1_IMG,
+	EF2_IMG,
+	EF3_IMG,
+	EF4_IMG,
+	EF5_IMG,
+	EF6_IMG,
+	EL0_IMG,
+	EL1_IMG,
+	EL2_IMG,
+	EL3_IMG,
+	EL4_IMG,
+	EL5_IMG,
+	EL6_IMG,
+	EB0_IMG,
+	EB1_IMG,
+	EB2_IMG,
+	EB3_IMG,
+	EB4_IMG,
+	EB5_IMG,
+	EB6_IMG,
+	ER0_IMG,
+	ER1_IMG,
+	ER2_IMG,
+	ER3_IMG,
+	ER4_IMG,
+	ER5_IMG,
+	ER6_IMG,
+	D0_IMG,
+	D1_IMG,
+	D2_IMG,
+	D3_IMG,
+	D4_IMG,
+	D5_IMG,
+	D6_IMG,
+}				t_image_arr;
 
 typedef struct s_2d_point
 {
@@ -72,6 +128,7 @@ typedef struct s_vector
 typedef struct s_map
 {
 	char		**map;
+	char		**minimap;
 	t_2d_point	size;
 }				t_map;
 
@@ -93,26 +150,11 @@ typedef struct s_img
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	int		hight;
+	int		width;
 	int		**color_grid;
+	int		columns_created;
 }				t_img;
-
-typedef struct s_image
-{
-	t_img		north_img;
-	t_img		east_img;
-	t_img		south_img;
-	t_img		west_img;
-	t_img		**enemy_front;
-	t_img		**enemy_back;
-	t_img		**enemy_left;
-	t_img		**enemy_right;
-	t_img		**door;
-	void		*mm_wall_img;
-	void		*mm_floor_img;
-	void		*mm_vacum_img;
-	void		*frame_x;
-	void		*frame_y;
-}				t_image;
 
 /**
  * @brief Structure that holds file content and file names
@@ -161,10 +203,11 @@ typedef struct s_data
 	void		*mlx_win;
 	void		*mlx_win_mm;				//	for testing
 	t_img		*img;
+	t_img		*img_mm;
 	t_file		*file;
 	t_map		map;
 	t_player	player;
-	t_image		image;
+	t_img		**textures;
 	t_enemy		*enemy_list;
 	int			enemy_indx;
 	uint64_t	start_time;
@@ -212,14 +255,14 @@ void		map_check(t_data *data);
 
 //			parser_2.c
 void		identifier_init(t_data *data);
-void		image_to_color_grid(t_data *data);
-void		image_init(t_data *data, int size);
 
 //			parser.c
 void		parser(t_data *data, char *str);
 
-//		enemy_parser.c
+//			texture_parser.c
+void		texture_parser(t_data *data);
 
+//			enemy_parser.c
 void		enemy_parser(t_data *data);
 
 /* =====================================================================*
@@ -279,5 +322,7 @@ void		free_and_exit(t_data *data, char *msg, int exit_status);
 //			initializer.c
 void		initializer(t_data *data);
 
+//			initializer_textures.c
+void		texture_array_init(t_data *data);
 
 #endif

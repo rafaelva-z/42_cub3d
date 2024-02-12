@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 22:26:46 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/08 11:18:55 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/08 12:20:33 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ static void	step_forward(t_enemy *enemy)
 {
 	enemy->pos.x += 0.1 * enemy->dir.x; 
 	enemy->pos.y += 0.1 * enemy->dir.y;
-	enemy->follow = 0; 
 }
 
 void	enemy(t_data *data)

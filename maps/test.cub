@@ -5,15 +5,15 @@
 
    SO ./textures/map/south_wall.xpm        
 
-                WE         ./textures/map/west_wall.xpm    
+                WE         ./textures/enemy/enemy_0.xpm
 
  EA                                                                                                              ./textures/map/east_wall.xpm 
 
 
 
-                            C                                             ceiling_file                     
+                            C                                             ./textures/map/west_wall.xpm                     
 
-             F      floor_file         
+             F      ./floor.xpm        
 
 
 
