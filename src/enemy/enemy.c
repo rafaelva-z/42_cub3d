@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   enemy.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 22:26:46 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/08 12:20:33 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/15 10:36:59 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-static double	distance_calc(t_2d_point p1, t_2d_point p2)
+static double	distance_calc(t_point p1, t_point p2)
 {
 	double	dist;
 

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   initializer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/10 23:03:38 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/15 13:15:41 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "../../include/cub3d.h"
 
 static void	init_data(t_data *data)
 {
@@ -50,7 +50,6 @@ static void	init_mlx(t_data *data)
 			&(data->img->bits_per_pixel), &(data->img->line_length),
 			&(data->img->endian));
 
-
 	data->mlx_win_mm = mlx_new_window(data->mlx, MM_WIDTH, MM_HEIGHT, WIN_TITLE);
 	if (!data->mlx_win_mm)
 		free_and_exit(data, ERR_MLX_WIN, 1);
@@ -71,8 +70,8 @@ static void	init_player(t_data *data)
 	data->player.vertical = 0;
 	data->player.move = 0;
 	data->player.move_cam = 0;
-	data->player.mouse = (t_2d_point){0, 0};
-	data->player.mov_dir = (t_2d_point){0, 0};
+	data->player.mouse = (t_point){0, 0};
+	data->player.mov_dir = (t_point){0, 0};
 	data->player.mouse_toggle = 1;
 }
 
@@ -81,5 +80,15 @@ void	initializer(t_data *data)
 	init_data(data);
 	init_mlx(data);
 	init_player(data);
+	// new stuff to be organized
+	data->z_buffer = calloc(WIN_WIDTH, sizeof(double));
+	data->sprites = calloc(3 + 1, sizeof(t_sprite));
+	for (int i = 0; i < 3; i++)
+	{
+		data->sprites[i].texture = data->textures[EB0_IMG];
+		data->sprites[i].pos = (t_point){(i + 1) * 2, (i + 1) * 2};
+		data->sprites[i].current_frame = 0;
+	}
+	data->sprites[3].texture = NULL;
 	data->enemy_list = NULL;
 }

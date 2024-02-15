@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 17:45:18 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/09 16:29:24 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:45:18 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 /**
  * This function needs to be optimized
 */
-void	draw_vertical_line_texture(t_2d_point print_pos, t_img *texture, t_data *data, t_ray *ray)
+void	draw_vertical_line_texture(t_point print_pos, t_img *texture, t_data *data, t_ray *ray)
 {
-	t_2d_point	t_pos;
+	t_point	t_pos;
 	double		t_step;
 	int			size;
 	int			t_start_x;
@@ -33,8 +33,8 @@ void	draw_vertical_line_texture(t_2d_point print_pos, t_img *texture, t_data *da
 	t_start_x = wallX * texture->width;
 	if ((ray->dir.x < 0 && ray->side == 0) || (ray->dir.y > 0 && ray->side == 1))
 		t_start_x = texture->width - t_start_x - 1;
-	t_step = (double)texture->hight / (double)ray->wall_height;
-	t_pos = (t_2d_point){t_start_x, 0};
+	t_step = (double)texture->height / (double)ray->wall_height;
+	t_pos = (t_point){t_start_x, 0};
 	if (print_pos.x >= WIN_WIDTH || print_pos.y >= WIN_HEIGHT || size <= 0)
 		return ;
 	if (print_pos.y < 0)
@@ -46,7 +46,7 @@ void	draw_vertical_line_texture(t_2d_point print_pos, t_img *texture, t_data *da
 	while (size > 0)
 	{
 		color = texture->color_grid[(int)t_pos.y][(int)t_pos.x];
-		for (int i = ray->distance; i > 2.5 ; i -= 2)
+		for (double i = ray->distance; i > 1 ; i -= 0.3)
 			color = (color & 0xfefefefe) >> 1;
 		if (print_pos.x < 0 || print_pos.y > WIN_HEIGHT || print_pos.x > WIN_WIDTH)
 			return ;
@@ -58,7 +58,7 @@ void	draw_vertical_line_texture(t_2d_point print_pos, t_img *texture, t_data *da
 	}
 }
 
-void	draw_vertical_line(t_2d_point start, int size, t_img *img, int color)
+void	draw_vertical_line(t_point start, int size, t_img *img, int color)
 {
 	int	y_pos;
 

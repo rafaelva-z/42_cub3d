@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture_parser.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:05:40 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/09 15:15:06 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/15 14:31:43 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static void	get_size(t_data *data, char	*path, t_img *img)
 	char	*temp;
 
 	fd = open(path, O_RDONLY);
-	printf("file: %s\n", path);
 	if (fd == -1)
 		free_and_exit(data, ERR_FD, 1);
 	while (1)
@@ -37,7 +36,7 @@ static void	get_size(t_data *data, char	*path, t_img *img)
 	img->width = ft_atoi(str);
 	while (*str && ft_isdigit(*str))
 		str++;
-	img->hight = ft_atoi(str);
+	img->height = ft_atoi(str);
 	free (temp);
 	close (fd);
 }
@@ -60,7 +59,7 @@ static void	colors_to_grid(t_data *data, t_img *img)
 	i = -1;
 	while (++i < img->width)
 	{
-		img->color_grid[i] = malloc(sizeof(int) * img->hight);
+		img->color_grid[i] = malloc(sizeof(int) * img->height);
 		if (!img->color_grid[i])
 			free_and_exit(data, ERR_MALLOC, 1);
 		img->columns_created++;
@@ -69,7 +68,7 @@ static void	colors_to_grid(t_data *data, t_img *img)
 	while (++i < img->width)
 	{
 		j = -1;
-		while (++j < img->hight)
+		while (++j < img->height)
 			img->color_grid[j][i] = get_pixel(img, i, j);
 	}
 }
@@ -97,7 +96,7 @@ static void	colors_to_grid(t_data *data, t_img *img)
 static void	image_init(t_data *data, t_img *img, char	*path)
 {
 	get_size(data, path, img);
-	img->img = mlx_xpm_file_to_image(data->mlx, path, &img->width, &img->hight);
+	img->img = mlx_xpm_file_to_image(data->mlx, path, &img->width, &img->height);
 	if (!img->img)
 		free_and_exit(data, ERR_IMG, 1);
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,

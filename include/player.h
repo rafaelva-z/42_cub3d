@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 15:38:11 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/05 18:59:34 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/15 17:06:53 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@
 # define MOUSE_SENS     2
 # define START_FOV		66
 # define FOV_SPD		0.001
-# define MOVE_SPD		0.008
-# define ROT_SPD		0.4
+# define MOVE_SPD		0.03
+# define ROT_SPD		1
 # define VERTICAL_SPD	1
 
 #endif

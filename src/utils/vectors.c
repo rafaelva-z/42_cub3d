@@ -6,23 +6,23 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:05:35 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/08 13:08:09 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/15 10:36:59 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "../../include/cub3d.h"
 
 /**
  * @brief	returns the sum of two points.
 */
-t_2d_point	vector_add(t_2d_point v1, t_2d_point v2)
+t_point	vector_add(t_point v1, t_point v2)
 {
-	return ((t_2d_point){v1.x + v2.x, v1.y + v2.y});
+	return ((t_point){v1.x + v2.x, v1.y + v2.y});
 }
 /**
  * @brief	normalizes the given vector.
 */
-void	vector_norm(t_2d_point *vector)
+void	vector_norm(t_point *vector)
 {
 	double	length;
 
@@ -38,9 +38,9 @@ void	vector_norm(t_2d_point *vector)
  * @note	The angle is converted to radians in order to be used with the
  *			cos/sin functions from the math.h lib
 */
-void	rotate_point(t_2d_point *point, double angle)
+void	rotate_point(t_point *point, double angle)
 {
-	t_2d_point	rot;
+	t_point	rot;
 
 	if (angle == 0)
 		return ;
@@ -55,9 +55,9 @@ void	rotate_point(t_2d_point *point, double angle)
  * @brief	rotates the given point around {0, 0} by "angle" degrees and
  * 			returns the result.
 */
-t_2d_point	vector_rotate(t_2d_point point, double angle)
+t_point	vector_rotate(t_point point, double angle)
 {
-	t_2d_point	rot;
+	t_point	rot;
 
 	if (angle == 0)
 		return (point);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:44:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/09 16:20:33 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/15 17:12:07 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	game_update(t_data *data)
 		update += vertical_movement(&data->player);
 		update += adjust_fov(&data->player);
 	}
-	if (update)
 		update_view(data);
 	if (!player->mouse_toggle)
 		mlx_mouse_move(data->mlx, data->mlx_win, WIN_WIDTH / 2, WIN_HEIGHT / 2);

@@ -39,9 +39,9 @@ static void	map_view(t_data *data)
 		data->map.minimap[y + 1][x + 1] *= -1;
 }
 
-static t_2d_point	pixel_offset(t_data *data)
+static t_point	pixel_offset(t_data *data)
 {
-	t_2d_point	offset;
+	t_point	offset;
 	int			x;
 	int			y;
 
@@ -120,7 +120,7 @@ static void	draw_tile(t_img *img, t_img *texture, int x, int y)
 	}
 }
 
-static void	map_to_tile(t_data *data, t_2d_point print, t_2d_point offset, t_2d_point pix_os)
+static void	map_to_tile(t_data *data, t_point print, t_point offset, t_point pix_os)
 {
 	t_img	*tile;
 	int		x;
@@ -145,20 +145,20 @@ static void	draw_minimap(t_data *data)
 {
 	int	i;
 	int j;
-	t_2d_point print;
-	t_2d_point offset;
-	t_2d_point pix_os;		//pixel offset
+	t_point print;
+	t_point offset;
+	t_point pix_os;		//pixel offset
 
 	pix_os = pixel_offset(data);
 	draw_vacum_tile(data->img_mm, data->textures[MMV_IMG], 0, 0);
-	offset = (t_2d_point) {data->player.pos.x - 4, data->player.pos.y - 4};
+	offset = (t_point) {data->player.pos.x - 4, data->player.pos.y - 4};
 	i = -7;
 	while (++i < 5)
 	{
 		j = -7;
 		while (++j < 5)
 		{
-			print = (t_2d_point) {data->player.pos.x - j, data->player.pos.y - i};
+			print = (t_point) {data->player.pos.x - j, data->player.pos.y - i};
 			map_to_tile(data, print, offset, pix_os);
 		}
 	}

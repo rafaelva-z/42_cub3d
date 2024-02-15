@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:16:32 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/11 00:10:28 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/15 10:36:59 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "../../include/cub3d.h"
 
 int	coordinate_finder(char **mtx, char c, char axle)
 {
@@ -41,7 +41,7 @@ int	display_error(char *str)
 	return (1);
 }
 
-int	is_inside_map(t_2d_point point, t_2d_point map_size)
+int	is_inside_map(t_point point, t_point map_size)
 {
 	if (point.x >= 0 && point.x < map_size.x
 		&& point.y >= 0 && point.y < map_size.y)
@@ -49,7 +49,7 @@ int	is_inside_map(t_2d_point point, t_2d_point map_size)
 	return (0);
 }
 
-int	is_wall(t_2d_point point, t_data *data)
+int	is_wall(t_point point, t_data *data)
 {
 	if (data->map.map[(int)point.y][(int)point.x] == '1')
 		return (1);
