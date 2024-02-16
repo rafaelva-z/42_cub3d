@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:05:40 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/09 15:15:06 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/12 09:59:19 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,13 @@ static void	colors_to_grid(t_data *data, t_img *img)
 	{
 		img->color_grid[i] = malloc(sizeof(int) * img->hight);
 		if (!img->color_grid[i])
+		{
+			while (i--)
+				free(img->color_grid[i]);
+			free (img->color_grid);
+			img->color_grid = NULL;
 			free_and_exit(data, ERR_MALLOC, 1);
-		img->columns_created++;
+		}
 	}
 	i = -1;
 	while (++i < img->width)

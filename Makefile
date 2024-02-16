@@ -6,12 +6,12 @@
 #    By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by rvaz              #+#    #+#              #
-#    Updated: 2024/02/08 18:06:53 by fda-estr         ###   ########.fr        #
+#    Updated: 2024/02/11 11:50:05 by fda-estr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .SILENT:
-NAME		=	cub3d
+NAME		=	cub3D
 
 CC			=	cc
 CFLAGS		=	-g #-Wall -Wextra -Werror #-fsanitize=address 
