@@ -6,16 +6,15 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/15 15:56:11 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/16 16:42:41 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# ifndef DEBUG
 #  define DEBUG 0
-# endif
+#  define SHADER 0
 
 # include "player.h"
 # include "../lib/libft/libft.h"
@@ -59,9 +58,10 @@
 
 //	Colors
 
-# define SKY_COLOR		0x005274ff
-# define WALL_COLOR		0x00aeb5d1
-# define FLOOR_COLOR	0x000c1126
+# define SKY_COLOR				0x005274ff
+# define WALL_COLOR				0x00aeb5d1
+# define FLOOR_COLOR			0x000c1126
+# define CHROMA_KEY_COLOR		0x00ffffff
 
 # define M_PI			3.14159265358979323846
 
@@ -216,6 +216,8 @@ typedef struct s_data
 	t_map		map;
 	t_player	player;
 	t_sprite	*sprites;
+	int 		*sprite_order;
+	int			sprite_amt;
 	t_img		**textures;
 	t_enemy		*enemy_list;
 	int			enemy_indx;
@@ -333,5 +335,7 @@ void		initializer(t_data *data);
 
 //			initializer_textures.c
 void		texture_array_init(t_data *data);
+
+int		shader(int color, double distance, double a, double b, short mode);
 
 #endif

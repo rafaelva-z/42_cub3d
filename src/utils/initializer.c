@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/15 13:15:41 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/16 16:12:30 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,15 @@ void	initializer(t_data *data)
 	init_player(data);
 	// new stuff to be organized
 	data->z_buffer = calloc(WIN_WIDTH, sizeof(double));
-	data->sprites = calloc(3 + 1, sizeof(t_sprite));
-	for (int i = 0; i < 3; i++)
+	data->sprite_amt = 3; // counted in parsing
+	data->sprites = calloc(data->sprite_amt, sizeof(t_sprite));
+	data->sprite_order = calloc(data->sprite_amt, sizeof(int));
+	// initialize all instances of sprites (enemies and objects)
+	for (int i = 0; i < data->sprite_amt; i++)
 	{
 		data->sprites[i].texture = data->textures[EB0_IMG];
 		data->sprites[i].pos = (t_point){(i + 1) * 2, (i + 1) * 2};
 		data->sprites[i].current_frame = 0;
 	}
-	data->sprites[3].texture = NULL;
-	data->enemy_list = NULL;
+	data->enemy_list = NULL; // to be removed
 }

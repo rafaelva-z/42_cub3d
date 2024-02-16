@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 17:45:18 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/15 16:45:18 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/16 16:42:16 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,10 @@ void	draw_vertical_line_texture(t_point print_pos, t_img *texture, t_data *data,
 	while (size > 0)
 	{
 		color = texture->color_grid[(int)t_pos.y][(int)t_pos.x];
-		for (double i = ray->distance; i > 1 ; i -= 0.3)
-			color = (color & 0xfefefefe) >> 1;
 		if (print_pos.x < 0 || print_pos.y > WIN_HEIGHT || print_pos.x > WIN_WIDTH)
 			return ;
 		if (print_pos.y >= 0)
-			draw_pixel(data->img, print_pos.x, print_pos.y, color);
+			draw_pixel(data->img, print_pos.x, print_pos.y, shader(color, ray->distance, 1, 0.3, 1));
 		print_pos.y++;
 		size--;
 		t_pos.y += t_step;

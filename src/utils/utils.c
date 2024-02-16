@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:16:32 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/15 10:36:59 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/16 11:15:44 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	update_view(t_data *data)
 	raycast(data);
 	minimap(data);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img->img, 0, 0);
-	mlx_do_sync(data->mlx);
 }
 
 void	begining_time_stamp(t_data *data)
