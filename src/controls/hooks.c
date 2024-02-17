@@ -6,11 +6,24 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:44:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/15 17:12:07 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/17 11:15:38 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
+
+void	update_sprite(t_sprite *sprites, int sprite_amt)
+{
+	int	i;
+
+	i = -1;
+	while (++i < sprite_amt)
+	{
+		sprites[i].current_frame++;
+		if (sprites[i].current_frame >= 6)
+			sprites[i].current_frame = 0;
+	}
+}
 
 /**
  * @brief Runs every tick, and updates the player's position and view
@@ -22,6 +35,7 @@ int	game_update(t_data *data)
 
 	update = 0;
 	player = &data->player;
+	update_sprite(data->sprites, data->sprite_amt);
 	if (player->move)
 		update += move_player(data);
 	if (player->move_cam || !player->mouse_toggle)

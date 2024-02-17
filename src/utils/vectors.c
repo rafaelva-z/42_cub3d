@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:05:35 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/15 10:36:59 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/17 12:21:20 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,22 @@
 t_point	vector_add(t_point v1, t_point v2)
 {
 	return ((t_point){v1.x + v2.x, v1.y + v2.y});
+}
+
+/**
+ * @brief	rotates the given point around {0, 0} by "angle" degrees and
+ * 			returns the result.
+*/
+t_point	vector_rotate(t_point point, double angle)
+{
+	t_point	rot;
+
+	if (angle == 0)
+		return (point);
+	angle *= M_PI / 180;
+	rot.x = point.x * cos(angle) - point.y * sin(angle);
+	rot.y = point.y * cos(angle) + point.x * sin(angle);
+	return (rot);
 }
 /**
  * @brief	normalizes the given vector.
@@ -49,20 +65,4 @@ void	rotate_point(t_point *point, double angle)
 	rot.y = point->y * cos(angle) + point->x * sin(angle);
 	point->x = rot.x;
 	point->y = rot.y;
-}
-
-/**
- * @brief	rotates the given point around {0, 0} by "angle" degrees and
- * 			returns the result.
-*/
-t_point	vector_rotate(t_point point, double angle)
-{
-	t_point	rot;
-
-	if (angle == 0)
-		return (point);
-	angle *= M_PI / 180;
-	rot.x = point.x * cos(angle) - point.y * sin(angle);
-	rot.y = point.y * cos(angle) + point.x * sin(angle);
-	return (rot);
 }

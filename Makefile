@@ -6,7 +6,7 @@
 #    By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by rvaz              #+#    #+#              #
-#    Updated: 2024/02/15 12:06:27 by rvaz             ###   ########.fr        #
+#    Updated: 2024/02/17 12:16:50 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,14 +46,16 @@ SRCS		=	$(addprefix ./src/,				\
 				$(addprefix raycast/,			\
 				dda.c							\
 				raycast.c						\
+				rc_spritecast.c					\
 				)								\
 				$(addprefix utils/,				\
-				draw_pixel.c					\
+				draw_utils.c					\
 				draw_line.c						\
-				initializer.c					\
-				initializer_textures.c			\
-				utils.c							\
 				free.c							\
+				initializer_textures.c			\
+				initializer.c					\
+				time_utils.c 					\
+				utils.c							\
 				vectors.c						\
 				)								\
 				$(addprefix minimap/,			\

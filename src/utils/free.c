@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:32:59 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/14 18:18:20 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/17 12:01:51 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	free_data(t_data *data)
 {
 	if (!data)
 		return ;
+	if (data->z_buffer)
+		free (data->z_buffer);
 	if (data->file)
 	{
 		if (data->file->file)

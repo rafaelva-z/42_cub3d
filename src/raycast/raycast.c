@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:41:12 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/16 16:43:37 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/17 12:01:00 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,83 +74,6 @@ void	rc_floor_ceiling(t_data *data)
 	}
 }
 
-/**
- * @brief	Order the sprites based on distance to the player using bouble sort
-*/
-void	orderSprites(t_sprite *sprites, int *sprite_order, int sprite_amt)
-{
-	int			tmp;
-	int			i;
-	int			j;
-
-	j = -1;
-	while (++j < sprite_amt - 1)
-	{
-		i = -1;
-		while (++i < sprite_amt - 1)
-		{
-			if (sprites[sprite_order[i]].dist_player < sprites[sprite_order[i + 1]].dist_player)
-			{
-				tmp = sprite_order[i];
-				sprite_order[i] = sprite_order[i + 1];
-				sprite_order[i + 1] = tmp;
-			}
-		}
-	}
-}
-
-
-static void rc_sprites(t_data *data)
-{
-	for (int i = 0; i < data->sprite_amt; i++)
-	{
-		data->sprite_order[i] = i; // this would be more efficient if the values were kept from one iteration to the next
-		data->sprites[i].dist_player = fabs((fabs((data->player.pos.x - data->sprites[i].pos.x)) + fabs((data->player.pos.y - data->sprites[i].pos.y))));
-	}
-	orderSprites(data->sprites, data->sprite_order, data->sprite_amt);
-	//projecting sprites
-	for(int i = 0; i < data->sprite_amt; i++)
-    {
-		t_point	sprt_pos = (t_point){data->sprites[data->sprite_order[i]].pos.x - data->player.pos.x, data->sprites[data->sprite_order[i]].pos.y - data->player.pos.y};	// sprite pos relative to player
-		double	invert = 1.0 / (data->player.plane.x * data->player.dir.y - data->player.dir.x * data->player.plane.y); // for matrix
-		t_point	transform = (t_point){invert * (data->player.dir.y * sprt_pos.x - data->player.dir.x * sprt_pos.y), invert * (-data->player.plane.y * sprt_pos.x + data->player.plane.x * sprt_pos.y)}; // matrix multiplication;
-		int		sprite_screen_x = (WIN_WIDTH / 2) * (1 + transform.x / transform.y);
-		t_point	sprite_size; //sprite size on screen
-		sprite_size.y = abs(WIN_HEIGHT / transform.y);
-		//Calculating start and end point for drawing
-		t_point	draw_start;
-		t_point draw_end;
-		draw_start.y = -sprite_size.y / 2 + WIN_HEIGHT / 2;
-		if (draw_start.y < 0)
-			draw_start.y = 0;
-		draw_end.y = sprite_size.y / 2 + WIN_HEIGHT / 2;
-		if (draw_end.y >= WIN_HEIGHT)
-			draw_end.y = WIN_HEIGHT - 1;
-		sprite_size.x = abs(WIN_HEIGHT / transform.y);
-		draw_start.x = -sprite_size.x / 2 + sprite_screen_x;
-		if (draw_start.x < 0)
-			draw_start.x = 0;
-		draw_end.x = sprite_size.x / 2 + sprite_screen_x;
-		if (draw_end.x >= WIN_WIDTH)
-			draw_end.x = WIN_WIDTH - 1;
-		//Draw the sprite
-		for (int stripe = draw_start.x; stripe < draw_end.x; stripe++)
-		{
-			int tex_x = (int)(256 * (stripe - (-sprite_size.x / 2 + sprite_screen_x)) * TEXTURE_WIDTH / sprite_size.x) / 256;
-			if (transform.y > 0 && stripe > 0 && stripe < WIN_WIDTH && transform.y < data->z_buffer[stripe])
-			{
-				for (int y = draw_start.y; y < draw_end.y; y++)
-				{
-					int d = y * 256 - WIN_HEIGHT * 128 + sprite_size.y * 128;
-					int tex_y = ((d * TEXTURE_HEIGHT) / sprite_size.y) / 256;
-					int color = data->sprites[data->sprite_order[i]].texture->color_grid[tex_y][tex_x];
-					draw_pixel(data->img, stripe, y, shader(color, abs(data->sprites[data->sprite_order[i]].dist_player), 2.0, 0.3, 1));
-				}
-			}
-		}
-	}
-}
-
 void	rc_walls(t_data *data, t_player *player)
 {
 	t_ray		ray;
@@ -181,7 +104,6 @@ void	raycast(t_data *data)
 	rc_floor_ceiling(data);
 	rc_walls(data, &data->player);
 	rc_sprites(data);
-	// free (data->z_buffer); // sprite casting
 }
 
 void	enemy_raycast(t_data *data, t_enemy *enemy)

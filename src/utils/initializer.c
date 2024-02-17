@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/16 16:12:30 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/17 12:30:47 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void	init_data(t_data *data)
 	data->file->ceiling_file = NULL;
 	begining_time_stamp(data);
 	data->enemy_indx = 0;
+	data->z_buffer = calloc(WIN_WIDTH, sizeof(double));
 	texture_array_init(data);
 }
 
@@ -81,16 +82,33 @@ void	initializer(t_data *data)
 	init_mlx(data);
 	init_player(data);
 	// new stuff to be organized
-	data->z_buffer = calloc(WIN_WIDTH, sizeof(double));
 	data->sprite_amt = 3; // counted in parsing
-	data->sprites = calloc(data->sprite_amt, sizeof(t_sprite));
-	data->sprite_order = calloc(data->sprite_amt, sizeof(int));
+	data->sprites = calloc(data->sprite_amt, sizeof(t_sprite)); // has to be allocated after parsing
+	data->sprite_order = calloc(data->sprite_amt, sizeof(int)); // has to be allocated after parsing
 	// initialize all instances of sprites (enemies and objects)
 	for (int i = 0; i < data->sprite_amt; i++)
 	{
-		data->sprites[i].texture = data->textures[EB0_IMG];
-		data->sprites[i].pos = (t_point){(i + 1) * 2, (i + 1) * 2};
-		data->sprites[i].current_frame = 0;
+		data->sprites[i].texture = data->textures[EB0_IMG]; // defined in parsing
+		data->sprites[i].pos = (t_point){(i + 1) * 2, (i + 1) * 2}; // defined in parsing
+		if (i == 0)
+		{
+			data->sprites[i].dir = (t_point){1, 0}; // defined in parsing
+			data->sprites[i].current_frame = 0; // random value?
+			data->sprites[i].type = SPRT_ENEMY; // defined in parsing
+		}
+		else if (i == 1)
+		{
+			data->sprites[i].dir = (t_point){0, 1}; // defined in parsing
+			data->sprites[i].current_frame = 4; // random value?
+			data->sprites[i].type = SPRT_ENEMY; // defined in parsing
+		}
+		else if (i == 2)
+		{
+			data->sprites[i].dir = (t_point){-1, 0}; // defined in parsing
+			data->sprites[i].current_frame = 2; // random value?
+			data->sprites[i].type = SPRT_ENEMY; // defined in parsing
+		}
+		data->sprite_order[i] = i;
 	}
-	data->enemy_list = NULL; // to be removed
+	data->enemy_list = NULL; // "enemy_list" should be replaced by "sprites"
 }

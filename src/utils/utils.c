@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:16:32 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/16 11:15:44 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/17 12:30:36 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,22 +61,4 @@ void	update_view(t_data *data)
 	raycast(data);
 	minimap(data);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img->img, 0, 0);
-}
-
-void	begining_time_stamp(t_data *data)
-{
-	struct timeval	time;
-
-	if (gettimeofday(&time, NULL) < 0)
-		free_and_exit(data, ERR_TIME, 1);
-	data->start_time = (time.tv_sec * 1000) + (time.tv_usec / 1000);
-}
-
-uint64_t	time_stamp(t_data *data)
-{
-	struct timeval time;
-
-	if (gettimeofday(&time, NULL) < 0)
-		free_and_exit(data, ERR_TIME, 1);
-	return((time.tv_sec * 1000) + (time.tv_usec / 1000) - data->start_time);
 }

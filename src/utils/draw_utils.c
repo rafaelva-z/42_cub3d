@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_pixel.c                                       :+:      :+:    :+:   */
+/*   draw_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/24 18:12:41 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/16 16:40:12 by rvaz             ###   ########.fr       */
+/*   Created: 2024/02/17 12:13:05 by rvaz              #+#    #+#             */
+/*   Updated: 2024/02/17 12:13:37 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	draw_pixel(t_img *img, int x, int y, int color)
 {
 	char	*dst;
 
-	// if ((color & CHROMA_KEY_COLOR) == 0)
-	// 	return ;
+	if ((color & CHROMA_KEY_COLOR) == 0)
+		return ;
 	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }

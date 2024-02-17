@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/16 16:42:41 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/17 12:22:37 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 #  define DEBUG 0
-#  define SHADER 0
+#  define SHADER 1
 
 # include "player.h"
 # include "../lib/libft/libft.h"
@@ -113,6 +113,13 @@ typedef enum s_image_arr
 	D6_IMG,
 }				t_image_arr;
 
+typedef enum s_sprite_type
+{
+	SPRT_OBJ1,
+	SPRT_OBJ2,
+	SPRT_ENEMY
+}				t_sprite_type;
+
 typedef struct s_2d_point
 {
 	double	x;
@@ -185,7 +192,8 @@ typedef struct s_sprite
 	t_point	dir;
 	t_img	*texture;
 	double	dist_player;
-	int		current_frame;
+	short	current_frame;
+	short	type;
 }				t_sprite;
 
 typedef struct s_player
@@ -285,6 +293,9 @@ void		dda(t_ray *ray, t_data *data);
 
 //			raycat.c
 void		raycast(t_data *data);
+
+//			rc_spritecast.c
+void		rc_sprites(t_data *data);
 
 /* =====================================================================*
  *		/src/enemy/														*
