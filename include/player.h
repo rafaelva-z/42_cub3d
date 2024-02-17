@@ -67,8 +67,8 @@
 # define MOUSE_SENS     2
 # define START_FOV		66
 # define FOV_SPD		0.001
-# define MOVE_SPD		0.08
-# define ROT_SPD		4
+# define MOVE_SPD		0.01
+# define ROT_SPD		0.7
 # define VERTICAL_SPD	1
 
 #endif

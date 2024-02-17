@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:32:59 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/17 12:01:51 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/12 10:00:15 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	free_color_grid(t_img *img)
 	int i;
 
 	i = -1;
-	while (++i < img->columns_created)
+	while (++i < img->width)
 		free (img->color_grid[i]);
 	free (img->color_grid);
 }
