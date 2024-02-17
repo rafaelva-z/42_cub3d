@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/17 12:22:37 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/12 09:59:42 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,6 @@ typedef struct s_img
 	int		height;
 	int		width;
 	int		**color_grid;
-	int		columns_created;
 }				t_img;
 
 /**

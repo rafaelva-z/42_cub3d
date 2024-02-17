@@ -32,7 +32,6 @@ void	texture_array_init(t_data *data)
 		data->textures[i]->endian = 0;
 		data->textures[i]->height = 0;
 		data->textures[i]->width = 0;
-		data->textures[i]->columns_created = 0;
 		data->textures[i]->color_grid = NULL;
 	}	
 }
