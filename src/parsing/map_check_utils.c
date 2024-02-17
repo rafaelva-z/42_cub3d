@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:34:12 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/08 14:48:21 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/15 10:36:59 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,23 @@ static void	dir_init(t_data *data, char c)
 {
 	if (c == 'N')
 	{
-		data->player.dir = (t_2d_point){0, -1};
-		data->player.plane = (t_2d_point){(double)START_FOV / 100, 0};
+		data->player.dir = (t_point){0, -1};
+		data->player.plane = (t_point){(double)START_FOV / 100, 0};
 	}
 	else if (c == 'S')
 	{
-		data->player.dir = (t_2d_point){0, 1};
-		data->player.plane = (t_2d_point){-(double)START_FOV / 100, 0};
+		data->player.dir = (t_point){0, 1};
+		data->player.plane = (t_point){-(double)START_FOV / 100, 0};
 	}
 	else if (c == 'W')
 	{
-		data->player.dir = (t_2d_point){-1, 0};
-		data->player.plane = (t_2d_point){0, -(double)START_FOV / 100};
+		data->player.dir = (t_point){-1, 0};
+		data->player.plane = (t_point){0, -(double)START_FOV / 100};
 	}
 	else if (c == 'E')
 	{
-		data->player.dir = (t_2d_point){1, 0};
-		data->player.plane = (t_2d_point){0, (double)START_FOV / 100};
+		data->player.dir = (t_point){1, 0};
+		data->player.plane = (t_point){0, (double)START_FOV / 100};
 	}
 }
 

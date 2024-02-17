@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+         #
+#    By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by rvaz              #+#    #+#              #
-#    Updated: 2024/02/08 18:06:53 by fda-estr         ###   ########.fr        #
+#    Updated: 2024/02/17 12:16:50 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,21 +39,23 @@ SRCS		=	$(addprefix ./src/,				\
 				parser.c						\
 				parser_2.c						\
 				enemy_parser.c					\
-				texture_parser.c					\
+				texture_parser.c				\
 				map_check.c						\
 				map_check_utils.c				\
 				)								\
 				$(addprefix raycast/,			\
 				dda.c							\
 				raycast.c						\
+				rc_spritecast.c					\
 				)								\
 				$(addprefix utils/,				\
-				draw_pixel.c					\
+				draw_utils.c					\
 				draw_line.c						\
-				initializer.c					\
-				initializer_textures.c			\
-				utils.c							\
 				free.c							\
+				initializer_textures.c			\
+				initializer.c					\
+				time_utils.c 					\
+				utils.c							\
 				vectors.c						\
 				)								\
 				$(addprefix minimap/,			\
@@ -99,10 +101,10 @@ re: fclean all
 
 run: all
 	@clear
-	./$(NAME) maps/test.cub
+	./$(NAME) maps/small_room.cub
 
 runvg: all
 	@clear
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes  --track-origins=yes ./$(NAME) maps/test.cub
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes  --track-origins=yes ./$(NAME) maps/small_room.cub
 
 .PHONY: all clean fclean re run runvg

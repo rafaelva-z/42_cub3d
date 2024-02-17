@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enemy_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 22:37:41 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/07 21:26:40 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/15 10:36:59 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static t_enemy	*new_list(t_data *data, int x, int y)
 	node = (t_enemy *) malloc(sizeof(t_enemy));
 	if (!node)
 		free_and_exit(data, ERR_MALLOC, 1);
-	node->dir = (t_2d_point) {1, 0};
+	node->dir = (t_point) {1, 0};
 	node->pos.x = x + 0.5;
 	node->pos.y = y + 0.5;
 	node->follow = 0;

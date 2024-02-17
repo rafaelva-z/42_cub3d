@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:32:59 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/10 17:46:43 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/17 12:01:51 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "../../include/cub3d.h"
 
 static void	free_color_grid(t_img *img)
 {
@@ -35,7 +35,6 @@ static void	free_textures(t_data *data)
 			continue ;
 		if (data->textures[i]->color_grid)
 			free_color_grid(data->textures[i]);
-		printf("texture pointer[%d]: %p\n", i, data->textures[i]);
 		if (data->textures[i]->img)
 			mlx_destroy_image(data->mlx, data->textures[i]->img);
 		free (data->textures[i]);
@@ -47,6 +46,8 @@ void	free_data(t_data *data)
 {
 	if (!data)
 		return ;
+	if (data->z_buffer)
+		free (data->z_buffer);
 	if (data->file)
 	{
 		if (data->file->file)

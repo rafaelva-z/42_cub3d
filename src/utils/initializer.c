@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   initializer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/10 23:03:38 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/17 12:30:47 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "../../include/cub3d.h"
 
 static void	init_data(t_data *data)
 {
@@ -31,6 +31,7 @@ static void	init_data(t_data *data)
 	data->file->ceiling_file = NULL;
 	begining_time_stamp(data);
 	data->enemy_indx = 0;
+	data->z_buffer = calloc(WIN_WIDTH, sizeof(double));
 	texture_array_init(data);
 }
 
@@ -49,7 +50,6 @@ static void	init_mlx(t_data *data)
 	data->img->addr = mlx_get_data_addr(data->img->img, 
 			&(data->img->bits_per_pixel), &(data->img->line_length),
 			&(data->img->endian));
-
 
 	data->mlx_win_mm = mlx_new_window(data->mlx, MM_WIDTH, MM_HEIGHT, WIN_TITLE);
 	if (!data->mlx_win_mm)
@@ -71,8 +71,8 @@ static void	init_player(t_data *data)
 	data->player.vertical = 0;
 	data->player.move = 0;
 	data->player.move_cam = 0;
-	data->player.mouse = (t_2d_point){0, 0};
-	data->player.mov_dir = (t_2d_point){0, 0};
+	data->player.mouse = (t_point){0, 0};
+	data->player.mov_dir = (t_point){0, 0};
 	data->player.mouse_toggle = 1;
 }
 
@@ -81,5 +81,34 @@ void	initializer(t_data *data)
 	init_data(data);
 	init_mlx(data);
 	init_player(data);
-	data->enemy_list = NULL;
+	// new stuff to be organized
+	data->sprite_amt = 3; // counted in parsing
+	data->sprites = calloc(data->sprite_amt, sizeof(t_sprite)); // has to be allocated after parsing
+	data->sprite_order = calloc(data->sprite_amt, sizeof(int)); // has to be allocated after parsing
+	// initialize all instances of sprites (enemies and objects)
+	for (int i = 0; i < data->sprite_amt; i++)
+	{
+		data->sprites[i].texture = data->textures[EB0_IMG]; // defined in parsing
+		data->sprites[i].pos = (t_point){(i + 1) * 2, (i + 1) * 2}; // defined in parsing
+		if (i == 0)
+		{
+			data->sprites[i].dir = (t_point){1, 0}; // defined in parsing
+			data->sprites[i].current_frame = 0; // random value?
+			data->sprites[i].type = SPRT_ENEMY; // defined in parsing
+		}
+		else if (i == 1)
+		{
+			data->sprites[i].dir = (t_point){0, 1}; // defined in parsing
+			data->sprites[i].current_frame = 4; // random value?
+			data->sprites[i].type = SPRT_ENEMY; // defined in parsing
+		}
+		else if (i == 2)
+		{
+			data->sprites[i].dir = (t_point){-1, 0}; // defined in parsing
+			data->sprites[i].current_frame = 2; // random value?
+			data->sprites[i].type = SPRT_ENEMY; // defined in parsing
+		}
+		data->sprite_order[i] = i;
+	}
+	data->enemy_list = NULL; // "enemy_list" should be replaced by "sprites"
 }
