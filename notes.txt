@@ -22,3 +22,6 @@
 	=> apparently mlx_mouse_hide() function causes leaks, take note!
 		(if you press "ctrl" and close the program it leaks)
 		should be allowed because the leak isn't on our code.
+
+	=> if you go back and forward inside a sprite eventually there is
+		an invalid read on the sprite color

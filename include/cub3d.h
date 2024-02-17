@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
 /*   Updated: 2024/02/12 09:59:42 by fda-estr         ###   ########.fr       */
@@ -13,9 +13,8 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# ifndef DEBUG
 #  define DEBUG 0
-# endif
+#  define SHADER 1
 
 # include "player.h"
 # include "../lib/libft/libft.h"
@@ -46,7 +45,7 @@
 //	Screen Resolution
 # define WIN_WIDTH		900
 # define WIN_HEIGHT		600
-# define WIN_TITLE		 "Cub3D - fda-est & rvaz"
+# define WIN_TITLE		"Cub3D - fda-est & rvaz"
 
 # define TEXTURE_WIDTH	64
 # define TEXTURE_HEIGHT	64
@@ -59,13 +58,14 @@
 
 //	Colors
 
-# define SKY_COLOR		0x005274ff
-# define WALL_COLOR		0x00aeb5d1
-# define FLOOR_COLOR	0x000c1126
+# define SKY_COLOR				0x005274ff
+# define WALL_COLOR				0x00aeb5d1
+# define FLOOR_COLOR			0x000c1126
+# define CHROMA_KEY_COLOR		0x00ffffff
 
 # define M_PI			3.14159265358979323846
 
-typedef enum	s_image_arr
+typedef enum s_image_arr
 {
 	NO_IMG,
 	EA_IMG,
@@ -113,36 +113,42 @@ typedef enum	s_image_arr
 	D6_IMG,
 }				t_image_arr;
 
+typedef enum s_sprite_type
+{
+	SPRT_OBJ1,
+	SPRT_OBJ2,
+	SPRT_ENEMY
+}				t_sprite_type;
+
 typedef struct s_2d_point
 {
 	double	x;
 	double	y;
-}	t_2d_point;
+}	t_point;
 
 typedef struct s_vector
 {
-	t_2d_point	point_a;
-	t_2d_point	point_b;
+	t_point	point_a;
+	t_point	point_b;
 }	t_vector;
 
 typedef struct s_map
 {
 	char		**map;
 	char		**minimap;
-	t_2d_point	size;
+	t_point		size;
 }				t_map;
 
 typedef struct s_ray
 {
-	t_2d_point	dir;
-	t_2d_point	last_hit;
+	t_point		dir;
+	t_point		last_hit;
 	double		distance;
 	int			wall_height;
 	int			side;
 	// linked list of hit points
 }				t_ray;
 
-// this one may be provisory
 typedef struct s_img
 {
 	void	*img;
@@ -150,7 +156,7 @@ typedef struct s_img
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-	int		hight;
+	int		height;
 	int		width;
 	int		**color_grid;
 }				t_img;
@@ -171,24 +177,34 @@ typedef struct s_file
 
 typedef struct s_enemy
 {
-	t_2d_point		pos;
-	t_2d_point		dir;
-	t_2d_point		plane;
+	t_point			pos;
+	t_point			dir;
+	t_point			plane;
 	int				follow;
 	int				move;
 	struct s_enemy	*next_enemy;
 }				t_enemy;
 
+typedef struct s_sprite
+{
+	t_point	pos;
+	t_point	dir;
+	t_img	*texture;
+	double	dist_player;
+	short	current_frame;
+	short	type;
+}				t_sprite;
+
 typedef struct s_player
 {
 	int			move;
 	int			move_cam;
-	t_2d_point	mouse;
+	t_point		mouse;
 	int			mouse_toggle;
-	t_2d_point	pos;
-	t_2d_point	dir;
-	t_2d_point	mov_dir;
-	t_2d_point	plane;
+	t_point		pos;
+	t_point		dir;
+	t_point		mov_dir;
+	t_point		plane;
 	double		fov;
 	int			vertical;
 }				t_player;
@@ -198,20 +214,23 @@ typedef struct s_player
 */
 typedef struct s_data
 {
-	void		*mlx;
-	void		*mlx_win;
-	void		*mlx_win_mm;				//	for testing
-	t_img		*img;
-	t_img		*img_mm;
+	void		*mlx;			//	put in "t_mlx" struct (?)
+	void		*mlx_win;		//	put in "t_mlx" struct (?)
+	void		*mlx_win_mm;	//	to be removed
+	t_img		*img;			//	put in "t_mlx" struct (?)
+	t_img		*img_mm;		//	to be removed
 	t_file		*file;
 	t_map		map;
 	t_player	player;
+	t_sprite	*sprites;
+	int 		*sprite_order;
+	int			sprite_amt;
 	t_img		**textures;
 	t_enemy		*enemy_list;
 	int			enemy_indx;
 	uint64_t	start_time;
+	double		*z_buffer;
 }				t_data;
-
 
 /* =====================================================================*
  *		/src/controls/													*
@@ -274,6 +293,9 @@ void		dda(t_ray *ray, t_data *data);
 //			raycat.c
 void		raycast(t_data *data);
 
+//			rc_spritecast.c
+void		rc_sprites(t_data *data);
+
 /* =====================================================================*
  *		/src/enemy/														*
  * =====================================================================*/
@@ -291,22 +313,22 @@ void		enemy(t_data *data);
 void		initializer(t_data *data);
 int			coordinate_finder(char **mtx, char c, char axle);
 int			display_error(char *str);
-int			is_inside_map(t_2d_point point, t_2d_point map_size);
-int			is_wall(t_2d_point point, t_data *data);
+int			is_inside_map(t_point point, t_point map_size);
+int			is_wall(t_point point, t_data *data);
 void		update_view(t_data *data);
 void		begining_time_stamp(t_data *data);
 uint64_t	time_stamp(t_data *data);
 
 //			utils_2.c
-t_2d_point	vector_add(t_2d_point v1, t_2d_point v2);
-void		vector_norm(t_2d_point *vector);
-t_2d_point	vector_rotate(t_2d_point vector, double angle);
-void		rotate_point(t_2d_point *point, double angle);
+t_point	vector_add(t_point v1, t_point v2);
+void		vector_norm(t_point *vector);
+t_point	vector_rotate(t_point vector, double angle);
+void		rotate_point(t_point *point, double angle);
 
 //			draw_line.c
-void		draw_vertical_line(t_2d_point start, int size, t_img *img,
+void		draw_vertical_line(t_point start, int size, t_img *img,
 				int color);
-void		draw_vertical_line_texture(t_2d_point start, t_img *texture,
+void		draw_vertical_line_texture(t_point start, t_img *texture,
 				t_data *data, t_ray *ray);
 void		draw_vert_line_grad_center(t_img *img, int x, int vertical);
 
@@ -323,5 +345,7 @@ void		initializer(t_data *data);
 
 //			initializer_textures.c
 void		texture_array_init(t_data *data);
+
+int		shader(int color, double distance, double a, double b, short mode);
 
 #endif

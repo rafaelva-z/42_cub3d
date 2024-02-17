@@ -6,18 +6,18 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 17:06:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/08 11:50:12 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/15 10:36:59 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "../../include/cub3d.h"
 
 /**
  *	@brief	Initializes "step" based on the ray direction, and "raylen" to the
  *			ray starting position based on the current map cell.
 */
-static void	dda_start(t_player *player, t_2d_point *step_size,
-		t_2d_point *raylen, t_2d_point *step, t_ray *ray)
+static void	dda_start(t_player *player, t_point *step_size,
+		t_point *raylen, t_point *step, t_ray *ray)
 {
 	if (ray->dir.x < 0)
 	{
@@ -41,8 +41,8 @@ static void	dda_start(t_player *player, t_2d_point *step_size,
 	}
 }
 
-static void	raycast_loop(t_2d_point *current, t_2d_point *raylen,
-		t_2d_point *step, int *side, t_2d_point *step_size)
+static void	raycast_loop(t_point *current, t_point *raylen,
+		t_point *step, int *side, t_point *step_size)
 {
 	if (raylen->x < raylen->y)
 	{
@@ -65,14 +65,14 @@ static void	raycast_loop(t_2d_point *current, t_2d_point *raylen,
 */
 void	dda(t_ray *ray, t_data *data)
 {
-	t_2d_point	current;
-	t_2d_point	step_size;
-	t_2d_point	step;
-	t_2d_point	ray_len;
+	t_point	current;
+	t_point	step_size;
+	t_point	step;
+	t_point	ray_len;
 
 	step_size.x = fabs(1.0 / ray->dir.x);
 	step_size.y = fabs(1.0 / ray->dir.y);
-	current = (t_2d_point){data->player.pos.x, data->player.pos.y};
+	current = (t_point){data->player.pos.x, data->player.pos.y};
 	dda_start(&data->player, &step_size, &ray_len, &step, ray);
 	while (is_inside_map(current, data->map.size) && !is_wall(current, data))
 		raycast_loop(&current, &ray_len, &step, &ray->side, &step_size);
