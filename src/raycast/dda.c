@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 17:06:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/20 16:20:15 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/20 16:54:04 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,13 @@ void	dda_enemy(t_ray *ray, t_data *data)
 	}
 }
 
+int	is_cdoor(t_point current, t_data *data)
+{
+	if (data->map.map[(int)current.y][(int)current.x] == 'D')
+		return (1);
+	return (0);
+}
+
 void	dda(t_ray *ray, t_data *data)
 {
 	t_point	current;
@@ -100,12 +107,15 @@ void	dda(t_ray *ray, t_data *data)
 	dda_start(&data->player, &step_size, &ray_len, &step, ray);
 	while (is_inside_map(current, data->map.size) && !is_wall(current, data))
 	{
-		// if (is_cdoor(current, data))
-		// {
-		// 	ray->distance = -100;
-		// 	return ;
-		// }
 		raycast_loop(&current, &ray_len, &step, &ray->side, &step_size);
+		if (is_cdoor(current, data))
+		{
+			if (ray->side == 0)
+				ray->distance = ray_len.x - step_size.x;
+			else
+				ray->distance = ray_len.y - step_size.y;
+			return ;
+		}
 	}
 	if (ray->side == 0)
 		ray->distance = ray_len.x - step_size.x;

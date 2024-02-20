@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/20 16:20:20 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:53:59 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 # define DEBUG 0
-# define SHADER 0
+# define SHADER 1
 
 # include "player.h"
 # include "../lib/libft/libft.h"
@@ -45,7 +45,6 @@
 
 // enemy fov
 # define ENEMY_FOV 30
-
 
 //	Screen Resolution
 # define WIN_WIDTH		900
