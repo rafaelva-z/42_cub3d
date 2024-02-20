@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:32:59 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/12 10:00:15 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/19 20:04:51 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,17 +82,6 @@ void	free_file(t_file *file)
 	free (file);
 }
 
-static void	delete_list(t_enemy *node)
-{
-	t_enemy *temp;
-
-	while (node)
-	{
-		temp = node->next_enemy;
-		free (node);
-		node = temp;
-	}
-}
 
 void	free_and_exit(t_data *data, char *msg, int exit_status)
 {
@@ -102,7 +91,6 @@ void	free_and_exit(t_data *data, char *msg, int exit_status)
 		ft_putstr_fd(msg, 2);
 	if (data)
 	{
-		delete_list(data->enemy_list);
 		free_textures(data);
 		free_data(data);
 	}

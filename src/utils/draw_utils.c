@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 12:13:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/17 12:13:37 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/18 16:11:51 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	shader(int color, double distance, double a, double b, short mode)
 {
 	double	i;
 
-	if (!SHADER)
+	if (!SHADER || color == CHROMA_KEY_COLOR)
 		return (color);
 	i = distance;
 	if (mode == 1)
@@ -52,7 +52,7 @@ void	draw_pixel(t_img *img, int x, int y, int color)
 {
 	char	*dst;
 
-	if ((color & CHROMA_KEY_COLOR) == 0)
+	if (color == CHROMA_KEY_COLOR)
 		return ;
 	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;

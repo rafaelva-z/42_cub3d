@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:16:32 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/17 12:30:36 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/20 15:02:47 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,12 @@ int	is_inside_map(t_point point, t_point map_size)
 		&& point.y >= 0 && point.y < map_size.y)
 		return (1);
 	return (0);
+}
+
+int is_player(t_point point, t_data *data)
+{
+	if ((int)point.y == (int)data->player.pos.y && (int)point.x == (int)data->player.pos.x)
+		return (-1);
 }
 
 int	is_wall(t_point point, t_data *data)

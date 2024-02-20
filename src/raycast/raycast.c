@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:41:12 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/17 12:01:00 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/20 16:20:35 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,27 +106,26 @@ void	raycast(t_data *data)
 	rc_sprites(data);
 }
 
-void	enemy_raycast(t_data *data, t_enemy *enemy)
+void	enemy_raycast(t_data *data, t_sprite *enemy)
 {
 	t_ray		ray;
-	double		camera_x;
 	int			r;
+	
 
 	r = 0;
-	while (r < 30) // define a macro for enemy rays
+	ray.dir.x = enemy->dir.x;
+	ray.dir.y = enemy->dir.y;
+	rotate_point(&ray.dir, -(ENEMY_FOV / 2));
+	while (r < ENEMY_FOV) // define a macro for enemy rays
 	{
-		camera_x = 2.0 * (double)r / 30.0 - 1.0;
-		ray.dir.x = enemy->dir.x + enemy->plane.x * camera_x;
-		ray.dir.y = enemy->dir.y + enemy->plane.y * camera_x;
-		dda(&ray, data);
+		dda_enemy(&ray, data);
 		// check if player was found on ray hit linked list then:
-		/*
-		if (playerfound())
-			follow = 1
-		else
-			follow = 0
-		*/
+		if (ray.distance == -1)
+		{
+			enemy->follow = true; 
+			return ;
+		}
 		r++;
+		rotate_point(&ray.dir, 1);
 	}
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img->img, 0, 0);
 }

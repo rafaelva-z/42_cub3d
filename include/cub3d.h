@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/20 14:08:27 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/20 16:20:20 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <stdint.h>
 # include <time.h>
 # include <sys/time.h>
+# include <stdbool.h>
 
 //	Messages & Errors
 # define ERR_ARGC		"cub3d: wrong number of arguments. Use only a map path\n"
@@ -41,6 +42,10 @@
 # define ERR_TIME		"cub3d: timestamp failed\n"
 # define MSG_EXIT		"cub3d: Thank you for testing!\n"
 # define MSG_LOSE		"cub3d: You lost!\n"
+
+// enemy fov
+# define ENEMY_FOV 30
+
 
 //	Screen Resolution
 # define WIN_WIDTH		900
@@ -56,12 +61,16 @@
 # define MM_TILE_WIDTH	32
 # define MM_TILE_HEIGHT	32
 
+//	Frame rate in ms
+
+# define FRAME_RATE 40
+
 //	Colors
 
 # define SKY_COLOR				0x005274ff
 # define WALL_COLOR				0x00aeb5d1
 # define FLOOR_COLOR			0x000c1126
-# define CHROMA_KEY_COLOR		0x00ffffff
+# define CHROMA_KEY_COLOR		0x00ff00ff
 
 # define M_PI			3.14159265358979323846
 
@@ -117,7 +126,8 @@ typedef enum s_sprite_type
 {
 	SPRT_OBJ1,
 	SPRT_OBJ2,
-	SPRT_ENEMY
+	SPRT_ENEMY,
+	SPRT_DOOR,
 }				t_sprite_type;
 
 typedef struct s_2d_point
@@ -175,21 +185,14 @@ typedef struct s_file
 	char	*floor_file;
 }				t_file;
 
-typedef struct s_enemy
-{
-	t_point			pos;
-	t_point			dir;
-	t_point			plane;
-	int				follow;
-	int				move;
-	struct s_enemy	*next_enemy;
-}				t_enemy;
-
 typedef struct s_sprite
 {
 	t_point	pos;
 	t_point	dir;
+	t_point	coliders[2];
 	t_img	*texture;
+	bool	move;
+	bool	follow;
 	double	dist_player;
 	short	current_frame;
 	short	type;
@@ -218,7 +221,7 @@ typedef struct s_data
 	void		*mlx_win;		//	put in "t_mlx" struct (?)
 	void		*mlx_win_mm;	//	to be removed
 	t_img		*img;			//	put in "t_mlx" struct (?)
-	t_img		*img_mm;		//	to be removed
+	t_img		*img_mm;		//	to be removed (no it cant be)
 	t_file		*file;
 	t_map		map;
 	t_player	player;
@@ -226,10 +229,9 @@ typedef struct s_data
 	int			*sprite_order;
 	int			sprite_amt;
 	t_img		**textures;
-	t_enemy		*enemy_list;
-	int			enemy_indx;
 	uint64_t	start_time;
 	double		*z_buffer;
+	uint64_t	next_frame;		
 }				t_data;
 
 /* =====================================================================*
@@ -288,10 +290,12 @@ void		enemy_parser(t_data *data);
  * =====================================================================*/
 
 //			dda.c
+void		dda_enemy(t_ray *ray, t_data *data);
 void		dda(t_ray *ray, t_data *data);
 
 //			raycat.c
 void		raycast(t_data *data);
+void		enemy_raycast(t_data *data, t_sprite *enemy);
 
 //			rc_spritecast.c
 void		rc_sprites(t_data *data);
@@ -304,6 +308,8 @@ void		rc_sprites(t_data *data);
 void		enemy(t_data *data);
 
 //		enemy_utils.c
+void		rotate_enemy(t_sprite *enemy, double angle, int *rot_dir);
+
 
 /* =====================================================================*
  *		/src/utils/														*
@@ -314,6 +320,7 @@ void		initializer(t_data *data);
 int			coordinate_finder(char **mtx, char c, char axle);
 int			display_error(char *str);
 int			is_inside_map(t_point point, t_point map_size);
+int 		is_player(t_point point, t_data *data);
 int			is_wall(t_point point, t_data *data);
 void		update_view(t_data *data);
 void		begining_time_stamp(t_data *data);
