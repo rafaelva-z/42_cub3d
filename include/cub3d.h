@@ -6,15 +6,15 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/12 09:59:42 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/20 14:08:27 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-#  define DEBUG 0
-#  define SHADER 1
+# define DEBUG 0
+# define SHADER 0
 
 # include "player.h"
 # include "../lib/libft/libft.h"
@@ -223,7 +223,7 @@ typedef struct s_data
 	t_map		map;
 	t_player	player;
 	t_sprite	*sprites;
-	int 		*sprite_order;
+	int			*sprite_order;
 	int			sprite_amt;
 	t_img		**textures;
 	t_enemy		*enemy_list;
@@ -320,9 +320,9 @@ void		begining_time_stamp(t_data *data);
 uint64_t	time_stamp(t_data *data);
 
 //			utils_2.c
-t_point	vector_add(t_point v1, t_point v2);
+t_point		vector_add(t_point v1, t_point v2);
 void		vector_norm(t_point *vector);
-t_point	vector_rotate(t_point vector, double angle);
+t_point		vector_rotate(t_point vector, double angle);
 void		rotate_point(t_point *point, double angle);
 
 //			draw_line.c
