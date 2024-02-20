@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:44:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/17 11:15:38 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/20 10:58:42 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ int	game_update(t_data *data)
 
 	update = 0;
 	player = &data->player;
+	while (time_stamp(data) < data->next_frame)
+		;
+	data->next_frame += FRAME_RATE;
 	update_sprite(data->sprites, data->sprite_amt);
 	if (player->move)
 		update += move_player(data);
@@ -44,6 +47,7 @@ int	game_update(t_data *data)
 		update += vertical_movement(&data->player);
 		update += adjust_fov(&data->player);
 	}
+	enemy(data);
 		update_view(data);
 	if (!player->mouse_toggle)
 		mlx_mouse_move(data->mlx, data->mlx_win, WIN_WIDTH / 2, WIN_HEIGHT / 2);
@@ -125,18 +129,18 @@ int	close_pgm(t_data *data)
 	return (0);
 }
 
-int	automation(t_data *data)
-{
-	static uint64_t	texture_change;
+// int	automation(t_data *data)
+// {
+// 	static uint64_t	texture_change;
 
-	if (texture_change == 0)
-		texture_change = time_stamp(data) + (uint64_t)200;
-	if (time_stamp(data) > texture_change)
-	{
-		if (data->enemy_indx < 6)
-			data->enemy_indx++;
-		else
-			data->enemy_indx = 0;
-	}
-	enemy(data);
-}
+// 	if (texture_change == 0)
+// 		texture_change = time_stamp(data) + (uint64_t)200;
+// 	if (time_stamp(data) > texture_change)
+// 	{
+// 		if (data->enemy_indx < 6)
+// 			data->enemy_indx++;
+// 		else
+// 			data->enemy_indx = 0;
+// 	}
+// 	enemy(data);
+// }

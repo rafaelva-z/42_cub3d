@@ -12,3 +12,13 @@
 
 #include "../../include/cub3d.h"
 
+void	rotate_enemy(t_sprite *enemy, double angle, int *rot_dir)
+{
+	if (angle < 0 && rot_dir)
+		*rot_dir = -1;
+	else if (angle > 0 && rot_dir)
+		*rot_dir = 1;
+	rotate_point(&enemy->dir, angle);
+	rotate_point(&enemy->coliders[0], angle);
+	rotate_point(&enemy->coliders[1], angle);
+}

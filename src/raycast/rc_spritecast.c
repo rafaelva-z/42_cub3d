@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rc_spritecast.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 11:42:45 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/17 12:30:18 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/20 14:43:54 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,11 @@ void	rc_sprites(t_data *data)
 				{
 					int d = y * 256 - WIN_HEIGHT * 128 + sprite_size.y * 128;
 					int tex_y = ((d * TEXTURE_HEIGHT) / sprite_size.y) / 256;
-					int color = data->sprites[data->sprite_order[i]].texture->color_grid[tex_y][tex_x];
+					int color;
+					if (tex_x >= 0 && tex_x < TEXTURE_WIDTH && tex_y >= 0 && tex_y < TEXTURE_HEIGHT)
+                        color = data->sprites[data->sprite_order[i]].texture->color_grid[tex_y][tex_x];
+                    else
+                        color = 0;
 					draw_pixel(data->img, screen_x, y, shader(color, abs(data->sprites[data->sprite_order[i]].dist_player), 2.0, 0.3, 1));
 				}
 			}
