@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 17:06:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/15 10:36:59 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/20 16:20:15 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,30 @@ static void	raycast_loop(t_point *current, t_point *raylen,
  			length from the starting point to the nearest wall in a straight
 			line.
 */
+
+void	dda_enemy(t_ray *ray, t_data *data)
+{
+	t_point	current;
+	t_point	step_size;
+	t_point	step;
+	t_point	ray_len;
+
+	ray->distance = 0;
+	step_size.x = fabs(1.0 / ray->dir.x);
+	step_size.y = fabs(1.0 / ray->dir.y);
+	current = (t_point){data->player.pos.x, data->player.pos.y};
+	dda_start(&data->player, &step_size, &ray_len, &step, ray);
+	while (is_inside_map(current, data->map.size) && !is_wall(current, data))
+	{
+		raycast_loop(&current, &ray_len, &step, &ray->side, &step_size);
+		if (is_player(current, data))
+		{
+			ray->distance = -1;
+			return ;
+		}
+	}
+}
+
 void	dda(t_ray *ray, t_data *data)
 {
 	t_point	current;
