@@ -6,7 +6,7 @@
 #    By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by rvaz              #+#    #+#              #
-#    Updated: 2024/02/11 11:50:05 by fda-estr         ###   ########.fr        #
+#    Updated: 2024/02/21 15:00:27 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRCS		=	$(addprefix ./src/,				\
 				rc_spritecast.c					\
 				)								\
 				$(addprefix utils/,				\
+				check_utils.c					\
 				draw_utils.c					\
 				draw_line.c						\
 				free.c							\
@@ -101,10 +102,10 @@ re: fclean all
 
 run: all
 	@clear
-	./$(NAME) maps/small_room.cub
+	./$(NAME) maps/corridor.cub
 
 runvg: all
 	@clear
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes  --track-origins=yes ./$(NAME) maps/small_room.cub
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes  --track-origins=yes ./$(NAME) maps/corridor.cub
 
 .PHONY: all clean fclean re run runvg

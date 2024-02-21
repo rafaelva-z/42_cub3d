@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enemy.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 22:26:46 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/21 15:57:54 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:14:17 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static double	distance_calc(t_point p1, t_point p2)
 {
 	double	dist;
+
 	dist = sqrt(pow((p2.x - p1.x), 2) + pow((p2.y - p1.y), 2));
 	return (dist);
 }
@@ -23,7 +24,7 @@ static void	rand_dir_change(t_data *data, int index)
 {
 	int				ran;
 	struct timeval	time;
-	
+
 	if (gettimeofday(&time, NULL) < 0)
 		free_and_exit(data, ERR_TIME, 1);
 	srand(time.tv_usec);
@@ -37,22 +38,25 @@ static void	rand_dir_change(t_data *data, int index)
 
 static void	avoid_wall(t_data *data, int index, int rot_dir)
 {
-	bool	left_touch;
-	bool	right_touch;
-	t_point colider_pos[2];
-	int i = 0;
+	bool		left_touch;
+	bool		right_touch;
+	t_point		colider_pos[2];
+	t_sprite	*sprt;
+	int			i;
 
+	sprt = &data->sprites[index];
+	i = 0;
 	while (i++ < 360)
 	{
 		left_touch = false;
 		right_touch = false;
-		colider_pos[0].x = data->sprites[index].coliders[0].x + data->sprites[index].pos.x;
-		colider_pos[0].y = data->sprites[index].coliders[0].y + data->sprites[index].pos.y;
-		colider_pos[1].x = data->sprites[index].coliders[1].x + data->sprites[index].pos.x; 
-		colider_pos[1].y = data->sprites[index].coliders[1].y + data->sprites[index].pos.y;
-		if (data->map.map[(int)colider_pos[0].y][(int)colider_pos[0].x] != '0')
+		colider_pos[0].x = sprt->coliders[0].x + sprt->pos.x;
+		colider_pos[0].y = sprt->coliders[0].y + sprt->pos.y;
+		colider_pos[1].x = sprt->coliders[1].x + sprt->pos.x;
+		colider_pos[1].y = sprt->coliders[1].y + sprt->pos.y;
+		if (data->map.map[(int)colider_pos[0].y][(int)colider_pos[0].x] != MAP_EMPTY)
 			left_touch = true;
-		if (data->map.map[(int)colider_pos[1].y][(int)colider_pos[1].x] != '0')
+		if (data->map.map[(int)colider_pos[1].y][(int)colider_pos[1].x] != MAP_EMPTY)
 			right_touch = true;
 		if (left_touch && right_touch)
 			rotate_enemy(&data->sprites[index], 1 * rot_dir);
@@ -62,18 +66,17 @@ static void	avoid_wall(t_data *data, int index, int rot_dir)
 			rotate_enemy(&data->sprites[index], 1);
 		else if (!left_touch && !right_touch)
 		{
-			data->sprites[index].move = true;
+			sprt->state = E_MOVE;
 			break ;
 		}
 	}
 	if (i > 360)
-		data->sprites[index].move = false;
+		data->sprites[index].state = E_IDLE;
 }
 
 static void	player_in_sight(t_data *data, t_sprite *enemy)
 {
 	double	dist;
-
 
 	enemy_raycast(data, enemy);
 	enemy->dir.x = data->player.pos.x - enemy->pos.x;
@@ -93,7 +96,7 @@ static void	player_in_sight(t_data *data, t_sprite *enemy)
 
 static void	step_forward(t_data *data, int index)
 {
-	if (data->sprites[index].move == false)
+	if (data->sprites[index].state == E_IDLE)
 		return ;
 	if (data->sprites[index].pos.x + ENEMY_SPD * data->sprites[index].dir.x >= 0)
 		data->sprites[index].pos.x += (ENEMY_SPD * data->sprites[index].dir.x);
@@ -120,7 +123,6 @@ void	enemy(t_data *data)
 		if (dist < 0.5)
 			free_and_exit(data, MSG_LOSE, 0);
 		player_in_sight(data, &data->sprites[i]);
-		// if (!current->follow)
 			rand_dir_change(data, i);
 		avoid_wall(data, i, rot_dir);
 		step_forward(data, i);

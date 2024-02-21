@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rc_spritecast.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 11:42:45 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/20 14:43:54 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:55:07 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,24 +81,24 @@ static void	set_sprite_texture(t_data *data, t_sprite *sprite)
 	else if (sprite->type == SPRT_OBJ1)
 	{
 		if (degrees < 45)
-			sprite->texture = data->textures[D0_IMG];
+			sprite->texture = data->textures[F_IMG];
 		else if (degrees < 135)
-			sprite->texture = data->textures[D0_IMG];
+			sprite->texture = data->textures[F_IMG];
 		else if (degrees < 225)
-			sprite->texture = data->textures[D0_IMG];
+			sprite->texture = data->textures[F_IMG];
 		else if (degrees < 315)
-			sprite->texture = data->textures[D0_IMG];
+			sprite->texture = data->textures[F_IMG];
 	}
 	else if (sprite->type == SPRT_OBJ2)
 	{
 		if (degrees < 45)
-			sprite->texture = data->textures[D0_IMG];
+			sprite->texture = data->textures[F_IMG];
 		else if (degrees < 135)
-			sprite->texture = data->textures[D0_IMG];
+			sprite->texture = data->textures[F_IMG];
 		else if (degrees < 225)
-			sprite->texture = data->textures[D0_IMG];
+			sprite->texture = data->textures[F_IMG];
 		else if (degrees < 315)
-			sprite->texture = data->textures[D0_IMG];
+			sprite->texture = data->textures[F_IMG];
 	}
 }
 
@@ -113,6 +113,13 @@ void	rc_sprites(t_data *data)
 	//	sprite projection
 	while (++i < data->sprite_amt)
 	{
+		if (data->sprites[data->sprite_order[i]].type == SPRT_DOOR)
+		{
+			if (data->sprites[data->sprite_order[i]].state == D_OPENING
+				|| data->sprites[data->sprite_order[i]].state == D_CLOSING)
+				rc_door(data, &data->sprites[data->sprite_order[i]], &data->player);
+			continue ;
+		}
 		set_sprite_texture(data, &data->sprites[data->sprite_order[i]]);
 		t_point	sprt_pos = (t_point){data->sprites[data->sprite_order[i]].pos.x - data->player.pos.x, data->sprites[data->sprite_order[i]].pos.y - data->player.pos.y};	// sprite pos relative to player
 		double	invert = 1.0 / (data->player.plane.x * data->player.dir.y - data->player.dir.x * data->player.plane.y); // for matrix
