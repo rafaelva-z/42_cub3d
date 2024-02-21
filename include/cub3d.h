@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/20 22:12:12 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/21 08:59:03 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 #  define DEBUG 0
-#  define SHADER 1
+#  define SHADER 0
 
 # include "player.h"
 # include "../lib/libft/libft.h"

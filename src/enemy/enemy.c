@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 22:26:46 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/20 21:57:06 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:57:54 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,6 @@ void	enemy(t_data *data)
 		// if (!current->follow)
 			rand_dir_change(data, i);
 		avoid_wall(data, i, rot_dir);
-		if (data->sprites[i].follow)
-			printf("RUN!\n");
 		step_forward(data, i);
 	}
 }
