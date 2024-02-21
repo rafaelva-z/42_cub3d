@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:41:12 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/21 15:05:22 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/21 17:26:15 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,10 +142,10 @@ void	enemy_raycast(t_data *data, t_sprite *enemy)
 	r = 0;
 	ray.dir.x = enemy->dir.x;
 	ray.dir.y = enemy->dir.y;
+	dda_enemy(&ray, data);
 	rotate_point(&ray.dir, -(ENEMY_FOV / 2));
 	while (r < ENEMY_FOV)
 	{
-		dda_enemy(&ray, data);
 		if (ray.distance == -1)
 		{
 			enemy->state = E_FOLLOW;

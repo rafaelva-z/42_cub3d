@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 22:26:46 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/21 14:14:17 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/21 17:18:04 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,13 @@ static void	player_in_sight(t_data *data, t_sprite *enemy)
 	double	dist;
 
 	enemy_raycast(data, enemy);
+	if (enemy->state != E_FOLLOW)
+		return ;
 	enemy->dir.x = data->player.pos.x - enemy->pos.x;
 	enemy->dir.y = data->player.pos.y - enemy->pos.y;
 	dist = distance_calc(data->player.pos, enemy->pos);
 	enemy->dir.x *= (1 / dist);
 	enemy->dir.y *= (1 / dist);
-
-
 	enemy->coliders[0].x = 0.60 * enemy->dir.x;
 	enemy->coliders[0].y = 0.60 * enemy->dir.y;
 	rotate_point(&enemy->coliders[0], 45);
@@ -114,7 +114,6 @@ void	enemy(t_data *data)
 	rot_dir = 1;
 	while (++i < data->sprite_amt)
 	{
-		rot_dir *= -1;
 		if (data->sprites[i].type != SPRT_ENEMY)
 			continue ;
 		dist = distance_calc(data->player.pos, data->sprites[i].pos);
@@ -122,7 +121,9 @@ void	enemy(t_data *data)
 			continue ;
 		if (dist < 0.5)
 			free_and_exit(data, MSG_LOSE, 0);
+		rot_dir *= -1;
 		player_in_sight(data, &data->sprites[i]);
+		if (data->sprites[i].state != E_FOLLOW)
 			rand_dir_change(data, i);
 		avoid_wall(data, i, rot_dir);
 		step_forward(data, i);
