@@ -45,6 +45,7 @@
 
 // enemy fov
 # define ENEMY_FOV 30
+# define ENEMY_SPD 0.025
 
 //	Screen Resolution
 # define WIN_WIDTH		900
@@ -338,7 +339,7 @@ void		rc_sprites(t_data *data);
 void		enemy(t_data *data);
 
 //		enemy_utils.c
-void		rotate_enemy(t_sprite *enemy, double angle, int *rot_dir);
+void		rotate_enemy(t_sprite *enemy, double angle);
 
 
 /* =====================================================================*

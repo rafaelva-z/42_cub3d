@@ -32,7 +32,7 @@ static void	rand_dir_change(t_data *data, int index)
 	if (ran == 0)
 	{
 		ran = (180 / 8) * ((rand() % 16) - 8);
-		rotate_enemy(&data->sprites[index], ran, NULL);
+		rotate_enemy(&data->sprites[index], ran);
 	}
 }
 
@@ -46,7 +46,7 @@ static void	avoid_wall(t_data *data, int index, int rot_dir)
 
 	sprt = &data->sprites[index];
 	i = 0;
-	while (i++ < 36)
+	while (i++ < 360)
 	{
 		left_touch = false;
 		right_touch = false;
@@ -59,18 +59,18 @@ static void	avoid_wall(t_data *data, int index, int rot_dir)
 		if (data->map.map[(int)colider_pos[1].y][(int)colider_pos[1].x] != MAP_EMPTY)
 			right_touch = true;
 		if (left_touch && right_touch)
-			rotate_enemy(&data->sprites[index], 10 * rot_dir, NULL);
+			rotate_enemy(&data->sprites[index], 1 * rot_dir);
 		else if (left_touch && !right_touch)
-			rotate_enemy(&data->sprites[index], 10, &rot_dir);
+			rotate_enemy(&data->sprites[index], -1);
 		else if (!left_touch && right_touch)
-			rotate_enemy(&data->sprites[index], -10, &rot_dir);
+			rotate_enemy(&data->sprites[index], 1);
 		else if (!left_touch && !right_touch)
 		{
 			sprt->state = E_MOVE;
 			break ;
 		}
 	}
-	if (i == 36)
+	if (i > 360)
 		data->sprites[index].state = E_IDLE;
 }
 
@@ -84,16 +84,24 @@ static void	player_in_sight(t_data *data, t_sprite *enemy)
 	dist = distance_calc(data->player.pos, enemy->pos);
 	enemy->dir.x *= (1 / dist);
 	enemy->dir.y *= (1 / dist);
+
+
+	enemy->coliders[0].x = 0.60 * enemy->dir.x;
+	enemy->coliders[0].y = 0.60 * enemy->dir.y;
+	rotate_point(&enemy->coliders[0], 45);
+	enemy->coliders[1].x = 0.60 * enemy->dir.x;
+	enemy->coliders[1].y = 0.60 * enemy->dir.y;
+	rotate_point(&enemy->coliders[1], -45);
 }
 
 static void	step_forward(t_data *data, int index)
 {
 	if (data->sprites[index].state == E_IDLE)
 		return ;
-	if (data->sprites[index].pos.x + MOVE_SPD * data->sprites[index].dir.x >= 0)
-		data->sprites[index].pos.x += (MOVE_SPD * data->sprites[index].dir.x);
-	if (data->sprites[index].pos.y + MOVE_SPD * data->sprites[index].dir.y)
-		data->sprites[index].pos.y += (MOVE_SPD * data->sprites[index].dir.y);
+	if (data->sprites[index].pos.x + ENEMY_SPD * data->sprites[index].dir.x >= 0)
+		data->sprites[index].pos.x += (ENEMY_SPD * data->sprites[index].dir.x);
+	if (data->sprites[index].pos.y + ENEMY_SPD * data->sprites[index].dir.y)
+		data->sprites[index].pos.y += (ENEMY_SPD * data->sprites[index].dir.y);
 }
 
 void	enemy(t_data *data)
@@ -112,10 +120,10 @@ void	enemy(t_data *data)
 		dist = distance_calc(data->player.pos, data->sprites[i].pos);
 		if (dist > 10)
 			continue ;
-		// if (dist > 0.5)
-		// 	free_and_exit(data, MSG_LOSE, 0);
-		// player_in_sight(data, current);
-		rand_dir_change(data, i);
+		if (dist < 0.5)
+			free_and_exit(data, MSG_LOSE, 0);
+		player_in_sight(data, &data->sprites[i]);
+			rand_dir_change(data, i);
 		avoid_wall(data, i, rot_dir);
 		step_forward(data, i);
 	}

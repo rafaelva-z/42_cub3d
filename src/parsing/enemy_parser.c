@@ -28,11 +28,12 @@ static void	enemy_init(t_data *data, int y, int x)
 	data->sprites[index].dir = (t_point){1, 0};
 	data->sprites[index].current_frame = ran;
 	data->sprites[index].type = SPRT_ENEMY;
-	data->sprites[index].coliders[0] = data->sprites[index].dir;
-	data->sprites[index].coliders[1] = data->sprites[index].dir;
-	rotate_point(&data->sprites[index].coliders[0], -45);
-	rotate_point(&data->sprites[index].coliders[1], 45);
-	data->sprites[index].state = 0;
+	data->sprites[index].coliders[0].x = 0.60 * data->sprites[index].dir.x;
+	data->sprites[index].coliders[0].y = 0.60 * data->sprites[index].dir.y;
+	rotate_point(&data->sprites[index].coliders[0], 45);
+	data->sprites[index].coliders[1].x = 0.60 * data->sprites[index].dir.x;
+	data->sprites[index].coliders[1].y = 0.60 * data->sprites[index].dir.y;
+	rotate_point(&data->sprites[index].coliders[1], -45);
 	data->sprite_order[index] = index;
 	data->sprite_amt++;
 }
