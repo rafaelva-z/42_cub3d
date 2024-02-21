@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 17:45:18 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/16 16:42:16 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/21 15:15:31 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ void	draw_vertical_line_texture(t_point print_pos, t_img *texture, t_data *data,
 	int			t_start_x;
 	int			color;
 	double		wallX;
-	
-	if (ray->side == 0)
+
+	if (ray->side == 0 || ray->side == 3)
 		wallX = data->player.pos.y + ray->distance * ray->dir.y;
-	else
+	else if (ray->side == 1 || ray->side == 4)
 		wallX = data->player.pos.x + ray->distance * ray->dir.x;
 	wallX -= floor(wallX);
 	size = ray->wall_height;
 	t_start_x = wallX * texture->width;
-	if ((ray->dir.x < 0 && ray->side == 0) || (ray->dir.y > 0 && ray->side == 1))
+	if (((ray->dir.x < 0 && ray->side == 0) || (ray->dir.y > 0 && ray->side == 1)))
 		t_start_x = texture->width - t_start_x - 1;
 	t_step = (double)texture->height / (double)ray->wall_height;
 	t_pos = (t_point){t_start_x, 0};

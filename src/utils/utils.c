@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:16:32 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/20 15:02:47 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:58:00 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,27 +39,6 @@ int	display_error(char *str)
 {
 	ft_putstr_fd(str, 2);
 	return (1);
-}
-
-int	is_inside_map(t_point point, t_point map_size)
-{
-	if (point.x >= 0 && point.x < map_size.x
-		&& point.y >= 0 && point.y < map_size.y)
-		return (1);
-	return (0);
-}
-
-int is_player(t_point point, t_data *data)
-{
-	if ((int)point.y == (int)data->player.pos.y && (int)point.x == (int)data->player.pos.x)
-		return (-1);
-}
-
-int	is_wall(t_point point, t_data *data)
-{
-	if (data->map.map[(int)point.y][(int)point.x] == '1')
-		return (1);
-	return (0);
 }
 
 void	update_view(t_data *data)

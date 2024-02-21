@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 15:38:11 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/20 15:14:13 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/21 12:26:13 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define KEY_PLUS		65451
 # define KEY_MINUS		65453
 # define KEY_CTRL       65507
+# define KEY_SPACE		32
 # define KEY_A			97
 # define KEY_C			99
 # define KEY_D			100
@@ -47,6 +48,7 @@
 # define LOOK_UP		KEY_UP
 # define LOOK_DOWN		KEY_DOWN
 # define TOGGLE_MOUSE   KEY_CTRL
+# define INTERACT		KEY_SPACE
 
 // 	Controls bits
 
@@ -67,8 +69,8 @@
 # define MOUSE_SENS     2
 # define START_FOV		66
 # define FOV_SPD		0.001
-# define MOVE_SPD		0.05
-# define ROT_SPD		2
+# define MOVE_SPD		0.1
+# define ROT_SPD		4
 # define VERTICAL_SPD	1
 
 #endif

@@ -3,25 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:44:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/20 10:58:42 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/21 16:13:42 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-void	update_sprite(t_sprite *sprites, int sprite_amt)
+void	update_sprite(t_data *data, t_sprite *sprites, int sprite_amt)
 {
 	int	i;
 
 	i = -1;
 	while (++i < sprite_amt)
 	{
-		sprites[i].current_frame++;
-		if (sprites[i].current_frame >= 6)
-			sprites[i].current_frame = 0;
+		if (sprites[i].type == SPRT_DOOR)
+		{
+			if (sprites[i].state == D_CLOSED || sprites[i].state == D_OPEN)
+				continue ;
+			else if (sprites[i].state == D_OPENING)
+				sprites[i].current_frame++;
+			else if (sprites[i].state == D_CLOSING)
+				sprites[i].current_frame--;
+			if (sprites[i].current_frame > 6)
+			{
+				sprites[i].state = D_OPEN;
+				sprites[i].current_frame = 0;
+				data->map.map[(int)sprites[i].pos.y][(int)sprites[i].pos.x] = MAP_OPEN_DOOR;
+			}
+			else if (sprites[i].current_frame < 0)
+			{
+				sprites[i].state = D_CLOSED;
+				sprites[i].current_frame = 0;
+				data->map.map[(int)sprites[i].pos.y][(int)sprites[i].pos.x] = MAP_DOOR;
+			}
+		}
+		else
+		{
+			sprites[i].current_frame++;
+			if (sprites[i].current_frame > 6)
+				sprites[i].current_frame = 0;
+		}
 	}
 }
 
@@ -38,7 +62,7 @@ int	game_update(t_data *data)
 	while (time_stamp(data) < data->next_frame)
 		;
 	data->next_frame += FRAME_RATE;
-	update_sprite(data->sprites, data->sprite_amt);
+	update_sprite(data, data->sprites, data->sprite_amt);
 	if (player->move)
 		update += move_player(data);
 	if (player->move_cam || !player->mouse_toggle)
@@ -48,7 +72,7 @@ int	game_update(t_data *data)
 		update += adjust_fov(&data->player);
 	}
 	enemy(data);
-		update_view(data);
+	update_view(data);
 	if (!player->mouse_toggle)
 		mlx_mouse_move(data->mlx, data->mlx_win, WIN_WIDTH / 2, WIN_HEIGHT / 2);
 	return (0);
@@ -70,6 +94,32 @@ int	key_reader(int keycode, t_data *data)
 		set_move_cam(keycode, data);
 	else if (keycode == TOGGLE_MOUSE)
 		toggle_mouse(data);
+	if (keycode == INTERACT)
+	{
+		static int doorToggle;
+		int i;
+
+		i = -1;
+		while (++i < data->sprite_amt)
+		{
+			if (data->sprites[i].type != SPRT_DOOR || (data->sprites[i].type == SPRT_DOOR && data->sprites[i].state == D_MOVING))
+				continue ;
+			if (data->sprites[i].dist_player < 1.5 && data->sprites[i].dist_player > (double)0.55)
+			{
+				if (data->sprites[i].state == D_CLOSED)
+				{
+					data->sprites[i].state = D_OPENING;
+					data->sprites[i].current_frame = 0;
+				}
+				else if (data->sprites[i].state == D_OPEN)
+				{
+					data->sprites[i].state = D_CLOSING;
+					data->sprites[i].current_frame = 6;
+				}
+				data->map.map[(int)data->sprites[i].pos.y][(int)data->sprites[i].pos.x] = MAP_MOVING_DOOR;
+			}
+		}
+	}
 	return (0);
 }
 
