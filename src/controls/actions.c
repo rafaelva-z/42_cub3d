@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 14:59:53 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/15 10:36:59 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/21 13:57:21 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int	move_player(t_data *data)
 	player->mov_dir = (t_point){player->mov_dir.x * MOVE_SPD, player->mov_dir.y * MOVE_SPD};
 	//printf("player->pos: %f %f\n", player->pos.x, player->pos.y);
 	//printf("result: %f %f\n", vector_add(player->mov_dir, vector_add(player->pos, player->mov_dir)));
-	if (!is_wall(vector_add(player->mov_dir, vector_add(player->pos, player->mov_dir)), data))
+	if (!is_wall(vector_add(player->mov_dir, vector_add(player->pos, player->mov_dir)), data)
+			&& is_door(vector_add(player->mov_dir, vector_add(player->pos, player->mov_dir)) , data) <= 1)
 	{
 		player->pos = vector_add(player->pos, player->mov_dir);
 		return (1);

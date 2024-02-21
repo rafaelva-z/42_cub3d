@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/20 18:53:59 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/21 14:59:38 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 # define DEBUG 0
-# define SHADER 1
+# define SHADER 0
 
 # include "player.h"
 # include "../lib/libft/libft.h"
@@ -72,6 +72,36 @@
 # define CHROMA_KEY_COLOR		0x00ff00ff
 
 # define M_PI			3.14159265358979323846
+
+//	Map Matrix Identifiers
+
+# define MAP_EMPTY				'0'
+# define MAP_WALL				'1'
+# define MAP_PLAYER_NORTH		'N'
+# define MAP_PLAYER_SOUTH		'S'
+# define MAP_PLAYER_EAST		'E'
+# define MAP_PLAYER_WEST		'W'
+# define MAP_ENEMY				'M'
+# define MAP_DOOR				'D'
+# define MAP_MOVING_DOOR		'P'
+# define MAP_OPEN_DOOR			'O'
+
+typedef enum s_door_state
+{
+	D_NONE,
+	D_OPEN,
+	D_CLOSED,
+	D_OPENING,
+	D_CLOSING,
+	D_MOVING
+}			t_door_state;
+
+typedef enum s_enemy_state
+{
+	E_IDLE,
+	E_FOLLOW,
+	E_MOVE,
+}			t_enemy_state;
 
 typedef enum s_image_arr
 {
@@ -192,6 +222,7 @@ typedef struct s_sprite
 	t_img	*texture;
 	bool	move;
 	bool	follow;
+	short	state; // rm follow to state because state can be applied to all sprites
 	double	dist_player;
 	short	current_frame;
 	short	type;
@@ -321,6 +352,7 @@ int			display_error(char *str);
 int			is_inside_map(t_point point, t_point map_size);
 int 		is_player(t_point point, t_data *data);
 int			is_wall(t_point point, t_data *data);
+int			is_door(t_point current, t_data *data);
 void		update_view(t_data *data);
 void		begining_time_stamp(t_data *data);
 uint64_t	time_stamp(t_data *data);
@@ -353,5 +385,6 @@ void		initializer(t_data *data);
 void		texture_array_init(t_data *data);
 
 int		shader(int color, double distance, double a, double b, short mode);
-
+void	dda_door(t_ray *ray, t_data *data);
+void	rc_door(t_data *data, t_sprite *door, t_player *player);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:44:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/20 10:58:42 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:00:44 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,31 @@ void	update_sprite(t_sprite *sprites, int sprite_amt)
 	i = -1;
 	while (++i < sprite_amt)
 	{
-		sprites[i].current_frame++;
-		if (sprites[i].current_frame >= 6)
-			sprites[i].current_frame = 0;
+		if (sprites[i].type == SPRT_DOOR)
+		{
+			if (sprites[i].state == D_CLOSED || sprites[i].state == D_OPEN)
+				continue ;
+			else if (sprites[i].state == D_OPENING)
+				sprites[i].current_frame++;
+			else if (sprites[i].state == D_CLOSING)
+				sprites[i].current_frame--;
+			if (sprites[i].current_frame > 6)
+			{
+				sprites[i].state = D_OPEN;
+				sprites[i].current_frame = 0;
+			}
+			else if (sprites[i].current_frame < 0)
+			{
+				sprites[i].state = D_CLOSED;
+				sprites[i].current_frame = 0;
+			}
+		}
+		else
+		{
+			sprites[i].current_frame++;
+			if (sprites[i].current_frame > 6)
+				sprites[i].current_frame = 0;
+		}
 	}
 }
 
@@ -48,7 +70,7 @@ int	game_update(t_data *data)
 		update += adjust_fov(&data->player);
 	}
 	enemy(data);
-		update_view(data);
+	update_view(data);
 	if (!player->mouse_toggle)
 		mlx_mouse_move(data->mlx, data->mlx_win, WIN_WIDTH / 2, WIN_HEIGHT / 2);
 	return (0);
@@ -70,6 +92,50 @@ int	key_reader(int keycode, t_data *data)
 		set_move_cam(keycode, data);
 	else if (keycode == TOGGLE_MOUSE)
 		toggle_mouse(data);
+	if (keycode == INTERACT)
+	{
+		/* function that finds nearest door to player */
+			// 1.	go to map matrix and find player
+			// 2.	check squares around player and set all MAP_DOOR to MAP_MOVING_DOOR
+			// 3.	change the corresponding doors states to DOOR_OPENING
+			// 3.1  to find the corresponding door, go to sprites and find the one with the same
+			//		position as the MAP_MOVING_DOOR in the map
+			// Also dele this part below as it wont be needed \/
+		
+		static int doorToggle;
+		if (doorToggle == 0)
+		{
+			for (int i = 0; i < data->map.size.y; i++)
+				for (int j = 0; j < data->map.size.x; j++)
+					if (data->map.map[i][j] == MAP_DOOR)
+						data->map.map[i][j] = MAP_MOVING_DOOR;
+			for (int i = 0; i < data->sprite_amt ; i++)
+			{
+				if (data->sprites[i].type == SPRT_DOOR)
+				{
+					data->sprites[i].current_frame = 0;
+					data->sprites[i].state = D_OPENING;
+				}
+			}
+			doorToggle = 1;
+		}
+		else
+		{
+			for (int i = 0; i < data->map.size.y; i++)
+				for (int j = 0; j < data->map.size.x; j++)
+					if (data->map.map[i][j] == MAP_OPEN_DOOR)
+						data->map.map[i][j] = MAP_MOVING_DOOR;
+			for (int i = 0; i < data->sprite_amt ; i++)
+			{
+				if (data->sprites[i].type == SPRT_DOOR)
+				{
+					data->sprites[i].current_frame = 6;
+					data->sprites[i].state = D_CLOSING;
+				}
+			}
+			doorToggle = 0;
+		}
+	}
 	return (0);
 }
 

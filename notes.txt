@@ -5,21 +5,12 @@
 	=> if we are not using textures to do the floor or the ceiling,
 		we have to adapt the parsing
 
-	=> put constant values in the header
-
-	=> create linked list of hit objects for rays
-
-	=> Set the ceiling and floor colors via rgb values on .cub file
-
-
 	====================== TO DO
 
-	=> Parser floor and ceiling colours(for mandatory part)
+	=> Parser floor and ceiling colours (for mandatory part)
  
 	======================  EXTRAS
 
-	=> ceiling and floor textures
-	=> add transparency to door windows
 	=> actual vertical movement
 
 	======================  LEAKS AND CRASHES
@@ -27,6 +18,3 @@
 	=> apparently mlx_mouse_hide() function causes leaks, take note!
 		(if you press "ctrl" and close the program it leaks)
 		should be allowed because the leak isn't on our code.
-
-	=> if you go back and forward inside a sprite eventually there is
-		an invalid read on the sprite color

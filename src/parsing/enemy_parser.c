@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enemy_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 22:37:41 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/20 16:25:27 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:32:56 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	enemy_init(t_data *data, int y, int x)
 	int				ran;
 	struct timeval	time;
 	int				index;
-	
+
 	if (gettimeofday(&time, NULL) < 0)
 		free_and_exit(data, ERR_TIME, 1);
 	srand(time.tv_usec);
@@ -29,33 +29,30 @@ static void	enemy_init(t_data *data, int y, int x)
 	data->sprites[index].current_frame = ran;
 	data->sprites[index].type = SPRT_ENEMY;
 	data->sprites[index].coliders[0] = data->sprites[index].dir;
+	data->sprites[index].coliders[1] = data->sprites[index].dir;
 	rotate_point(&data->sprites[index].coliders[0], -45);
-	data->sprites[index].coliders[1] = data->sprites[index].dir;
 	rotate_point(&data->sprites[index].coliders[1], 45);
-	data->sprite_order[index] = index;
-	data->sprites[index].move = false;
-	data->sprites[index].follow = false;
-	data->sprite_amt++;
-	}
-
-static void	door_init(t_data *data, int i, int j)
-{
-	int index;
-	
-	index = data->sprite_amt;
-	data->sprites[index].texture = data->textures[EB0_IMG];
-	data->sprites[index].pos = (t_point){i , j };
-	data->sprites[index].dir = (t_point){0, 0};
-	data->sprites[index].current_frame = D0_IMG;
-	data->sprites[index].type = SPRT_DOOR;
-	data->sprites[index].coliders[0] = data->sprites[index].dir;
-	data->sprites[index].coliders[1] = data->sprites[index].dir;
-	data->sprites[index].move = false;
-	data->sprites[index].follow = false;
+	data->sprites[index].state = 0;
 	data->sprite_order[index] = index;
 	data->sprite_amt++;
 }
 
+static void	door_init(t_data *data, int i, int j)
+{
+	int	index;
+
+	index = data->sprite_amt;
+	data->sprites[index].texture = data->textures[EB0_IMG];
+	data->sprites[index].pos = (t_point){i, j};
+	data->sprites[index].dir = (t_point){0, 0}; // not used at all
+	data->sprites[index].current_frame = 0;
+	data->sprites[index].type = SPRT_DOOR;
+	data->sprites[index].state = D_CLOSED;
+	data->sprite_order[index] = index;
+	data->sprite_amt++;
+}
+
+// 	maybe change this to sprite parser
 void	enemy_parser(t_data *data)
 {
 	int	i;
@@ -71,16 +68,13 @@ void	enemy_parser(t_data *data)
 		j = -1;
 		while (data->map.map[i][++j])
 		{
-			if (data->map.map[i][j] == 'M')
+			if (data->map.map[i][j] == MAP_ENEMY)
 			{
 				enemy_init(data, i, j);
-				data->map.map[i][j] = '0';
+				data->map.map[i][j] = MAP_EMPTY;
 			}
-			if (data->map.map[i][j] == 'D')
+			if (data->map.map[i][j] == MAP_DOOR)
 				door_init(data, i, j);
 		}
 	}
-
-	
-		
 }
