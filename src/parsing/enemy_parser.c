@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 22:37:41 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/21 14:32:56 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/21 16:12:31 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ static void	enemy_init(t_data *data, int y, int x)
 static void	door_init(t_data *data, int i, int j)
 {
 	int	index;
-
+	
 	index = data->sprite_amt;
 	data->sprites[index].texture = data->textures[EB0_IMG];
-	data->sprites[index].pos = (t_point){i, j};
+	data->sprites[index].pos = (t_point){j + 0.5, i + 0.5};
 	data->sprites[index].dir = (t_point){0, 0}; // not used at all
 	data->sprites[index].current_frame = 0;
 	data->sprites[index].type = SPRT_DOOR;

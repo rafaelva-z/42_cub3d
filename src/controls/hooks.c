@@ -6,13 +6,13 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:44:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/21 15:00:44 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/21 16:13:42 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-void	update_sprite(t_sprite *sprites, int sprite_amt)
+void	update_sprite(t_data *data, t_sprite *sprites, int sprite_amt)
 {
 	int	i;
 
@@ -31,11 +31,13 @@ void	update_sprite(t_sprite *sprites, int sprite_amt)
 			{
 				sprites[i].state = D_OPEN;
 				sprites[i].current_frame = 0;
+				data->map.map[(int)sprites[i].pos.y][(int)sprites[i].pos.x] = MAP_OPEN_DOOR;
 			}
 			else if (sprites[i].current_frame < 0)
 			{
 				sprites[i].state = D_CLOSED;
 				sprites[i].current_frame = 0;
+				data->map.map[(int)sprites[i].pos.y][(int)sprites[i].pos.x] = MAP_DOOR;
 			}
 		}
 		else
@@ -60,7 +62,7 @@ int	game_update(t_data *data)
 	while (time_stamp(data) < data->next_frame)
 		;
 	data->next_frame += FRAME_RATE;
-	update_sprite(data->sprites, data->sprite_amt);
+	update_sprite(data, data->sprites, data->sprite_amt);
 	if (player->move)
 		update += move_player(data);
 	if (player->move_cam || !player->mouse_toggle)
@@ -94,46 +96,28 @@ int	key_reader(int keycode, t_data *data)
 		toggle_mouse(data);
 	if (keycode == INTERACT)
 	{
-		/* function that finds nearest door to player */
-			// 1.	go to map matrix and find player
-			// 2.	check squares around player and set all MAP_DOOR to MAP_MOVING_DOOR
-			// 3.	change the corresponding doors states to DOOR_OPENING
-			// 3.1  to find the corresponding door, go to sprites and find the one with the same
-			//		position as the MAP_MOVING_DOOR in the map
-			// Also dele this part below as it wont be needed \/
-		
 		static int doorToggle;
-		if (doorToggle == 0)
+		int i;
+
+		i = -1;
+		while (++i < data->sprite_amt)
 		{
-			for (int i = 0; i < data->map.size.y; i++)
-				for (int j = 0; j < data->map.size.x; j++)
-					if (data->map.map[i][j] == MAP_DOOR)
-						data->map.map[i][j] = MAP_MOVING_DOOR;
-			for (int i = 0; i < data->sprite_amt ; i++)
+			if (data->sprites[i].type != SPRT_DOOR || (data->sprites[i].type == SPRT_DOOR && data->sprites[i].state == D_MOVING))
+				continue ;
+			if (data->sprites[i].dist_player < 1.5 && data->sprites[i].dist_player > (double)0.55)
 			{
-				if (data->sprites[i].type == SPRT_DOOR)
+				if (data->sprites[i].state == D_CLOSED)
 				{
-					data->sprites[i].current_frame = 0;
 					data->sprites[i].state = D_OPENING;
+					data->sprites[i].current_frame = 0;
 				}
-			}
-			doorToggle = 1;
-		}
-		else
-		{
-			for (int i = 0; i < data->map.size.y; i++)
-				for (int j = 0; j < data->map.size.x; j++)
-					if (data->map.map[i][j] == MAP_OPEN_DOOR)
-						data->map.map[i][j] = MAP_MOVING_DOOR;
-			for (int i = 0; i < data->sprite_amt ; i++)
-			{
-				if (data->sprites[i].type == SPRT_DOOR)
+				else if (data->sprites[i].state == D_OPEN)
 				{
-					data->sprites[i].current_frame = 6;
 					data->sprites[i].state = D_CLOSING;
+					data->sprites[i].current_frame = 6;
 				}
+				data->map.map[(int)data->sprites[i].pos.y][(int)data->sprites[i].pos.x] = MAP_MOVING_DOOR;
 			}
-			doorToggle = 0;
 		}
 	}
 	return (0);
