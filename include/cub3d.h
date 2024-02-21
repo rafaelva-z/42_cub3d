@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/20 16:20:20 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/21 08:59:03 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@
 
 // enemy fov
 # define ENEMY_FOV 30
+# define ENEMY_SPD 0.025
 
 
 //	Screen Resolution
@@ -308,7 +309,7 @@ void		rc_sprites(t_data *data);
 void		enemy(t_data *data);
 
 //		enemy_utils.c
-void		rotate_enemy(t_sprite *enemy, double angle, int *rot_dir);
+void		rotate_enemy(t_sprite *enemy, double angle);
 
 
 /* =====================================================================*

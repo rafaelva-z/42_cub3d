@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 22:37:41 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/20 16:25:27 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/20 21:18:10 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,12 @@ static void	enemy_init(t_data *data, int y, int x)
 	data->sprites[index].dir = (t_point){1, 0};
 	data->sprites[index].current_frame = ran;
 	data->sprites[index].type = SPRT_ENEMY;
-	data->sprites[index].coliders[0] = data->sprites[index].dir;
-	rotate_point(&data->sprites[index].coliders[0], -45);
-	data->sprites[index].coliders[1] = data->sprites[index].dir;
-	rotate_point(&data->sprites[index].coliders[1], 45);
+	data->sprites[index].coliders[0].x = 0.60 * data->sprites[index].dir.x;
+	data->sprites[index].coliders[0].y = 0.60 * data->sprites[index].dir.y;
+	rotate_point(&data->sprites[index].coliders[0], 45);
+	data->sprites[index].coliders[1].x = 0.60 * data->sprites[index].dir.x;
+	data->sprites[index].coliders[1].y = 0.60 * data->sprites[index].dir.y;
+	rotate_point(&data->sprites[index].coliders[1], -45);
 	data->sprite_order[index] = index;
 	data->sprites[index].move = false;
 	data->sprites[index].follow = false;
