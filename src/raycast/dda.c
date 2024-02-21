@@ -99,7 +99,14 @@ void	dda(t_ray *ray, t_data *data)
 	current = (t_point){data->player.pos.x, data->player.pos.y};
 	dda_start(&data->player, &step_size, &ray_len, &step, ray);
 	while (is_inside_map(current, data->map.size) && !is_wall(current, data))
+	{
+		// if (is_cdoor(current, data))
+		// {
+		// 	ray->distance = -100;
+		// 	return ;
+		// }
 		raycast_loop(&current, &ray_len, &step, &ray->side, &step_size);
+	}
 	if (ray->side == 0)
 		ray->distance = ray_len.x - step_size.x;
 	else

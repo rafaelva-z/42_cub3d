@@ -148,9 +148,9 @@ void	rc_sprites(t_data *data)
 					int tex_y = ((d * TEXTURE_HEIGHT) / sprite_size.y) / 256;
 					int color;
 					if (tex_x >= 0 && tex_x < TEXTURE_WIDTH && tex_y >= 0 && tex_y < TEXTURE_HEIGHT)
-                        color = data->sprites[data->sprite_order[i]].texture->color_grid[tex_y][tex_x];
-                    else
-                        color = 0;
+						color = data->sprites[data->sprite_order[i]].texture->color_grid[tex_y][tex_x];
+					else
+						color = 0;
 					draw_pixel(data->img, screen_x, y, shader(color, abs(data->sprites[data->sprite_order[i]].dist_player), 2.0, 0.3, 1));
 				}
 			}
