@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 17:06:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/21 15:04:55 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/21 16:52:16 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	dda_enemy(t_ray *ray, t_data *data)
 			return ;
 		}
 	}
+	ray->distance = 1;
 }
 int	dda_door_ray(t_ray *ray, t_data *data, t_point current, t_point step, t_point step_size, t_point ray_len)
 {
