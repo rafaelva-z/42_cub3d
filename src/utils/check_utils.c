@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:57:49 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/21 14:59:43 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/21 16:50:44 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	is_player(t_point point, t_data *data)
 	if ((int)point.y == (int)data->player.pos.y
 		&& (int)point.x == (int)data->player.pos.x)
 		return (-1);
+	return (0);
 }
 
 int	is_wall(t_point point, t_data *data)
