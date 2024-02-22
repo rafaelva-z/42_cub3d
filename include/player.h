@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 15:38:11 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/21 12:26:13 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/22 13:05:10 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,12 @@
 # define MOVE_BACK_B	1
 # define MOVE_LEFT_B	2
 # define MOVE_RIGHT_B	3
-
-# define ROT_B			0
-# define RROT_B			1
-# define ZOOM_IN_B		2
-# define ZOOM_OUT_B		3
-# define LOOK_UP_B		4
-# define LOOK_DOWN_B	5
+# define ROT_B			4
+# define RROT_B			5
+# define ZOOM_IN_B		6
+# define ZOOM_OUT_B		7
+# define LOOK_UP_B		8
+# define LOOK_DOWN_B	9
 
 //	Player Constants
 

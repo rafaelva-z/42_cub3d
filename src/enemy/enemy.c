@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 22:26:46 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/21 17:18:04 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/22 11:26:26 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static void	player_in_sight(t_data *data, t_sprite *enemy)
 {
 	double	dist;
 
-	enemy_raycast(data, enemy);
+	rc_enemy(data, enemy);
 	if (enemy->state != E_FOLLOW)
 		return ;
 	enemy->dir.x = data->player.pos.x - enemy->pos.x;

@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:44:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/21 16:13:42 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/22 13:43:02 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ int	game_update(t_data *data)
 		;
 	data->next_frame += FRAME_RATE;
 	update_sprite(data, data->sprites, data->sprite_amt);
-	if (player->move)
+	if (player->actions)
 		update += move_player(data);
-	if (player->move_cam || !player->mouse_toggle)
+	if (player->actions || !player->mouse_toggle)
 	{
 		update += rotate_player(&data->player);
 		update += vertical_movement(&data->player);
@@ -86,40 +86,15 @@ int	key_reader(int keycode, t_data *data)
 	if (keycode == KEY_ESC)
 		close_pgm(data);
 	else if (keycode == MOVE_FORWARD || keycode == MOVE_BACK
-		|| keycode == MOVE_LEFT || keycode == MOVE_RIGHT)
-		set_move(keycode, data);
-	else if (keycode == ZOOM_OUT || keycode == ZOOM_IN || keycode == ROT
-		|| keycode == RROT || keycode == ZOOM_IN || keycode == ZOOM_OUT
-		|| keycode == LOOK_UP || keycode == LOOK_DOWN)
-		set_move_cam(keycode, data);
+		|| keycode == MOVE_LEFT || keycode == MOVE_RIGHT || keycode == ZOOM_OUT
+		|| keycode == ZOOM_IN || keycode == ROT || keycode == RROT
+		|| keycode == ZOOM_IN || keycode == ZOOM_OUT || keycode == LOOK_UP
+		|| keycode == LOOK_DOWN)
+		set_actions(keycode, data);
 	else if (keycode == TOGGLE_MOUSE)
 		toggle_mouse(data);
 	if (keycode == INTERACT)
-	{
-		static int doorToggle;
-		int i;
-
-		i = -1;
-		while (++i < data->sprite_amt)
-		{
-			if (data->sprites[i].type != SPRT_DOOR || (data->sprites[i].type == SPRT_DOOR && data->sprites[i].state == D_MOVING))
-				continue ;
-			if (data->sprites[i].dist_player < 1.5 && data->sprites[i].dist_player > (double)0.55)
-			{
-				if (data->sprites[i].state == D_CLOSED)
-				{
-					data->sprites[i].state = D_OPENING;
-					data->sprites[i].current_frame = 0;
-				}
-				else if (data->sprites[i].state == D_OPEN)
-				{
-					data->sprites[i].state = D_CLOSING;
-					data->sprites[i].current_frame = 6;
-				}
-				data->map.map[(int)data->sprites[i].pos.y][(int)data->sprites[i].pos.x] = MAP_MOVING_DOOR;
-			}
-		}
-	}
+		door_interactions(data);
 	return (0);
 }
 
@@ -129,25 +104,25 @@ int	key_reader(int keycode, t_data *data)
 int	key_release(int keycode, t_player *player)
 {
 	if (keycode == MOVE_FORWARD)
-		player->move &= player->move ^ 1 << MOVE_FORWARD_B;
+		player->actions &= player->actions ^ 1 << MOVE_FORWARD_B;
 	else if (keycode == MOVE_BACK)
-		player->move &= player->move ^ (1 << MOVE_BACK_B);
+		player->actions &= player->actions ^ (1 << MOVE_BACK_B);
 	else if (keycode == MOVE_LEFT)
-		player->move &= player->move ^ (1 << MOVE_LEFT_B);
+		player->actions &= player->actions ^ (1 << MOVE_LEFT_B);
 	else if (keycode == MOVE_RIGHT)
-		player->move &= player->move ^ (1 << MOVE_RIGHT_B);
+		player->actions &= player->actions ^ (1 << MOVE_RIGHT_B);
 	else if (keycode == ROT)
-		player->move_cam &= player->move_cam ^ 1 << ROT_B;
+		player->actions &= player->actions ^ 1 << ROT_B;
 	else if (keycode == RROT)
-		player->move_cam &= player->move_cam ^ 1 << RROT_B;
+		player->actions &= player->actions ^ 1 << RROT_B;
 	else if (keycode == ZOOM_OUT)
-		player->move_cam &= player->move_cam ^ 1 << ZOOM_OUT_B;
+		player->actions &= player->actions ^ 1 << ZOOM_OUT_B;
 	else if (keycode == ZOOM_IN)
-		player->move_cam &= player->move_cam ^ 1 << ZOOM_IN_B;
+		player->actions &= player->actions ^ 1 << ZOOM_IN_B;
 	else if (keycode == LOOK_UP)
-		player->move_cam &= player->move_cam ^ 1 << LOOK_UP_B;
+		player->actions &= player->actions ^ 1 << LOOK_UP_B;
 	else if (keycode == LOOK_DOWN)
-		player->move_cam &= player->move_cam ^ 1 << LOOK_DOWN_B;
+		player->actions &= player->actions ^ 1 << LOOK_DOWN_B;
 	return (0);
 }
 

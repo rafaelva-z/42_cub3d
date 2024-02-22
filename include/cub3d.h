@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/21 16:30:40 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/22 13:48:18 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,9 +221,7 @@ typedef struct s_sprite
 	t_point	dir;
 	t_point	coliders[2];
 	t_img	*texture;
-	bool	move;
-	bool	follow;
-	short	state; // rm follow to state because state can be applied to all sprites
+	short	state;
 	double	dist_player;
 	short	current_frame;
 	short	type;
@@ -231,8 +229,7 @@ typedef struct s_sprite
 
 typedef struct s_player
 {
-	int			move;
-	int			move_cam;
+	int			actions;
 	t_point		mouse;
 	int			mouse_toggle;
 	t_point		pos;
@@ -270,8 +267,7 @@ typedef struct s_data
  * =====================================================================*/
 
 //			controls.c
-void		set_move(int keycode, t_data *data);
-void		set_move_cam(int keycode, t_data *data);
+void		set_actions(int keycode, t_data *data);
 
 //			actions.c
 int			vertical_movement(t_player *player);
@@ -279,6 +275,7 @@ int			rotate_player(t_player *player);
 int			adjust_fov(t_player *player);
 int			move_player(t_data *data);
 void		toggle_mouse(t_data *data);
+void		door_interactions(t_data *data);
 
 //			hooks.c
 int			game_update(t_data *data);
@@ -325,8 +322,8 @@ void		dda_enemy(t_ray *ray, t_data *data);
 void		dda(t_ray *ray, t_data *data);
 
 //			raycat.c
-void		raycast(t_data *data);
-void		enemy_raycast(t_data *data, t_sprite *enemy);
+void		rc_player(t_data *data);
+void		rc_enemy(t_data *data, t_sprite *enemy);
 
 //			rc_spritecast.c
 void		rc_sprites(t_data *data);
