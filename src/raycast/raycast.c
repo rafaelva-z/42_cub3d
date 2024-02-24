@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:41:12 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/21 17:28:03 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/21 18:18:44 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void	enemy_raycast(t_data *data, t_sprite *enemy)
 	rotate_point(&ray.dir, -(ENEMY_FOV / 2));
 	while (r < ENEMY_FOV)
 	{
-		dda_enemy(&ray, data);
+		dda_enemy(&ray, data, enemy);
 		if (ray.distance == -1)
 		{
 			enemy->state = E_FOLLOW;
