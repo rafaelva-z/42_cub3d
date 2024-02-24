@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/21 16:30:40 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/24 12:12:34 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,16 @@
 # define ERR_FD			"cub3d: file opening failed\n"
 # define ERR_MLX_WIN	"cub3d: mlx_new_window() failed\n"
 # define ERR_MAP		"cub3d: invalid map\n"
+# define ERR_DOOR		"cub3d: invalid door placement\n"
 # define ERR_IMG		"cub3d: Image failed loading\n"
 # define ERR_TIME		"cub3d: timestamp failed\n"
 # define MSG_EXIT		"cub3d: Thank you for testing!\n"
 # define MSG_LOSE		"cub3d: You lost!\n"
 
-// enemy fov
+// enemy
 # define ENEMY_FOV 30
-# define ENEMY_SPD 0.025
+# define ENEMY_SPD 0.07
+# define ENEMY_FLW_TIME 5000
 
 //	Screen Resolution
 # define WIN_WIDTH		900
@@ -217,16 +219,15 @@ typedef struct s_file
 
 typedef struct s_sprite
 {
-	t_point	pos;
-	t_point	dir;
-	t_point	coliders[2];
-	t_img	*texture;
-	bool	move;
-	bool	follow;
-	short	state; // rm follow to state because state can be applied to all sprites
-	double	dist_player;
-	short	current_frame;
-	short	type;
+	t_point		pos;
+	t_point		dir;
+	t_point		coliders[2];
+	t_img		*texture;
+	uint16_t	follow_timer;
+	short		state; // rm follow to state because state can be applied to all sprites
+	double		dist_player;
+	short		current_frame;
+	short		type;
 }				t_sprite;
 
 typedef struct s_player
@@ -321,7 +322,7 @@ void		enemy_parser(t_data *data);
  * =====================================================================*/
 
 //			dda.c
-void		dda_enemy(t_ray *ray, t_data *data);
+void		dda_enemy(t_ray *ray, t_data *data, t_sprite *enemy);
 void		dda(t_ray *ray, t_data *data);
 
 //			raycat.c

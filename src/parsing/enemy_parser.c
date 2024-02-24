@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enemy_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 22:37:41 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/21 16:54:35 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/21 18:33:30 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void	enemy_init(t_data *data, int y, int x)
 	data->sprites[index].coliders[1].y = 0.60 * data->sprites[index].dir.y;
 	rotate_point(&data->sprites[index].coliders[1], -45);
 	data->sprites[index].state = E_IDLE;
+	data->sprites[index].follow_timer = 0;
 	data->sprite_order[index] = index;
 	data->sprite_amt++;
 }

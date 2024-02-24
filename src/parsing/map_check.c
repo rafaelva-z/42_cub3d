@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 12:03:00 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/10 23:37:00 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/24 12:15:53 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,32 @@ static void	minimap_negative(char **minimap)
 	}
 }
 
+static void	door_check(t_data *data)
+{
+	int		i;
+	int		j;
+	char	**map;
+
+	i = -1;
+	map = data->map.map;
+	while (map[++i])
+	{
+		j = -1;
+		while (map[i][++j])
+		{
+			if (map[i][j] != 'D')
+				continue ;
+			if (map[i + 1][j] == '1' && map[i - 1][j] == '1'
+					&& map[i][j + 1] != '1' && map[i][j - 1] != '1')
+				continue ;
+			if (map[i + 1][j] != '1' && map[i - 1][j] != '1'
+					&& map[i][j + 1] == '1' && map[i][j - 1] == '1')
+				continue ;
+			free_and_exit(data, ERR_DOOR, 1);
+		}
+	}
+}
+
 void	map_check(t_data *data)
 {
 	int	i;
@@ -122,6 +148,7 @@ void	map_check(t_data *data)
 	minimap_negative(data->map.minimap);
 	character_check(data);
 	borther_check(data);
+	door_check(data);
 	while (data->map.map[++i])
 		if (!str_finder(data->map.map[i], "1"))
 			free_and_exit(data, "cub3d: Error: Map cannot contain empty lines\n", 1);
