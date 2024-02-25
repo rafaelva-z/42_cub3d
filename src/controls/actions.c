@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 14:59:53 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/22 13:42:20 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/23 18:42:37 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,28 +61,6 @@ int	move_player(t_data *data)
 }
 
 /**
- * @brief	Updates the player's field of view based on the keys pressed
-*/
-int	adjust_fov(t_player *player)
-{
-	// find a better way to actually change fov
-	if (player->actions & 1 << ZOOM_IN_B && player->plane.x < 10)
-	{
-		player->fov -= FOV_SPD;
-		player->plane = (t_point){player->plane.x * 0.9, player->plane.y * 0.9};
-		return (1);
-	}
-	else if (player->actions & 1 << ZOOM_OUT_B && player->fov < 150)
-	{
-		player->fov += FOV_SPD;
-		player->plane = (t_point){player->plane.x * 1.111111111,
-			player->plane.y * 1.111111111};
-		return (1);
-	}
-	return (0);
-}
-
-/**
  * @brief	Updates the player's rotation based on the keys pressed
 */
 int	rotate_player(t_player *player)
@@ -102,28 +80,6 @@ int	rotate_player(t_player *player)
 	return (1);
 }
 
-/**
- * @brief	Updates the player's vertical view based on the keys pressed
-*/
-int	vertical_movement(t_player *player)
-{
-	if (player->actions & 1 << LOOK_UP_B && player->vertical < 100)
-	{
-		player->vertical += VERTICAL_SPD;
-		return (1);
-	}
-	else if (player->actions & 1 << LOOK_DOWN_B
-		&& player->vertical > -100)
-	{
-		player->vertical -= VERTICAL_SPD;
-		return (1);
-	}
-	return (0);
-}
-
-/**
- * @brief	Toggles the mouse controls and visibility
-*/
 void	toggle_mouse(t_data *data)
 {
 	if (data->player.mouse_toggle)
@@ -156,7 +112,53 @@ void	door_interactions(t_data *data)
 				data->sprites[i].state = D_CLOSING;
 				data->sprites[i].current_frame = 6;
 			}
-			data->map.map[(int)data->sprites[i].pos.y][(int)data->sprites[i].pos.x] = MAP_MOVING_DOOR;
+			data->map.map[(int)data->sprites[i].pos.y]
+				[(int)data->sprites[i].pos.x] = MAP_MOVING_DOOR;
 		}
 	}
 }
+
+/**
+ * @brief	Updates the player's field of view based on the keys pressed
+*/
+// int	adjust_fov(t_player *player)
+// {
+// 	// find a better way to actually change fov
+// 	if (player->actions & 1 << ZOOM_IN_B && player->plane.x < 10)
+// 	{
+// 		player->fov -= FOV_SPD;
+// 		player->plane = (t_point){player->plane.x * 0.9, player->plane.y * 0.9};
+// 		return (1);
+// 	}
+// 	else if (player->actions & 1 << ZOOM_OUT_B && player->fov < 150)
+// 	{
+// 		player->fov += FOV_SPD;
+// 		player->plane = (t_point){player->plane.x * 1.111111111,
+// 			player->plane.y * 1.111111111};
+// 		return (1);
+// 	}
+// 	return (0);
+// }
+
+/**
+ * @brief	Updates the player's vertical view based on the keys pressed
+*/
+// int	vertical_movement(t_player *player)
+// {
+// 	if (player->actions & 1 << LOOK_UP_B && player->vertical < 100)
+// 	{
+// 		player->vertical += VERTICAL_SPD;
+// 		return (1);
+// 	}
+// 	else if (player->actions & 1 << LOOK_DOWN_B
+// 		&& player->vertical > -100)
+// 	{
+// 		player->vertical -= VERTICAL_SPD;
+// 		return (1);
+// 	}
+// 	return (0);
+// }
+
+/**
+ * @brief	Toggles the mouse controls and visibility
+*/

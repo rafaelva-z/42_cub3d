@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/22 13:48:18 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/24 17:51:38 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 # define DEBUG 0
-# define SHADER 1
+# define SHADER 0
 
 # include "player.h"
 # include "../lib/libft/libft.h"
@@ -183,10 +183,12 @@ typedef struct s_ray
 {
 	t_point		dir;
 	t_point		last_hit;
+	t_point		length;
+	t_point		step_size;
+	t_point		step_dir;
 	double		distance;
 	int			wall_height;
 	int			side;
-	// linked list of hit points
 }				t_ray;
 
 typedef struct s_img
@@ -318,8 +320,12 @@ void		enemy_parser(t_data *data);
  * =====================================================================*/
 
 //			dda.c
-void		dda_enemy(t_ray *ray, t_data *data);
 void		dda(t_ray *ray, t_data *data);
+void		dda_enemy(t_ray *ray, t_data *data);
+void		dda_door(t_ray *ray, t_data *data);
+int			dda_loop(t_point *current, t_ray *ray);
+void		dda_start(t_player *player, t_ray *ray);
+int			dda_door_ray(t_ray *ray, t_player *player, t_point current);
 
 //			raycat.c
 void		rc_player(t_data *data);
@@ -329,19 +335,36 @@ void		rc_enemy(t_data *data, t_sprite *enemy);
 void		rc_sprites(t_data *data);
 
 /* =====================================================================*
+ *		/src/rendering/													*
+ * =====================================================================*/
+
+//			draw_stuff.c
+void		draw_wall(t_data *data, int r, t_ray *ray, t_sprite *door);
+
+//			draw_line.c
+void		draw_vertical_line(t_point start, int size, t_img *img,
+				int color);
+void		draw_vertical_line_texture(t_point start, t_img *texture,
+				t_data *data, t_ray *ray);
+void		draw_pixel(t_img *img, int x, int y, int color);
+
+/* =====================================================================*
  *		/src/enemy/														*
  * =====================================================================*/
 
-//		enemy.c
+//			enemy.c
 void		enemy(t_data *data);
 
-//		enemy_utils.c
+//			enemy_utils.c
 void		rotate_enemy(t_sprite *enemy, double angle);
 
 
 /* =====================================================================*
  *		/src/utils/														*
  * =====================================================================*/
+
+//			update_sprite.c
+void		update_sprite(t_data *data, t_sprite *sprites, int sprite_amt);
 
 //			utils.c
 void		initializer(t_data *data);
@@ -352,24 +375,14 @@ int 		is_player(t_point point, t_data *data);
 int			is_wall(t_point point, t_data *data);
 int			is_door(t_point current, t_data *data);
 void		update_view(t_data *data);
-void		begining_time_stamp(t_data *data);
-uint64_t	time_stamp(t_data *data);
+void		begining_timestamp(t_data *data);
+uint64_t	get_timestamp(t_data *data);
 
 //			utils_2.c
 t_point		vector_add(t_point v1, t_point v2);
 void		vector_norm(t_point *vector);
 t_point		vector_rotate(t_point vector, double angle);
 void		rotate_point(t_point *point, double angle);
-
-//			draw_line.c
-void		draw_vertical_line(t_point start, int size, t_img *img,
-				int color);
-void		draw_vertical_line_texture(t_point start, t_img *texture,
-				t_data *data, t_ray *ray);
-void		draw_vert_line_grad_center(t_img *img, int x, int vertical);
-
-//			draw_pixel.c
-void		draw_pixel(t_img *img, int x, int y, int color);
 
 //			free.c
 void		free_data(t_data *data);

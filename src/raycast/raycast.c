@@ -6,54 +6,11 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 18:41:12 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/22 12:00:57 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/24 17:38:12 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
-
-/**
- * @brief	Sets the texture to be drawn on the wall based on "side" variable
- * 			form the given ray. 0 West/East; 1 North/South; 3/4 Door.
-*/
-void	set_wall_texture(t_img **txt_lst, t_ray *r, t_sprite *door, t_img **txt)
-{
-	if (r->side == 0)
-	{
-		if (r->dir.x < 0)
-			*txt = txt_lst[WE_IMG];
-		else
-			*txt = txt_lst[EA_IMG];
-	}
-	else if (r->side == 1)
-	{
-		if (r->dir.y < 0)
-			*txt = txt_lst[NO_IMG];
-		else
-			*txt = txt_lst[SO_IMG];
-	}
-	else if (r->side == 3 || r->side == 4)
-	{
-		if (door)
-			*txt = txt_lst[D0_IMG + door->current_frame];
-		else
-			*txt = txt_lst[D0_IMG];
-	}
-}
-
-/**
- * @brief	
-*/
-static void	draw_wall(t_data *data, int r, t_ray *ray, t_sprite *door)
-{
-	int		sky_size;
-	t_img	*texture;
-
-	sky_size = ((WIN_HEIGHT - ray->wall_height) / 2) + data->player.vertical;
-	set_wall_texture(data->textures, ray, door, &texture);
-	draw_vertical_line_texture((t_point){r, sky_size}, texture, data, ray);
-}
-
 
 void	rc_fc_loop(t_point *r, t_point raydir0, t_point raydir1, t_point *color, t_data *data)
 {
@@ -127,7 +84,7 @@ void	rc_walls(t_data *data, t_player *player)
 }
 
 /**
- * @brief	A raycast function that draws only opening/closing doors
+ * @brief	A raycast function that draws only opening or closing doors
 */
 void	rc_door(t_data *data, t_sprite *door, t_player *player)
 {
@@ -146,7 +103,7 @@ void	rc_door(t_data *data, t_sprite *door, t_player *player)
 			/ (ray.distance * (data->player.fov * 0.0151));
 		if (ray.wall_height < 0)
 			continue ;
-		draw_wall(data, r, &ray, door); // draw door
+		draw_wall(data, r, &ray, door);
 	}
 }
 
@@ -159,29 +116,4 @@ void	rc_player(t_data *data)
 	rc_floor_ceiling(data);
 	rc_walls(data, &data->player);
 	rc_sprites(data);
-}
-
-/**
- * @brief	The raycast main function
-*/
-void	rc_enemy(t_data *data, t_sprite *enemy)
-{
-	t_ray		ray;
-	int			r;
-
-	r = 0;
-	ray.dir.x = enemy->dir.x;
-	ray.dir.y = enemy->dir.y;
-	rotate_point(&ray.dir, -(ENEMY_FOV / 2));
-	while (r < ENEMY_FOV)
-	{
-		dda_enemy(&ray, data);
-		if (ray.distance == -1)
-		{
-			enemy->state = E_FOLLOW;
-			return ;
-		}
-		rotate_point(&ray.dir, 1);
-		r++;
-	}
 }

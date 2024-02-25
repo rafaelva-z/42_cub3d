@@ -6,13 +6,14 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 17:45:18 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/22 12:57:24 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/24 17:34:06 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-double	def_texture_start(t_ray *ray, t_img *texture, int *size, t_data *data)
+static double	def_texture_start(t_ray *ray, t_img *texture, int *size,
+					t_data *data)
 {
 	double	wallx;
 
@@ -105,25 +106,25 @@ void	draw_vertical_line(t_point start, int size, t_img *img, int color)
 	}
 }
 
-void	draw_vert_line_grad_center(t_img *img, int x, int vertical)
-{
-	int	y;
-	int b;
-	int	sky_color;
-	int	floor_color;
+// void	draw_vert_line_grad_center(t_img *img, int x, int vertical)
+// {
+// 	int	y;
+// 	int b;
+// 	int	sky_color;
+// 	int	floor_color;
 
-	sky_color = (SKY_COLOR & 0xfefefefe) >> 1;
-	floor_color = FLOOR_COLOR;
-	b = WIN_HEIGHT - 1;
-	if (x >= WIN_WIDTH || x < 0)
-		return ;
-	y = 0;
-	while (y < WIN_HEIGHT / 2 + vertical)
-		draw_pixel(img, x, y++, sky_color);
-	while (b > y)
-	{
-		if (!(b % 200) || !(b % 300))
-			floor_color = (floor_color & 0xfefefefe) >> 1;
-		draw_pixel(img, x, b--, floor_color);
-	}
-}
+// 	sky_color = (SKY_COLOR & 0xfefefefe) >> 1;
+// 	floor_color = FLOOR_COLOR;
+// 	b = WIN_HEIGHT - 1;
+// 	if (x >= WIN_WIDTH || x < 0)
+// 		return ;
+// 	y = 0;
+// 	while (y < WIN_HEIGHT / 2 + vertical)
+// 		draw_pixel(img, x, y++, sky_color);
+// 	while (b > y)
+// 	{
+// 		if (!(b % 200) || !(b % 300))
+// 			floor_color = (floor_color & 0xfefefefe) >> 1;
+// 		draw_pixel(img, x, b--, floor_color);
+// 	}
+// }

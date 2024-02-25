@@ -6,48 +6,11 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:44:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/22 13:43:02 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/23 19:25:44 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
-
-void	update_sprite(t_data *data, t_sprite *sprites, int sprite_amt)
-{
-	int	i;
-
-	i = -1;
-	while (++i < sprite_amt)
-	{
-		if (sprites[i].type == SPRT_DOOR)
-		{
-			if (sprites[i].state == D_CLOSED || sprites[i].state == D_OPEN)
-				continue ;
-			else if (sprites[i].state == D_OPENING)
-				sprites[i].current_frame++;
-			else if (sprites[i].state == D_CLOSING)
-				sprites[i].current_frame--;
-			if (sprites[i].current_frame > 6)
-			{
-				sprites[i].state = D_OPEN;
-				sprites[i].current_frame = 0;
-				data->map.map[(int)sprites[i].pos.y][(int)sprites[i].pos.x] = MAP_OPEN_DOOR;
-			}
-			else if (sprites[i].current_frame < 0)
-			{
-				sprites[i].state = D_CLOSED;
-				sprites[i].current_frame = 0;
-				data->map.map[(int)sprites[i].pos.y][(int)sprites[i].pos.x] = MAP_DOOR;
-			}
-		}
-		else
-		{
-			sprites[i].current_frame++;
-			if (sprites[i].current_frame > 6)
-				sprites[i].current_frame = 0;
-		}
-	}
-}
 
 /**
  * @brief Runs every tick, and updates the player's position and view
@@ -59,18 +22,14 @@ int	game_update(t_data *data)
 
 	update = 0;
 	player = &data->player;
-	while (time_stamp(data) < data->next_frame)
+	while (get_timestamp(data) < data->next_frame)
 		;
 	data->next_frame += FRAME_RATE;
 	update_sprite(data, data->sprites, data->sprite_amt);
 	if (player->actions)
 		update += move_player(data);
 	if (player->actions || !player->mouse_toggle)
-	{
 		update += rotate_player(&data->player);
-		update += vertical_movement(&data->player);
-		update += adjust_fov(&data->player);
-	}
 	enemy(data);
 	update_view(data);
 	if (!player->mouse_toggle)
@@ -153,19 +112,3 @@ int	close_pgm(t_data *data)
 	free_and_exit(data, MSG_EXIT, 0);
 	return (0);
 }
-
-// int	automation(t_data *data)
-// {
-// 	static uint64_t	texture_change;
-
-// 	if (texture_change == 0)
-// 		texture_change = time_stamp(data) + (uint64_t)200;
-// 	if (time_stamp(data) > texture_change)
-// 	{
-// 		if (data->enemy_indx < 6)
-// 			data->enemy_indx++;
-// 		else
-// 			data->enemy_indx = 0;
-// 	}
-// 	enemy(data);
-// }
