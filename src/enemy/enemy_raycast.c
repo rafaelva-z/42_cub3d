@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 17:35:38 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/24 17:35:53 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/25 14:34:56 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	rc_enemy(t_data *data, t_sprite *enemy)
 	rotate_point(&ray.dir, -(ENEMY_FOV / 2));
 	while (r < ENEMY_FOV)
 	{
-		dda_enemy(&ray, data);
+		dda_enemy(&ray, data, enemy);
 		if (ray.distance == -1)
 		{
 			enemy->state = E_FOLLOW;

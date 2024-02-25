@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 17:06:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/24 17:53:30 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/25 14:29:42 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,31 +16,31 @@
  *	@brief	Initializes "step" based on the ray direction, and "raylen" to the
  *			ray starting position based on the current map cell.
 */
-void	dda_start(t_player *player, t_ray *ray)
+void	dda_start(t_point *pos, t_ray *ray)
 {
 	if (ray->dir.x < 0)
 	{
 		ray->step_dir.x = -1;
-		ray->length.x = (player->pos.x - floor(player->pos.x))
+		ray->length.x = (pos->x - floor(pos->x))
 			* ray->step_size.x;
 	}
 	else
 	{
 		ray->step_dir.x = 1;
-		ray->length.x = ((floor(player->pos.x) + 1)
-				- player->pos.x) * ray->step_size.x;
+		ray->length.x = ((floor(pos->x) + 1)
+				- pos->x) * ray->step_size.x;
 	}
 	if (ray->dir.y < 0)
 	{
 		ray->step_dir.y = -1;
-		ray->length.y = (player->pos.y - floor(player->pos.y))
+		ray->length.y = (pos->y - floor(pos->y))
 			* ray->step_size.y;
 	}
 	else
 	{
 		ray->step_dir.y = 1;
-		ray->length.y = ((floor(player->pos.y) + 1)
-				- player->pos.y) * ray->step_size.y;
+		ray->length.y = ((floor(pos->y) + 1)
+				- pos->y) * ray->step_size.y;
 	}
 }
 
@@ -60,15 +60,15 @@ int	dda_loop(t_point *current, t_ray *ray)
 	}
 }
 
-void	dda_enemy(t_ray *ray, t_data *data)
+void	dda_enemy(t_ray *ray, t_data *data, t_sprite *enemy)
 {
 	t_point	current;
 
 	ray->distance = 0;
 	ray->step_size.x = fabs(1.0 / ray->dir.x);
 	ray->step_size.y = fabs(1.0 / ray->dir.y);
-	current = (t_point){data->player.pos.x, data->player.pos.y};
-	dda_start(&data->player, ray);
+	current = (t_point){enemy->pos.x, enemy->pos.y};
+	dda_start(&enemy->pos, ray);
 	while (is_inside_map(current, data->map.size) && !is_wall(current, data))
 	{
 		ray->side = dda_loop(&current, ray);
@@ -93,7 +93,7 @@ void	dda(t_ray *ray, t_data *data)
 	ray->step_size.x = fabs(1.0 / ray->dir.x);
 	ray->step_size.y = fabs(1.0 / ray->dir.y);
 	current = (t_point){data->player.pos.x, data->player.pos.y};
-	dda_start(&data->player, ray);
+	dda_start(&data->player.pos, ray);
 	while (is_inside_map(current, data->map.size) && !is_wall(current, data))
 	{
 		ray->side = dda_loop(&current, ray);

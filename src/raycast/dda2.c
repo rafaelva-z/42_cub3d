@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:37:32 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/24 18:27:25 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/25 14:29:58 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	dda_door(t_ray *ray, t_data *data)
 	ray->step_size.x = fabs(1.0 / ray->dir.x);
 	ray->step_size.y = fabs(1.0 / ray->dir.y);
 	current = (t_point){data->player.pos.x, data->player.pos.y};
-	dda_start(&data->player, ray);
+	dda_start(&data->player.pos, ray);
 	while (is_inside_map(current, data->map.size) && !is_wall(current, data))
 	{
 		ray->side = dda_loop(&current, ray);
