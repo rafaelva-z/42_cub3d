@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 11:42:45 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/21 14:55:07 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/24 19:10:51 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,30 @@ static void	set_sprite_positions(t_sprite *sprites, int *sprite_order,
 					+ fabs((player->pos.y - sprites[sprite_order[i]].pos.y))));
 }
 
+void	set_object_texture(t_data *data, t_sprite *sprite, double degrees)
+{
+	if (degrees < 45)
+		sprite->texture = data->textures[F_IMG + sprite->current_frame];
+	else if (degrees < 135)
+		sprite->texture = data->textures[F_IMG + sprite->current_frame];
+	else if (degrees < 225)
+		sprite->texture = data->textures[F_IMG + sprite->current_frame];
+	else if (degrees < 315)
+		sprite->texture = data->textures[F_IMG + sprite->current_frame];
+}
+
+void	set_enemy_texture(t_data *data, t_sprite *sprite, double degrees)
+{
+	if (degrees < 45)
+		sprite->texture = data->textures[EB0_IMG + sprite->current_frame];
+	else if (degrees < 135)
+		sprite->texture = data->textures[EL0_IMG + sprite->current_frame];
+	else if (degrees < 225)
+		sprite->texture = data->textures[EF0_IMG + sprite->current_frame];
+	else if (degrees < 315)
+		sprite->texture = data->textures[ER0_IMG + sprite->current_frame];
+}
+
 /**
  * @brief	Sets all sprites textures based on player and sprite direction
 */
@@ -61,45 +85,15 @@ static void	set_sprite_texture(t_data *data, t_sprite *sprite)
 	float	radians;
 	float	degrees;
 
-	// Calculating the angle between the player and the sprite & converting to degrees
-	radians = atan2(sprite->pos.y - data->player.pos.y,
-			sprite->pos.x - data->player.pos.x);
+	radians = atan2(data->player.dir.y, data->player.dir.x)
+		- atan2(sprite->dir.y, sprite->dir.x);
 	degrees = radians * (180 / M_PI);
 	if (degrees < 0)
 		degrees += 360;
 	if (sprite->type == SPRT_ENEMY)
-	{
-		if (degrees < 45)
-			sprite->texture = data->textures[EF0_IMG + sprite->current_frame];
-		else if (degrees < 135)
-			sprite->texture = data->textures[ER0_IMG + sprite->current_frame];
-		else if (degrees < 225)
-			sprite->texture = data->textures[EB0_IMG + sprite->current_frame];
-		else if (degrees < 315)
-			sprite->texture = data->textures[EL0_IMG + sprite->current_frame];
-	}
+		set_enemy_texture(data, sprite, degrees);
 	else if (sprite->type == SPRT_OBJ1)
-	{
-		if (degrees < 45)
-			sprite->texture = data->textures[F_IMG];
-		else if (degrees < 135)
-			sprite->texture = data->textures[F_IMG];
-		else if (degrees < 225)
-			sprite->texture = data->textures[F_IMG];
-		else if (degrees < 315)
-			sprite->texture = data->textures[F_IMG];
-	}
-	else if (sprite->type == SPRT_OBJ2)
-	{
-		if (degrees < 45)
-			sprite->texture = data->textures[F_IMG];
-		else if (degrees < 135)
-			sprite->texture = data->textures[F_IMG];
-		else if (degrees < 225)
-			sprite->texture = data->textures[F_IMG];
-		else if (degrees < 315)
-			sprite->texture = data->textures[F_IMG];
-	}
+		set_object_texture(data, sprite, degrees);
 }
 
 void	rc_sprites(t_data *data)

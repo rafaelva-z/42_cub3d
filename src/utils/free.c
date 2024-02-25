@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:32:59 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/19 20:04:51 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/23 19:20:36 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	free_color_grid(t_img *img)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < img->width)
@@ -37,9 +37,9 @@ static void	free_textures(t_data *data)
 			free_color_grid(data->textures[i]);
 		if (data->textures[i]->img)
 			mlx_destroy_image(data->mlx, data->textures[i]->img);
-		free (data->textures[i]);
+		free(data->textures[i]);
 	}
-		free (data->textures);
+	free(data->textures);
 }
 
 void	free_data(t_data *data)

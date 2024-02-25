@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 12:13:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/21 12:20:39 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/21 18:35:01 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	shader(int color, double distance, double a, double b, short mode)
 			i -= b;
 		}
 	}
-	else 
+	else
 	{
 		while (i < a)
 		{

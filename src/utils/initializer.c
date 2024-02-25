@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/21 12:21:36 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/23 19:25:48 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	init_data(t_data *data)
 	data->file->west_file = NULL;
 	data->file->floor_file = NULL;
 	data->file->ceiling_file = NULL;
-	begining_time_stamp(data);
+	begining_timestamp(data);
 	data->sprites = NULL;
 	data->z_buffer = calloc(WIN_WIDTH, sizeof(double));
 	texture_array_init(data);
@@ -51,7 +51,7 @@ static void	init_mlx(t_data *data)
 	data->img->addr = mlx_get_data_addr(data->img->img, 
 			&(data->img->bits_per_pixel), &(data->img->line_length),
 			&(data->img->endian));
-
+	// To be deleted (from here)
 	data->mlx_win_mm = mlx_new_window(data->mlx, MM_WIDTH, MM_HEIGHT, WIN_TITLE);
 	if (!data->mlx_win_mm)
 		free_and_exit(data, ERR_MLX_WIN, 1);
@@ -62,7 +62,7 @@ static void	init_mlx(t_data *data)
 	data->img_mm->addr = mlx_get_data_addr(data->img_mm->img, 
 			&(data->img_mm->bits_per_pixel), &(data->img_mm->line_length),
 			&(data->img_mm->endian));
-
+	// (to here)
 	mlx_do_key_autorepeatoff(data->mlx);
 }
 
@@ -70,8 +70,7 @@ static void	init_player(t_data *data)
 {
 	data->player.fov = START_FOV;
 	data->player.vertical = 0;
-	data->player.move = 0;
-	data->player.move_cam = 0;
+	data->player.actions = 0;
 	data->player.mouse = (t_point){0, 0};
 	data->player.mov_dir = (t_point){0, 0};
 	data->player.mouse_toggle = 1;
