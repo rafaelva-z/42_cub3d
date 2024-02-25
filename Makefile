@@ -6,7 +6,7 @@
 #    By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by rvaz              #+#    #+#              #
-#    Updated: 2024/02/21 15:00:27 by rvaz             ###   ########.fr        #
+#    Updated: 2024/02/24 17:36:37 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRCS		=	$(addprefix ./src/,				\
 				main.c							\
 				$(addprefix enemy/,				\
 				enemy.c							\
+				enemy_raycast.c					\
 				enemy_utils.c					\
 				)								\
 				$(addprefix controls/,			\
@@ -45,13 +46,18 @@ SRCS		=	$(addprefix ./src/,				\
 				)								\
 				$(addprefix raycast/,			\
 				dda.c							\
+				dda2.c							\
 				raycast.c						\
 				rc_spritecast.c					\
 				)								\
-				$(addprefix utils/,				\
-				check_utils.c					\
-				draw_utils.c					\
+				$(addprefix rendering/,			\
 				draw_line.c						\
+				draw_stuff.c 					\
+				draw_utils.c					\
+				)								\
+				$(addprefix utils/,				\
+				update_sprite.c					\
+				check_utils.c					\
 				free.c							\
 				initializer_textures.c			\
 				initializer.c					\

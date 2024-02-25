@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enemy.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 22:26:46 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/21 20:01:46 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/25 14:22:35 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,9 @@ static void	player_in_sight(t_data *data, t_sprite *enemy)
 {
 	double	dist;
 
-	if (time_stamp(data) >= enemy->follow_timer)
-	{
-		enemy_raycast(data, enemy);
-		if (enemy->state != E_FOLLOW)
-			return ;	
-		enemy->follow_timer = time_stamp(data) + ENEMY_FLW_TIME;
-	}
+	rc_enemy(data, enemy);
+	if (enemy->state != E_FOLLOW)
+		return ;
 	enemy->dir.x = data->player.pos.x - enemy->pos.x;
 	enemy->dir.y = data->player.pos.y - enemy->pos.y;
 	dist = distance_calc(data->player.pos, enemy->pos);

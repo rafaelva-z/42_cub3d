@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:05:35 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/17 12:21:20 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/23 19:26:28 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_point	vector_rotate(t_point point, double angle)
 	rot.y = point.y * cos(angle) + point.x * sin(angle);
 	return (rot);
 }
+
 /**
  * @brief	normalizes the given vector.
 */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:34:35 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/24 12:40:32 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/25 14:34:21 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	main(int argc, char **argv)
 		return (display_error(ERR_ARGC));
 	initializer(&data);
 	parser(&data, argv[1]);
-	test(&data);
 	update_view(&data);
 	mlx_hooks(&data);
 	mlx_loop(data.mlx);

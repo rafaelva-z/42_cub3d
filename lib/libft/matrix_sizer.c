@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix_sizer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 20:36:42 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/22 15:12:59 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:03:16 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 /*Only workes with rectangular matrixes appart from c (character count)*/
 /*d = the dimention [Height (h) width(w) area (a)]*/
-
-static int character_count(char **mtx)
+static int	character_count(char **mtx)
 {
 	int	i;
 	int	j;
