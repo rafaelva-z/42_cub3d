@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/27 19:15:59 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/27 19:34:32 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,14 @@ static void	init_mlx(t_data *data)
 	if (!data->img)
 		free_and_exit(data, ERR_MALLOC, 1);
 	data->img->img = mlx_new_image(data->mlx, WIN_WIDTH, WIN_HEIGHT);
-	data->img->addr = mlx_get_data_addr(data->img->img, 
+	data->img->addr = mlx_get_data_addr(data->img->img,
 			&(data->img->bits_per_pixel), &(data->img->line_length),
 			&(data->img->endian));
-	// To be deleted (from here)
-	data->mlx_win_mm = mlx_new_window(data->mlx, MM_WIDTH, MM_HEIGHT, WIN_TITLE);
-	if (!data->mlx_win_mm)
-		free_and_exit(data, ERR_MLX_WIN, 1);
 	data->img_mm = malloc(sizeof(t_img));
 	if (!data->img_mm)
 		free_and_exit(data, ERR_MALLOC, 1);
 	data->img_mm->img = mlx_new_image(data->mlx, MM_WIDTH, MM_HEIGHT);
-	data->img_mm->addr = mlx_get_data_addr(data->img_mm->img, 
+	data->img_mm->addr = mlx_get_data_addr(data->img_mm->img,
 			&(data->img_mm->bits_per_pixel), &(data->img_mm->line_length),
 			&(data->img_mm->endian));
 	// (to here)

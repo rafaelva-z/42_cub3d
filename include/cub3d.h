@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/27 19:16:20 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/27 19:26:30 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,11 +254,10 @@ typedef struct s_player
 */
 typedef struct s_data
 {
-	void		*mlx;			//	put in "t_mlx" struct (?)
-	void		*mlx_win;		//	put in "t_mlx" struct (?)
-	void		*mlx_win_mm;	//	to be removed
-	t_img		*img;			//	put in "t_mlx" struct (?)
-	t_img		*img_mm;		//	to be removed (no it cant be)
+	void		*mlx;
+	void		*mlx_win;
+	t_img		*img;
+	t_img		*img_mm;
 	t_file		*file;
 	t_map		map;
 	t_player	player;
@@ -302,7 +301,8 @@ void		minimap(t_data *data);
 
 //			minimap_utils.c
 t_point		pixel_offset(t_data *data);
-void		map_to_tile(t_data *data, t_point print, t_point offset, t_point pix_os);
+void		map_to_tile(t_data *data, t_point print, t_point offset,
+				t_point pix_os);
 
 /* =====================================================================*
  *		/src/parsing/													*
@@ -310,9 +310,9 @@ void		map_to_tile(t_data *data, t_point print, t_point offset, t_point pix_os);
 
 //			map_check_utils
 void		map_and_player_init(t_data *data, int i, int j);
- char		*str_duplicator(char *prod, int len, t_data *data);
- char		**map_dup(char **map, t_data *data);
- void		minimap_negative(char **minimap);
+char		*str_duplicator(char *prod, int len, t_data *data);
+char		**map_dup(char **map, t_data *data);
+void		minimap_negative(char **minimap);
 
 //			map_check.c
 void		map_check(t_data *data);
@@ -372,7 +372,8 @@ void		enemy(t_data *data);
 //			enemy_utils.c
 void		rotate_enemy(t_sprite *enemy, double angle);
 double		distance_calc(t_point p1, t_point p2);
-void		get_colid_pos(t_point *cld_pos_1, t_point *cld_pos_2, t_sprite *spt);
+void		get_colid_pos(t_point *cld_pos_1,
+				t_point *cld_pos_2, t_sprite *spt);
 
 /* =====================================================================*
  *		/src/utils/														*
@@ -386,7 +387,7 @@ void		initializer(t_data *data);
 int			coordinate_finder(char **mtx, char c, char axle);
 int			display_error(char *str);
 int			is_inside_map(t_point point, t_point map_size);
-int 		is_player(t_point point, t_data *data);
+int			is_player(t_point point, t_data *data);
 int			is_wall(t_point point, t_data *data);
 int			is_door(t_point current, t_data *data);
 void		update_view(t_data *data);
@@ -411,7 +412,7 @@ void		initializer(t_data *data);
 //			initializer_textures.c
 void		texture_array_init(t_data *data);
 
-int		shader(int color, double distance, double a, double b, short mode);
-void	dda_door(t_ray *ray, t_data *data);
-void	rc_door(t_data *data, t_sprite *door, t_player *player);
+int			shader(int color, double distance, double a, double b, short mode);
+void		dda_door(t_ray *ray, t_data *data);
+void		rc_door(t_data *data, t_sprite *door, t_player *player);
 #endif

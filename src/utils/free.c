@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:32:59 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/27 19:16:06 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/27 19:37:09 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ static void	free_textures(t_data *data)
 
 void	free_data(t_data *data)
 {
-	if (!data)
-		return ;
 	if (data->z_buffer)
 		free (data->z_buffer);
 	if (data->file)
@@ -64,8 +62,6 @@ void	free_data(t_data *data)
 		mlx_destroy_image(data->mlx, data->img->img);
 		free(data->img);
 	}
-	if (data->mlx_win_mm)
-		mlx_destroy_window(data->mlx, data->mlx_win_mm);
 	if (data->mlx_win)
 		mlx_destroy_window(data->mlx, data->mlx_win);
 	if (data->mlx)
@@ -81,7 +77,6 @@ void	free_file(t_file *file)
 		matrix_deleter(&file->file);
 	free (file);
 }
-
 
 void	free_and_exit(t_data *data, char *msg, int exit_status)
 {
