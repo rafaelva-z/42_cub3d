@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/25 14:32:22 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/27 19:26:30 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 # define DEBUG 0
-# define SHADER 0
+# define SHADER 1
 
 # include "player.h"
 # include "../lib/libft/libft.h"
@@ -32,12 +32,16 @@
 # include <stdbool.h>
 
 //	Messages & Errors
-# define ERR_ARGC		"cub3d: wrong number of arguments. Use only a map path\n"
+# define ERR_ARGC		"cub3d: wrong nbr of arguments. Use only a map path\n"
 # define ERR_MALLOC		"cub3d: malloc() failed\n"
 # define ERR_MLX_INIT	"cub3d: mlx_init() failed\n"
 # define ERR_FD			"cub3d: file opening failed\n"
 # define ERR_MLX_WIN	"cub3d: mlx_new_window() failed\n"
 # define ERR_MAP		"cub3d: invalid map\n"
+# define ERR_STR_POS	"cub3d: Map Error: invalid starting coordinate\n"
+# define ERR_LINES		"cub3d: Error: Map cannot contain empty lines\n"
+# define ERR_BORD		"cub3d: Error: invalid map borders\n"
+# define ERR_INV_CHAR	"cub3d: Map Error: invalid character\n"
 # define ERR_DOOR		"cub3d: invalid door placement\n"
 # define ERR_IMG		"cub3d: Image failed loading\n"
 # define ERR_TIME		"cub3d: timestamp failed\n"
@@ -50,8 +54,8 @@
 # define ENEMY_FLW_TIME 5000
 
 //	Screen Resolution
-# define WIN_WIDTH		900
-# define WIN_HEIGHT		600
+# define WIN_WIDTH		1350
+# define WIN_HEIGHT		900
 # define WIN_TITLE		"Cub3D - fda-est & rvaz"
 
 # define TEXTURE_WIDTH	64
@@ -225,7 +229,7 @@ typedef struct s_sprite
 	t_point		dir;
 	t_point		coliders[2];
 	t_img		*texture;
-	uint16_t	follow_timer;
+	uint64_t	follow_timer;
 	short		state;
 	double		dist_player;
 	short		current_frame;
@@ -250,11 +254,10 @@ typedef struct s_player
 */
 typedef struct s_data
 {
-	void		*mlx;			//	put in "t_mlx" struct (?)
-	void		*mlx_win;		//	put in "t_mlx" struct (?)
-	void		*mlx_win_mm;	//	to be removed
-	t_img		*img;			//	put in "t_mlx" struct (?)
-	t_img		*img_mm;		//	to be removed (no it cant be)
+	void		*mlx;
+	void		*mlx_win;
+	t_img		*img;
+	t_img		*img_mm;
 	t_file		*file;
 	t_map		map;
 	t_player	player;
@@ -296,12 +299,20 @@ int			close_pgm(t_data *data);
 //			minimap.c
 void		minimap(t_data *data);
 
+//			minimap_utils.c
+t_point		pixel_offset(t_data *data);
+void		map_to_tile(t_data *data, t_point print, t_point offset,
+				t_point pix_os);
+
 /* =====================================================================*
  *		/src/parsing/													*
  * =====================================================================*/
 
 //			map_check_utils
-void		map_and_player_init(t_data *data);
+void		map_and_player_init(t_data *data, int i, int j);
+char		*str_duplicator(char *prod, int len, t_data *data);
+char		**map_dup(char **map, t_data *data);
+void		minimap_negative(char **minimap);
 
 //			map_check.c
 void		map_check(t_data *data);
@@ -315,8 +326,8 @@ void		parser(t_data *data, char *str);
 //			texture_parser.c
 void		texture_parser(t_data *data);
 
-//			enemy_parser.c
-void		enemy_parser(t_data *data);
+//			sprite_parser.c
+void		sprite_parser(t_data *data);
 
 /* =====================================================================*
  *		/src/raycast/													*
@@ -360,7 +371,9 @@ void		enemy(t_data *data);
 
 //			enemy_utils.c
 void		rotate_enemy(t_sprite *enemy, double angle);
-
+double		distance_calc(t_point p1, t_point p2);
+void		get_colid_pos(t_point *cld_pos_1,
+				t_point *cld_pos_2, t_sprite *spt);
 
 /* =====================================================================*
  *		/src/utils/														*
@@ -374,12 +387,13 @@ void		initializer(t_data *data);
 int			coordinate_finder(char **mtx, char c, char axle);
 int			display_error(char *str);
 int			is_inside_map(t_point point, t_point map_size);
-int 		is_player(t_point point, t_data *data);
+int			is_player(t_point point, t_data *data);
 int			is_wall(t_point point, t_data *data);
 int			is_door(t_point current, t_data *data);
 void		update_view(t_data *data);
 void		begining_timestamp(t_data *data);
 uint64_t	get_timestamp(t_data *data);
+int			get_pixel(t_img *img, int x, int y);
 
 //			utils_2.c
 t_point		vector_add(t_point v1, t_point v2);
@@ -398,7 +412,7 @@ void		initializer(t_data *data);
 //			initializer_textures.c
 void		texture_array_init(t_data *data);
 
-int		shader(int color, double distance, double a, double b, short mode);
-void	dda_door(t_ray *ray, t_data *data);
-void	rc_door(t_data *data, t_sprite *door, t_player *player);
+int			shader(int color, double distance, double a, double b, short mode);
+void		dda_door(t_ray *ray, t_data *data);
+void		rc_door(t_data *data, t_sprite *door, t_player *player);
 #endif

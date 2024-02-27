@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initializer_textures.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:22:12 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/15 14:31:43 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/27 19:37:52 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,5 @@ void	texture_array_init(t_data *data)
 		data->textures[i]->height = 0;
 		data->textures[i]->width = 0;
 		data->textures[i]->color_grid = NULL;
-	}	
+	}
 }
-

@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 12:03:00 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/24 12:15:53 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/26 13:31:00 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,41 +18,9 @@ static void	character_check(t_data *data)
 
 	size = matrix_sizer(data->map.map, 'c');
 	if (size != matrix_finder(data->map.map, "10 NSEWDM"))
-		free_and_exit(data, "cub3d: Map Error: invalid character\n", 1);
+		free_and_exit(data, ERR_INV_CHAR, 1);
 	if (matrix_finder(data->map.map, "NSEW") != 1)
-		free_and_exit(data, "cub3d: Map Error: invalid starting coordinate\n", 1);
-}
-
-static char *str_duplicator(char *prod, int len)
-{
-	char	*temp;
-	int		i;
-
-	temp = ft_calloc(sizeof(char), len + 1);
-	if (!temp)
-		return (NULL);								//	Error handling
-	ft_strlcpy(temp, prod, ft_strlen(prod) + 1);
-	i = -1;
-	while (temp[++i])
-		;
-	while (i < len)
-		temp[i++] = ' ';
-	free(prod);
-	return (temp);
-}
-
-static char	**map_dup(char **map)
-{
-	char	**prod;
-	int		len;
-	int		i;
-
-	prod = matrix_dup(map);
-	len = matrix_sizer(prod, 'w');
-	i = -1;
-	while (prod[++i])
-		prod[i] = str_duplicator(prod[i], len);
-	return (prod);
+		free_and_exit(data, ERR_STR_POS, 1);
 }
 
 static int	neighbors_check(char **map, int i, int j)
@@ -86,26 +54,7 @@ void	borther_check(t_data *data)
 	}
 	if (flag == 1 || str_finder(data->map.map[0], "0NSWEM")
 		|| str_finder(data->map.map[i], "0SEWNM"))
-		free_and_exit(data, "cub3d: Error: invalid map borders\n", 1);
-}
-
-static void	minimap_negative(char **minimap)
-{
-	int	i;
-	int	j;
-
-	i = -1;
-	while (minimap[++i])
-	{
-		j = -1;
-		while (minimap[i][++j])
-		{
-			if (minimap[i][j] != '1' && minimap[i][j] != ' ')
-				minimap[i][j] = '0' * -1;
-			else
-				minimap[i][j] *= -1;
-		}
-	}
+		free_and_exit(data, ERR_BORD, 1);
 }
 
 static void	door_check(t_data *data)
@@ -139,10 +88,10 @@ void	map_check(t_data *data)
 	int	i;
 
 	i = -1;
-	data->map.map = map_dup(data->file->file + 6);
+	data->map.map = map_dup(data->file->file + 6, data);
 	if (!data->map.map)
 		free_and_exit(data, ERR_MALLOC, 1);
-	data->map.minimap = map_dup(data->file->file + 6);
+	data->map.minimap = map_dup(data->file->file + 6, data);
 	if (!data->map.map)
 		free_and_exit(data, ERR_MALLOC, 1);
 	minimap_negative(data->map.minimap);
@@ -151,6 +100,6 @@ void	map_check(t_data *data)
 	door_check(data);
 	while (data->map.map[++i])
 		if (!str_finder(data->map.map[i], "1"))
-			free_and_exit(data, "cub3d: Error: Map cannot contain empty lines\n", 1);
-	map_and_player_init(data);
+			free_and_exit(data, ERR_LINES, 1);
+	map_and_player_init(data, 0, 0);
 }

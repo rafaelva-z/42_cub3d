@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 14:59:53 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/23 18:42:37 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/27 19:38:42 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	door_interactions(t_data *data)
 				data->sprites[i].current_frame = 6;
 			}
 			data->map.map[(int)data->sprites[i].pos.y]
-				[(int)data->sprites[i].pos.x] = MAP_MOVING_DOOR;
+			[(int)data->sprites[i].pos.x] = MAP_MOVING_DOOR;
 		}
 	}
 }

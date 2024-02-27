@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:16:32 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/22 11:28:11 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/26 18:26:28 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,16 @@ int	display_error(char *str)
 void	update_view(t_data *data)
 {
 	rc_player(data);
-	minimap(data);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img->img, 0, 0);
+	minimap(data);
+}
+
+int	get_pixel(t_img *img, int x, int y)
+{
+	char	*temp;
+	int		prod;
+
+	temp = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
+	prod = *(int *)temp;
+	return (prod);
 }
