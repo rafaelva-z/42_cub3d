@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 23:05:31 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/08 18:05:51 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/02/26 13:10:25 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,3 @@ void	identifier_init(t_data *dt)
 		|| !dt->file->east_file || !dt->file->south_file)
 		free_and_exit(dt, "Error: Doubled identifier\n", 1);
 }
-

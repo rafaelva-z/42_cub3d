@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initializer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/23 19:25:48 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/27 19:15:59 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static void	init_data(t_data *data)
 {
 	data->mlx = NULL;
 	data->mlx_win = NULL;
-	data->mlx_win_mm = NULL;
 	data->map.map = NULL;
 	data->map.minimap = NULL;
 	data->file = malloc(sizeof(t_file));

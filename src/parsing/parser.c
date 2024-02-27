@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:08:06 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/23 19:20:47 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/02/26 13:09:24 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	extension(t_data *data, char *str)
 		free_and_exit(data, "Error: invalid file extension", 1);
 }
 
-static void	new_line_check(t_data *data, char *s)
+static int	new_line_check(t_data *data, char *s)
 {
 	int	i;
 	int	line_count;
@@ -43,33 +43,21 @@ static void	new_line_check(t_data *data, char *s)
 			;
 	}
 	if (!s[i])
-	{
-		free(s);
-		free_and_exit(data, ERR_MAP, 1);
-	}
+		return (0);
 	while (s[++i])
 	{
 		if (s[i] == '\n' && s[i + 1] == '\n')
-		{
-			free(s);
-			free_and_exit(data, ERR_MAP, 1);
-		}
+			return (0);
 	}
 	if (i && s[i - 1] == '\n')
-	{
-		free(s);
-		free_and_exit(data, ERR_MAP, 1);
-	}
+		return (0);
+	return (1);
 }
 
-static void	file_extractor(t_data *data, char *str)
+static void	file_extractor(t_data *data, char *str, char *s, char *join_s)
 {
 	int		fd;
-	char	*s;
-	char	*join_s;
 
-	s = NULL;
-	join_s = NULL;
 	fd = open(str, O_RDONLY);
 	if (fd == -1)
 		free_and_exit(data, ERR_FD, 1);
@@ -82,7 +70,11 @@ static void	file_extractor(t_data *data, char *str)
 	}
 	if (!join_s)
 		free_and_exit(data, "Error: empty map...\n", 1);
-	new_line_check(data, join_s);
+	if (new_line_check(data, join_s) == 0)
+	{
+		free (join_s);
+		free_and_exit(data, ERR_MAP, 1);
+	}
 	data->file->file = ft_split(join_s, '\n');
 	if (!data->file->file)
 		free_and_exit(data, ERR_MALLOC, 1);
@@ -107,32 +99,12 @@ static void	trimmer(t_data *data)
 void	parser(t_data *data, char *str)
 {
 	extension(data, str);
-	file_extractor(data, str);
+	file_extractor(data, str, NULL, NULL);
 	trimmer(data);
-	if (DEBUG == 1)
-	{
-		printf("====MAP-FILE================\n");
-		for (int i = 0; data->file->file[i]; i++)
-			printf("%s|\n", data->file->file[i]);
-		printf("====MAP-END=================\n");
-	}
 	identifier_init(data);
-	if (DEBUG == 1)
-	{
-		printf("\n===TEXTURE-FILES============\n");
-		printf("SO: %s|\n", data->file->south_file);
-		printf("NO: %s|\n", data->file->north_file);
-		printf("WE: %s|\n", data->file->west_file);
-		printf("EA: %s|\n", data->file->east_file);
-		printf("F: %s|\n", data->file->floor_file);
-		printf("C: %s|\n", data->file->ceiling_file);
-		printf("\n===TEXTURE-FILES-END========\n");
-	}
 	map_check(data);
-	if (DEBUG == 1)
-		printf("\nVALID MAP!\n");
 	texture_parser(data);
-	enemy_parser(data);
+	sprite_parser(data);
 	free_file(data->file);
 	data->file = NULL;
 }
