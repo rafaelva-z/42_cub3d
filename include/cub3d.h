@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/03/05 12:43:47 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/05 14:30:26 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,7 @@ typedef enum s_sprite_type
 	SPRT_DOOR,
 }				t_sprite_type;
 
+
 typedef struct s_2d_point
 {
 	double	x;
@@ -174,8 +175,8 @@ typedef struct s_2d_point
 
 typedef struct s_vector
 {
-	t_point	point_a;
-	t_point	point_b;
+	t_point	p_a;
+	t_point	p_b;
 }	t_vector;
 
 typedef struct s_map
@@ -350,12 +351,23 @@ int			dda_loop(t_point *current, t_ray *ray);
 void		dda_start(t_point *pos, t_ray *ray);
 int			dda_door_ray(t_ray *ray, t_player *player, t_point current);
 
-//			raycat.c
+//			raycast.c
 void		rc_player(t_data *data);
 void		rc_enemy(t_data *data, t_sprite *enemy);
 
+//			rc_floor_ceiling.c
+void		rc_floor_ceiling(t_data *data);
+
 //			rc_spritecast.c
 void		rc_sprites(t_data *data);
+
+//			rc_spritecast2.c
+void		set_object_texture(t_data *data, t_sprite *sprite, double degrees);
+void		set_enemy_texture(t_data *data, t_sprite *sprite, double degrees);
+void		sc_matrix_multiplication(t_data *data, t_point *transform, int i);
+int			sc_set_color( t_point *t_pos, t_data *data,
+				t_rc_sprites *rc, int i);
+void		sc_set_draw_pos(t_rc_sprites *rc);
 
 /* =====================================================================*
  *		/src/rendering/													*
@@ -421,7 +433,7 @@ void		initializer(t_data *data);
 //			initializer_textures.c
 void		texture_array_init(t_data *data);
 
-int			shader(int color, double distance, double a, double b, short mode);
+int			shader(int color, double distance, t_point k, short mode);
 void		dda_door(t_ray *ray, t_data *data);
 short		rc_door(t_data *data, t_sprite *door, t_player *player);
 #endif
