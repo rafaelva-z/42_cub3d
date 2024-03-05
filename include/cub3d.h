@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/27 19:26:30 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/03/05 12:43:47 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 # define DEBUG 0
-# define SHADER 1
+# define SHADER 0
 
 # include "player.h"
 # include "../lib/libft/libft.h"
@@ -54,8 +54,8 @@
 # define ENEMY_FLW_TIME 5000
 
 //	Screen Resolution
-# define WIN_WIDTH		1350
-# define WIN_HEIGHT		900
+# define WIN_WIDTH		900
+# define WIN_HEIGHT		600
 # define WIN_TITLE		"Cub3D - fda-est & rvaz"
 
 # define TEXTURE_WIDTH	64
@@ -236,6 +236,15 @@ typedef struct s_sprite
 	short		type;
 }				t_sprite;
 
+typedef struct s_rc_sprites
+{
+	t_point		transform;			// matrix multiplication
+	t_point		sprt_size;		// sprite size on screen
+	t_point		draw_start;
+	t_point		draw_end;
+	int			sprite_screen_x;
+}				t_rc_sprites;
+
 typedef struct s_player
 {
 	int			actions;
@@ -262,7 +271,7 @@ typedef struct s_data
 	t_map		map;
 	t_player	player;
 	t_sprite	*sprites;
-	int			*sprite_order;
+	int			*sprt_order;
 	int			sprite_amt;
 	t_img		**textures;
 	uint64_t	start_time;
@@ -414,5 +423,5 @@ void		texture_array_init(t_data *data);
 
 int			shader(int color, double distance, double a, double b, short mode);
 void		dda_door(t_ray *ray, t_data *data);
-void		rc_door(t_data *data, t_sprite *door, t_player *player);
+short		rc_door(t_data *data, t_sprite *door, t_player *player);
 #endif

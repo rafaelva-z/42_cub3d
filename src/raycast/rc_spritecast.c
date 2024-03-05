@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 11:42:45 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/24 19:10:51 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/05 12:44:36 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * @brief	Order the sprites based on distance to the player using bouble sort
 */
-static void	order_sprites(t_sprite *sprites, int *sprite_order, int sprite_amt)
+static void	order_sprites(t_sprite *sprites, int *sprt_order, int sprite_amt)
 {
 	int			tmp;
 	int			i;
@@ -27,12 +27,12 @@ static void	order_sprites(t_sprite *sprites, int *sprite_order, int sprite_amt)
 		i = -1;
 		while (++i < sprite_amt - 1)
 		{
-			if (sprites[sprite_order[i]].dist_player
-				< sprites[sprite_order[i + 1]].dist_player)
+			if (sprites[sprt_order[i]].dist_player
+				< sprites[sprt_order[i + 1]].dist_player)
 			{
-				tmp = sprite_order[i];
-				sprite_order[i] = sprite_order[i + 1];
-				sprite_order[i + 1] = tmp;
+				tmp = sprt_order[i];
+				sprt_order[i] = sprt_order[i + 1];
+				sprt_order[i + 1] = tmp;
 			}
 		}
 	}
@@ -41,16 +41,16 @@ static void	order_sprites(t_sprite *sprites, int *sprite_order, int sprite_amt)
 /**
  * @brief	Sets all sprites positions based on the player's position
 */
-static void	set_sprite_positions(t_sprite *sprites, int *sprite_order,
+static void	set_sprite_positions(t_sprite *sprites, int *sprt_order,
 	int sprite_amt, t_player *player)
 {
 	int	i;
 
 	i = -1;
 	while (++i < sprite_amt)
-		sprites[sprite_order[i]].dist_player = fabs((fabs((player->pos.x
-							- sprites[sprite_order[i]].pos.x))
-					+ fabs((player->pos.y - sprites[sprite_order[i]].pos.y))));
+		sprites[sprt_order[i]].dist_player = fabs((fabs((player->pos.x
+							- sprites[sprt_order[i]].pos.x))
+					+ fabs((player->pos.y - sprites[sprt_order[i]].pos.y))));
 }
 
 void	set_object_texture(t_data *data, t_sprite *sprite, double degrees)
@@ -96,65 +96,104 @@ static void	set_sprite_texture(t_data *data, t_sprite *sprite)
 		set_object_texture(data, sprite, degrees);
 }
 
-void	rc_sprites(t_data *data)
+void	set_draw_pos(t_rc_sprites *rc)
 {
-	int	i;
 
-	set_sprite_positions(data->sprites, data->sprite_order,
-		data->sprite_amt, &data->player);
-	order_sprites(data->sprites, data->sprite_order, data->sprite_amt);
-	i = -1;
-	//	sprite projection
-	while (++i < data->sprite_amt)
+	rc->draw_start.y = -rc->sprt_size.y / 2 + WIN_HEIGHT / 2;
+	if (rc->draw_start.y < 0)
+		rc->draw_start.y = 0;
+	rc->draw_end.y = rc->sprt_size.y / 2 + WIN_HEIGHT / 2;
+	if (rc->draw_end.y >= WIN_HEIGHT)
+		rc->draw_end.y = WIN_HEIGHT - 1;
+	rc->draw_start.x = -rc->sprt_size.x / 2 + rc->sprite_screen_x;
+	if (rc->draw_start.x < 0)
+		rc->draw_start.x = 0;
+	rc->draw_end.x = rc->sprt_size.x / 2 + rc->sprite_screen_x;
+	if (rc->draw_end.x >= WIN_WIDTH)
+		rc->draw_end.x = WIN_WIDTH - 1;
+}
+
+void	matrix_multiplication(t_data *data, t_point *transform, int i)
+{
+	t_point	sprt_pos;
+	double	invert;
+
+	sprt_pos.x = data->sprites[data->sprt_order[i]].pos.x
+		- data->player.pos.x;
+	sprt_pos.y = data->sprites[data->sprt_order[i]].pos.y
+		- data->player.pos.y;
+	invert = 1.0 / (data->player.plane.x * data->player.dir.y
+			- data->player.dir.x * data->player.plane.y);
+	(*transform).x = invert * (data->player.dir.y * sprt_pos.x
+			- data->player.dir.x * sprt_pos.y);
+	(*transform).y = invert * (-data->player.plane.y * sprt_pos.x
+			+ data->player.plane.x * sprt_pos.y);
+}
+
+int	asdf( t_point *t_pos, t_data *data, t_rc_sprites *rc, int i)
+{
+	int	color;
+
+	if (t_pos->x >= 0 && t_pos->x < TEXTURE_WIDTH
+		&& t_pos->y >= 0 && t_pos->y < TEXTURE_HEIGHT)
+		color = data->sprites[data->sprt_order[i]]
+			.texture->color_grid[(int)t_pos->y][(int)t_pos->x];
+	else
+		color = 0;
+}
+
+void	draw_sprite( t_data *data, t_rc_sprites *rc, int i)
+{
+	t_point		t_pos;
+	int			x;
+	int			y;
+	int			color;
+
+	x = rc->draw_start.x - 1;
+	while (++x < rc->draw_end.x)
 	{
-		if (data->sprites[data->sprite_order[i]].type == SPRT_DOOR)
+		t_pos.x = (int)(256
+				* (x - (-rc->sprt_size.x / 2 + rc->sprite_screen_x))
+				* TEXTURE_WIDTH / rc->sprt_size.x) / 256;
+		if (rc->transform.y > 0 && x > 0 && x < WIN_WIDTH
+			&& rc->transform.y < data->z_buffer[x])
 		{
-			if (data->sprites[data->sprite_order[i]].state == D_OPENING
-				|| data->sprites[data->sprite_order[i]].state == D_CLOSING)
-				rc_door(data, &data->sprites[data->sprite_order[i]], &data->player);
-			continue ;
-		}
-		set_sprite_texture(data, &data->sprites[data->sprite_order[i]]);
-		t_point	sprt_pos = (t_point){data->sprites[data->sprite_order[i]].pos.x - data->player.pos.x, data->sprites[data->sprite_order[i]].pos.y - data->player.pos.y};	// sprite pos relative to player
-		double	invert = 1.0 / (data->player.plane.x * data->player.dir.y - data->player.dir.x * data->player.plane.y); // for matrix
-		t_point	transform = (t_point){invert * (data->player.dir.y * sprt_pos.x - data->player.dir.x * sprt_pos.y), invert * (-data->player.plane.y * sprt_pos.x + data->player.plane.x * sprt_pos.y)}; // matrix multiplication;
-		int		sprite_screen_x = (WIN_WIDTH / 2) * (1 + transform.x / transform.y);
-		t_point	sprite_size; //sprite size on screen
-		sprite_size.y = abs(WIN_HEIGHT / transform.y);
-		sprite_size.x = sprite_size.y;
-		//Calculating start and end point for drawing
-		t_point	draw_start;
-		t_point draw_end;
-		draw_start.y = -sprite_size.y / 2 + WIN_HEIGHT / 2;
-		if (draw_start.y < 0)
-			draw_start.y = 0;
-		draw_end.y = sprite_size.y / 2 + WIN_HEIGHT / 2;
-		if (draw_end.y >= WIN_HEIGHT)
-			draw_end.y = WIN_HEIGHT - 1;
-		draw_start.x = -sprite_size.x / 2 + sprite_screen_x;
-		if (draw_start.x < 0)
-			draw_start.x = 0;
-		draw_end.x = sprite_size.x / 2 + sprite_screen_x;
-		if (draw_end.x >= WIN_WIDTH)
-			draw_end.x = WIN_WIDTH - 1;
-		//Draw the sprite
-		for (int screen_x = draw_start.x; screen_x < draw_end.x; screen_x++)
-		{
-			int tex_x = (int)(256 * (screen_x - (-sprite_size.x / 2 + sprite_screen_x)) * TEXTURE_WIDTH / sprite_size.x) / 256;
-			if (transform.y > 0 && screen_x > 0 && screen_x < WIN_WIDTH && transform.y < data->z_buffer[screen_x])
+			y = rc->draw_start.y - 1;
+			while (++y < rc->draw_end.y)
 			{
-				for (int y = draw_start.y; y < draw_end.y; y++)
-				{
-					int d = y * 256 - WIN_HEIGHT * 128 + sprite_size.y * 128;
-					int tex_y = ((d * TEXTURE_HEIGHT) / sprite_size.y) / 256;
-					int color;
-					if (tex_x >= 0 && tex_x < TEXTURE_WIDTH && tex_y >= 0 && tex_y < TEXTURE_HEIGHT)
-						color = data->sprites[data->sprite_order[i]].texture->color_grid[tex_y][tex_x];
-					else
-						color = 0;
-					draw_pixel(data->img, screen_x, y, shader(color, abs(data->sprites[data->sprite_order[i]].dist_player), 2.0, 0.3, 1));
-				}
+				t_pos.y = (y * 256 - WIN_HEIGHT * 128 + rc->sprt_size.y * 128);
+				t_pos.y = ((t_pos.y * TEXTURE_HEIGHT) / rc->sprt_size.y) / 256;
+				color = asdf(&t_pos, data, rc, i);
+				draw_pixel(data->img, x, y, shader(color, abs(data->sprites
+						[data->sprt_order[i]].dist_player), 2.0, 0.3, 1));
 			}
 		}
+	}
+}
+
+void	rc_sprites(t_data *data)
+{
+	t_rc_sprites	*rc;
+	int				i;
+
+	rc = malloc(sizeof(t_rc_sprites));
+	if (!rc)
+		free_and_exit(data, ERR_MALLOC, 1);
+	set_sprite_positions(data->sprites, data->sprt_order,
+		data->sprite_amt, &data->player);
+	order_sprites(data->sprites, data->sprt_order, data->sprite_amt);
+	i = -1;
+	while (++i < data->sprite_amt)
+	{
+		if (rc_door(data, &data->sprites[data->sprt_order[i]], &data->player))
+			continue ;
+		set_sprite_texture(data, &data->sprites[data->sprt_order[i]]);
+		matrix_multiplication(data, &rc->transform, i);
+		rc->sprite_screen_x = (WIN_WIDTH / 2)
+			* (1 + rc->transform.x / rc->transform.y);
+		rc->sprt_size.y = abs(WIN_HEIGHT / rc->transform.y);
+		rc->sprt_size.x = rc->sprt_size.y;
+		set_draw_pos(rc);
+		draw_sprite(data, rc, i);
 	}
 }
