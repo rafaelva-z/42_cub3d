@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprite_parser.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:11:16 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/26 13:11:19 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/03/05 12:43:47 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	enemy_init(t_data *data, int y, int x)
 	rotate_point(&data->sprites[index].coliders[1], -45);
 	data->sprites[index].state = E_IDLE;
 	data->sprites[index].follow_timer = 0;
-	data->sprite_order[index] = index;
+	data->sprt_order[index] = index;
 	data->sprite_amt++;
 }
 
@@ -51,7 +51,7 @@ static void	door_init(t_data *data, int i, int j)
 	data->sprites[index].current_frame = 0;
 	data->sprites[index].type = SPRT_DOOR;
 	data->sprites[index].state = D_CLOSED;
-	data->sprite_order[index] = index;
+	data->sprt_order[index] = index;
 	data->sprite_amt++;
 }
 
@@ -62,7 +62,7 @@ void	sprite_parser(t_data *data)
 
 	data->sprite_amt = matrix_finder(data->map.map, "MD");
 	data->sprites = calloc(data->sprite_amt, sizeof(t_sprite));
-	data->sprite_order = calloc(data->sprite_amt, sizeof(int));
+	data->sprt_order = calloc(data->sprite_amt, sizeof(int));
 	data->sprite_amt = 0;
 	i = -1;
 	while (data->map.map[++i])
