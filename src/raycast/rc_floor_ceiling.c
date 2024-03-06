@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:51:53 by rvaz              #+#    #+#             */
-/*   Updated: 2024/03/05 14:30:46 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/06 15:33:27 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	rc_fc_loop(t_point *r, t_vector ray_p, t_point *color, t_data *data)
 
 	while (++r->y < WIN_HEIGHT)
 	{
-		distance = (0.5 * WIN_HEIGHT) / (r->y - WIN_HEIGHT / 2); // camera height divided by y position relative to center of the screen
+		distance = (WIN_HEIGHT / 2) / (r->y - WIN_HEIGHT / 2);
 		t_step.x = distance * (ray_p.p_b.x - ray_p.p_a.x) / WIN_WIDTH;
 		t_step.y = distance * (ray_p.p_b.y - ray_p.p_a.y) / WIN_WIDTH;
 		real_pos.x = data->player.pos.x + distance * ray_p.p_a.x;
@@ -55,9 +55,9 @@ static void	rc_fc_loop(t_point *r, t_vector ray_p, t_point *color, t_data *data)
 			fc_set_pos(&t_step, &real_pos, &t_pos);
 			fc_set_color(data, t_pos, color);
 			draw_pixel(data->img, (int)r->x, (int)r->y,
-				shader(color->x, r->y, (t_point){500, 45}, 0));
+				shader(color->x, r->y, (t_point){WIN_HEIGHT * 0.844, 45}, 0));
 			draw_pixel(data->img, (int)r->x, WIN_HEIGHT - (int)r->y,
-				shader(color->y, r->y, (t_point){500, 45}, 0));
+				shader(color->y, r->y, (t_point){WIN_HEIGHT * 0.844, 45}, 0));
 		}
 	}
 }

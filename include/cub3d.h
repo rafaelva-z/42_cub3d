@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/03/05 14:30:26 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/06 12:13:33 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 # define DEBUG 0
-# define SHADER 0
+# define SHADER 1
 
 # include "player.h"
 # include "../lib/libft/libft.h"
