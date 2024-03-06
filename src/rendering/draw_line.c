@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 17:45:18 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/24 17:34:06 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/06 11:34:45 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	draw_vertical_line_texture(t_point prnt_pos, t_img *texture,
 			return ;
 		if (prnt_pos.y >= 0)
 			draw_pixel(data->img, prnt_pos.x, prnt_pos.y,
-				shader(color, ray->distance, 1, 0.3, 1));
+				shader(color, ray->distance, (t_point){1, 0.3}, 1));
 		prnt_pos.y++;
 		size--;
 		t_pos.y += t_step;

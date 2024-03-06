@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 11:42:45 by rvaz              #+#    #+#             */
-/*   Updated: 2024/03/05 14:34:19 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/06 11:35:17 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	draw_sprite( t_data *data, t_rc_sprites *rc, int i)
 		if (rc->transform.y < 0 || x < 0 || x > WIN_WIDTH
 			|| rc->transform.y > data->z_buffer[x])
 			continue ;
-		y = rc->draw_start.y - 1;
+		y = rc->draw_start.y;
 		while (++y < rc->draw_end.y)
 		{
 			t_pos.y = (y * 256 - WIN_HEIGHT * 128 + rc->sprt_size.y * 128);
