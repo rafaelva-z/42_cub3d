@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+         #
+#    By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by rvaz              #+#    #+#              #
-#    Updated: 2024/02/26 14:02:19 by fda-estr         ###   ########.fr        #
+#    Updated: 2024/03/05 14:18:11 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,9 @@ SRCS		=	$(addprefix ./src/,				\
 				dda.c							\
 				dda2.c							\
 				raycast.c						\
+				rc_floor_ceiling.c				\
 				rc_spritecast.c					\
+				rc_spritecast2.c				\
 				)								\
 				$(addprefix rendering/,			\
 				draw_line.c						\

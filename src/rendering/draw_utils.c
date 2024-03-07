@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   draw_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 12:13:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/27 19:32:27 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/03/05 14:29:19 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-int	shader(int color, double distance, double a, double b, short mode)
+int	shader(int color, double distance, t_point j, short mode)
 {
 	double	i;
 
@@ -21,18 +21,18 @@ int	shader(int color, double distance, double a, double b, short mode)
 	i = distance;
 	if (mode == 1)
 	{
-		while (i > a)
+		while (i > j.x)
 		{
 			color = (color & 0xfefefefe) >> 1;
-			i -= b;
+			i -= j.y;
 		}
 	}
 	else
 	{
-		while (i < a)
+		while (i < j.x)
 		{
 			color = (color & 0xfefefefe) >> 1;
-			i += b;
+			i += j.y;
 		}
 	}
 	return (color);
