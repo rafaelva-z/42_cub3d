@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rc_spritecast.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 11:42:45 by rvaz              #+#    #+#             */
-/*   Updated: 2024/03/06 11:35:17 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/12 20:33:24 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ void	draw_sprite( t_data *data, t_rc_sprites *rc, int i)
 		{
 			t_pos.y = (y * 256 - WIN_HEIGHT * 128 + rc->sprt_size.y * 128);
 			t_pos.y = ((t_pos.y * TEXTURE_HEIGHT) / rc->sprt_size.y) / 256;
-			color = sc_set_color(&t_pos, data, rc, i);
-			draw_pixel(data->img, x, y, shader(color, abs(data->sprites
+			color = sc_set_color(&t_pos, data, i);
+			draw_pixel(data->img, x, y, shader(color, fabs(data->sprites
 					[data->sprt_order[i]].dist_player), (t_point){2, 0.3}, 1));
 		}
 	}
@@ -120,7 +120,7 @@ void	rc_sprites(t_data *data)
 		sc_matrix_multiplication(data, &rc->transform, i);
 		rc->sprite_screen_x = (WIN_WIDTH / 2)
 			* (1 + rc->transform.x / rc->transform.y);
-		rc->sprt_size.y = abs(WIN_HEIGHT / rc->transform.y);
+		rc->sprt_size.y = fabs((double)WIN_HEIGHT / rc->transform.y);
 		rc->sprt_size.x = rc->sprt_size.y;
 		sc_set_draw_pos(rc);
 		draw_sprite(data, rc, i);

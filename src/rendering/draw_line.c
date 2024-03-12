@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 17:45:18 by rvaz              #+#    #+#             */
-/*   Updated: 2024/03/06 11:34:45 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/12 17:54:34 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static double	def_texture_start(t_ray *ray, t_img *texture, int *size,
 {
 	double	wallx;
 
+	wallx = 0;
 	if (ray->side == 0 || ray->side == 3)
 		wallx = data->player.pos.y + ray->distance * ray->dir.y;
 	else if (ray->side == 1 || ray->side == 4)
@@ -32,7 +33,7 @@ static double	def_texture_start(t_ray *ray, t_img *texture, int *size,
 */
 int	invert_neg_oriented_textures(t_ray *ray, t_img *texture, int *t_start_x)
 {
-	if (ray->dir.x < 0 && ray->side == 0
+	if ((ray->dir.x < 0 && ray->side == 0)
 		|| (ray->dir.y > 0 && ray->side == 1))
 		return (texture->width - *t_start_x - 1);
 	return (*t_start_x);

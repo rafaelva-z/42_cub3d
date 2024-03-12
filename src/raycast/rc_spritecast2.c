@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rc_spritecast2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 14:14:03 by rvaz              #+#    #+#             */
-/*   Updated: 2024/03/05 14:16:25 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/12 17:51:19 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	sc_matrix_multiplication(t_data *data, t_point *transform, int i)
 			+ data->player.plane.x * sprt_pos.y);
 }
 
-int	sc_set_color( t_point *t_pos, t_data *data, t_rc_sprites *rc, int i)
+int	sc_set_color( t_point *t_pos, t_data *data, int i)
 {
 	int	color;
 
@@ -63,6 +63,7 @@ int	sc_set_color( t_point *t_pos, t_data *data, t_rc_sprites *rc, int i)
 			.texture->color_grid[(int)t_pos->y][(int)t_pos->x];
 	else
 		color = 0;
+	return (color);
 }
 
 void	sc_set_draw_pos(t_rc_sprites *rc)

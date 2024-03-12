@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initializer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/27 19:34:32 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/03/12 21:14:47 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,6 @@ static void	init_mlx(t_data *data)
 	data->img->addr = mlx_get_data_addr(data->img->img,
 			&(data->img->bits_per_pixel), &(data->img->line_length),
 			&(data->img->endian));
-	data->img_mm = malloc(sizeof(t_img));
-	if (!data->img_mm)
-		free_and_exit(data, ERR_MALLOC, 1);
-	data->img_mm->img = mlx_new_image(data->mlx, MM_WIDTH, MM_HEIGHT);
-	data->img_mm->addr = mlx_get_data_addr(data->img_mm->img,
-			&(data->img_mm->bits_per_pixel), &(data->img_mm->line_length),
-			&(data->img_mm->endian));
-	// (to here)
 	mlx_do_key_autorepeatoff(data->mlx);
 }
 
