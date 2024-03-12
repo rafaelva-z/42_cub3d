@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 22:26:46 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/26 13:52:59 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/03/09 15:13:50 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,7 @@ static void	avoid_wall(t_data *data, t_sprite *sprt, int rot_dir, int i)
 		else if (!left_touch && right_touch)
 			rotate_enemy(sprt, 1);
 		else if (!left_touch && !right_touch)
-		{
-			sprt->state = E_MOVE;
 			break ;
-		}
 	}
 }
 
@@ -61,13 +58,9 @@ static void	player_in_sight(t_data *data, t_sprite *enemy)
 {
 	double	dist;
 
-	if (get_timestamp(data) > enemy->follow_timer)
-	{
-		rc_enemy(data, enemy);
-		if (enemy->state != E_FOLLOW)
-			return ;
-		enemy->follow_timer = get_timestamp(data) + ENEMY_FLW_TIME;
-	}
+	rc_enemy(data, enemy);
+	if (get_timestamp(data) > enemy->follow_timer && enemy->state != E_FOLLOW)
+		return ;
 	enemy->dir.x = data->player.pos.x - enemy->pos.x;
 	enemy->dir.y = data->player.pos.y - enemy->pos.y;
 	dist = distance_calc(data->player.pos, enemy->pos);

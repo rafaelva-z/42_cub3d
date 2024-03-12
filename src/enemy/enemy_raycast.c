@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 17:35:38 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/25 17:15:38 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/03/09 15:13:55 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ void	rc_enemy(t_data *data, t_sprite *enemy)
 		if (ray.distance == -1)
 		{
 			enemy->state = E_FOLLOW;
+			enemy->follow_timer = get_timestamp(data) + ENEMY_FLW_TIME;
 			return ;
 		}
+		enemy->state = E_MOVE;
 		rotate_point(&ray.dir, 1);
 		r++;
 	}
