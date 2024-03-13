@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/03/11 20:20:19 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/03/12 21:15:52 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@
 # define ENEMY_FLW_TIME 5000
 
 //	Screen Resolution
-# define WIN_WIDTH		900
-# define WIN_HEIGHT		600
+# define WIN_WIDTH		1600
+# define WIN_HEIGHT		750
 # define WIN_TITLE		"Cub3D - fda-est & rvaz"
 
 # define TEXTURE_WIDTH	64
@@ -267,7 +267,6 @@ typedef struct s_data
 	void		*mlx;
 	void		*mlx_win;
 	t_img		*img;
-	t_img		*img_mm;
 	t_file		*file;
 	t_map		map;
 	t_player	player;
@@ -277,7 +276,8 @@ typedef struct s_data
 	t_img		**textures;
 	uint64_t	start_time;
 	double		*z_buffer;
-	uint64_t	next_frame;		
+	uint64_t	next_frame;
+	time_t		delta_time;
 }				t_data;
 
 /* =====================================================================*
@@ -346,7 +346,7 @@ void		sprite_parser(t_data *data);
 //			dda.c
 void		dda(t_ray *ray, t_data *data);
 void		dda_enemy(t_ray *ray, t_data *data, t_sprite *enemy);
-void		dda_door(t_ray *ray, t_data *data);
+void		dda_door(t_ray *ray, t_data *data, t_sprite *sprite);
 int			dda_loop(t_point *current, t_ray *ray);
 void		dda_start(t_point *pos, t_ray *ray);
 int			dda_door_ray(t_ray *ray, t_player *player, t_point current);
@@ -365,8 +365,7 @@ void		rc_sprites(t_data *data);
 void		set_object_texture(t_data *data, t_sprite *sprite, double degrees);
 void		set_enemy_texture(t_data *data, t_sprite *sprite, double degrees);
 void		sc_matrix_multiplication(t_data *data, t_point *transform, int i);
-int			sc_set_color( t_point *t_pos, t_data *data,
-				t_rc_sprites *rc, int i);
+int			sc_set_color(t_point *t_pos, t_data *data, int i);
 void		sc_set_draw_pos(t_rc_sprites *rc);
 
 /* =====================================================================*
@@ -413,8 +412,9 @@ int			is_wall(t_point point, t_data *data);
 int			is_door(t_point current, t_data *data);
 void		update_view(t_data *data);
 void		begining_timestamp(t_data *data);
-uint64_t	get_timestamp(t_data *data);
 int			get_pixel(t_img *img, int x, int y);
+uint64_t	get_timestamp(t_data *data);
+uint64_t	get_abs_timestamp(t_data *data);
 
 //			utils_2.c
 t_point		vector_add(t_point v1, t_point v2);
@@ -434,6 +434,5 @@ void		initializer(t_data *data);
 void		texture_array_init(t_data *data);
 
 int			shader(int color, double distance, t_point k, short mode);
-void		dda_door(t_ray *ray, t_data *data);
 short		rc_door(t_data *data, t_sprite *door, t_player *player);
 #endif

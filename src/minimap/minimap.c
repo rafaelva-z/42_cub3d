@@ -49,21 +49,21 @@ static void	draw_cursor(t_data *data)
 	{
 		j = -1;
 		while (++j <= 10)
-			draw_pixel(data->img_mm, 159 + i, 155 + j, 0xff0000);
+			draw_pixel(data->img, 159 + i, 155 + j, 0xff0000);
 	}
 	i = -1;
 	while (++i < 3)
 	{
 		j = -1;
 		while (++j <= 10)
-			draw_pixel(data->img_mm, 155 + j, 159 + i, 0xff0000);
+			draw_pixel(data->img, 155 + j, 159 + i, 0xff0000);
 	}
 	i = -3;
 	while (++i < 3)
 	{
 		j = -3;
 		while (++j < 3)
-			draw_pixel(data->img_mm, 160 + (25 * data->player.dir.x) + i, 160
+			draw_pixel(data->img, 160 + (25 * data->player.dir.x) + i, 160
 				+ (25 * data->player.dir.y) + j, 0xff0000);
 	}
 }
@@ -73,6 +73,7 @@ static void	draw_vacum_tile(t_img *img, t_img *texture, int x, int y)
 	int	i;
 	int	j;
 
+	return ;
 	i = -1;
 	if (x == MM_WIDTH || y == MM_HEIGHT)
 		return ;
@@ -94,7 +95,7 @@ void	minimap(t_data *data)
 
 	map_view(data);
 	pix_os = pixel_offset(data);
-	draw_vacum_tile(data->img_mm, data->textures[MMV_IMG], 0, 0);
+	draw_vacum_tile(data->img, data->textures[MMV_IMG], 0, 0);
 	offset = (t_point){data->player.pos.x - 4, data->player.pos.y - 4};
 	i = -7;
 	while (++i < 5)
@@ -107,6 +108,4 @@ void	minimap(t_data *data)
 		}
 	}
 	draw_cursor(data);
-	mlx_put_image_to_window(data->mlx,
-		data->mlx_win, data->img_mm->img, 0, 0);
 }
