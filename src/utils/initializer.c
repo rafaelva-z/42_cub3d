@@ -28,7 +28,7 @@ static void	init_data(t_data *data)
 	data->file->west_file = NULL;
 	data->file->floor_file = NULL;
 	data->file->ceiling_file = NULL;
-	begining_timestamp(data);
+	data->start_time = get_timestamp(data);
 	data->sprites = NULL;
 	data->z_buffer = calloc(WIN_WIDTH, sizeof(double));
 	texture_array_init(data);
