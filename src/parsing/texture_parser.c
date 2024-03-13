@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture_parser.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:05:40 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/03/12 20:42:21 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/13 18:32:13 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	colors_to_grid(t_data *data, t_img *img)
 	}
 }
 
-static void	image_init(t_data *dt, t_img *img, char	*path)
+void	image_init(t_data *dt, t_img *img, char	*path)
 {
 	get_size(dt, path, img);
 	img->img = mlx_xpm_file_to_image(dt->mlx, path, &img->width, &img->height);
@@ -88,8 +88,6 @@ void	texture_parser_aux(t_data *dt)
 	image_init(dt, dt->textures[EA_IMG], dt->file->east_file);
 	image_init(dt, dt->textures[SO_IMG], dt->file->south_file);
 	image_init(dt, dt->textures[WE_IMG], dt->file->west_file);
-	image_init(dt, dt->textures[F_IMG], dt->file->floor_file);
-	image_init(dt, dt->textures[C_IMG], dt->file->ceiling_file);
 	image_init(dt, dt->textures[MMW_IMG], "./textures/minimap/mm_wall.xpm");
 	image_init(dt, dt->textures[MMF_IMG], "./textures/minimap/mm_floor.xpm");
 	image_init(dt, dt->textures[MMV_IMG], "./textures/minimap/mm_vacum.xpm");

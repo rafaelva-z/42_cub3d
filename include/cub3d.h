@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/03/12 21:15:52 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/13 18:31:52 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,6 +266,8 @@ typedef struct s_data
 {
 	void		*mlx;
 	void		*mlx_win;
+	int			floor_colour;
+	int			ceiling_colour;
 	t_img		*img;
 	t_file		*file;
 	t_map		map;
@@ -329,11 +331,13 @@ void		map_check(t_data *data);
 
 //			parser_2.c
 void		identifier_init(t_data *data);
+void		ceiling_floor_init(t_data *data);
 
 //			parser.c
 void		parser(t_data *data, char *str);
 
 //			texture_parser.c
+void		image_init(t_data *dt, t_img *img, char	*path);
 void		texture_parser(t_data *data);
 
 //			sprite_parser.c
