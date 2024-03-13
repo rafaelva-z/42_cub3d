@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   dda2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:37:32 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/25 14:29:58 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/12 20:34:13 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-void	dda_door(t_ray *ray, t_data *data)
+void	dda_door(t_ray *ray, t_data *data, t_sprite *sprite)
 {
 	t_point	current;
 
@@ -23,7 +23,9 @@ void	dda_door(t_ray *ray, t_data *data)
 	while (is_inside_map(current, data->map.size) && !is_wall(current, data))
 	{
 		ray->side = dda_loop(&current, ray);
-		if (is_door(current, data) == D_MOVING)
+		if (is_door(current, data) == D_MOVING
+			&& ((int)sprite->pos.x == (int)current.x)
+			&& ((int)sprite->pos.y == (int)current.y))
 			if (dda_door_ray(ray, &data->player, current))
 				return ;
 	}

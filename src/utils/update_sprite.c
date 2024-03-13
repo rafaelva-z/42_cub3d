@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update_sprite.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 18:53:27 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/23 18:54:13 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/12 18:08:26 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	update_door_sprite(t_data *data, t_sprite *sprites)
 	{
 		sprites->state = D_OPEN;
 		sprites->current_frame = 0;
-		data->map.map[(int)sprites->pos.y][(int)sprites->pos.x] = MAP_OPEN_DOOR;
+		data->map.map[(int)sprites->pos.y][(int)sprites->pos.x] = MAP_EMPTY;
 	}
 	else if (sprites->current_frame < 0)
 	{

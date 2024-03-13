@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enemy.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 22:26:46 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/03/09 15:13:50 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:49:32 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	player_in_sight(t_data *data, t_sprite *enemy)
 	rotate_point(&enemy->coliders[1], -45);
 }
 
-static void	step_forward(t_data *data, t_sprite *sprt)
+static void	step_forward(t_sprite *sprt)
 {
 	if (sprt->state == E_IDLE)
 		return ;
@@ -106,6 +106,6 @@ void	enemy(t_data *data)
 		if (data->sprites[i].state != E_FOLLOW)
 			rand_dir_change(data, i);
 		avoid_wall(data, &data->sprites[i], rot_dir, 0);
-		step_forward(data, &data->sprites[i]);
+		step_forward(&data->sprites[i]);
 	}
 }

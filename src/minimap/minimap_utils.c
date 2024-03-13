@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 14:02:24 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/26 14:13:12 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/03/12 20:38:51 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ void	map_to_tile(t_data *data, t_point print, t_point offset, t_point pix_os)
 			|| data->map.minimap[y - 1][x - 1] < 0)
 		return ;
 	else if (data->map.minimap[y - 1][x - 1] == '0')
-		draw_tile(data->img_mm, data->textures[MMF_IMG],
+		draw_tile(data->img, data->textures[MMF_IMG],
 			(32 * (print.x - offset.x)) - pix_os.x,
 			(32 * (print.y - offset.y)) - pix_os.y);
 	else if (data->map.minimap[y - 1][x - 1] == '1')
-		draw_tile(data->img_mm, data->textures[MMW_IMG],
+		draw_tile(data->img, data->textures[MMW_IMG],
 			(32 * (print.x - offset.x)) - pix_os.x,
 			(32 * (print.y - offset.y)) - pix_os.y);
 }

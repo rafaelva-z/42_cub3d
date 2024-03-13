@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:08:06 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/02/26 13:09:24 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:49:58 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	extension(t_data *data, char *str)
 		free_and_exit(data, "Error: invalid file extension", 1);
 }
 
-static int	new_line_check(t_data *data, char *s)
+static int	new_line_check(char *s)
 {
 	int	i;
 	int	line_count;
@@ -70,7 +70,7 @@ static void	file_extractor(t_data *data, char *str, char *s, char *join_s)
 	}
 	if (!join_s)
 		free_and_exit(data, "Error: empty map...\n", 1);
-	if (new_line_check(data, join_s) == 0)
+	if (new_line_check(join_s) == 0)
 	{
 		free (join_s);
 		free_and_exit(data, ERR_MAP, 1);
