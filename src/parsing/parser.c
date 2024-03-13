@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:08:06 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/03/13 18:57:31 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/03/13 19:28:05 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,14 @@ static int	new_line_check(char *s)
 		line_count++;
 		while (s[++i] && s[i] != '\n')
 			;
+		if (!s[i])
+			return (0);
 	}
 	if (!s[i])
 		return (0);
 	while (s[++i])
-	{
 		if (s[i] == '\n' && s[i + 1] == '\n')
 			return (0);
-	}
 	if (i && s[i - 1] == '\n')
 		return (0);
 	return (1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 23:05:31 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/03/13 18:57:47 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/03/13 19:27:29 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	colour_parsing(t_data *data, char *str)
 	int		r;
 	int		g;
 	int		b;
-	
+
 	colour_char = ft_split(str, ',');
 	if (!colour_char)
 		free_and_exit(data, ERR_MALLOC, 1);
@@ -88,12 +88,12 @@ static int	colour_parsing(t_data *data, char *str)
 void	ceiling_floor_init(t_data *data)
 {
 	if ((int)ft_strlen(data->file->ceiling_file)
-			!= str_finder(data->file->ceiling_file, "1234567890,"))
+		!= str_finder(data->file->ceiling_file, "1234567890,"))
 		image_init(data, data->textures[C_IMG], data->file->ceiling_file);
 	else
 		data->ceiling_colour = colour_parsing(data, data->file->ceiling_file);
 	if ((int)ft_strlen(data->file->floor_file)
-			!= str_finder(data->file->floor_file, "1234567890,"))
+		!= str_finder(data->file->floor_file, "1234567890,"))
 		image_init(data, data->textures[F_IMG], data->file->floor_file);
 	else
 		data->floor_colour = colour_parsing(data, data->file->floor_file);
