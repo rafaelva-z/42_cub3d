@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/03/12 21:14:47 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/13 18:22:15 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	init_data(t_data *data)
 	data->file->west_file = NULL;
 	data->file->floor_file = NULL;
 	data->file->ceiling_file = NULL;
-	begining_timestamp(data);
+	data->start_time = get_timestamp(data);
 	data->sprites = NULL;
 	data->z_buffer = calloc(WIN_WIDTH, sizeof(double));
 	texture_array_init(data);
