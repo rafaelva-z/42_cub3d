@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:08:06 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/03/12 17:49:58 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/13 18:57:31 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void	parser(t_data *data, char *str)
 	file_extractor(data, str, NULL, NULL);
 	trimmer(data);
 	identifier_init(data);
+	ceiling_floor_init(data);
 	map_check(data);
 	texture_parser(data);
 	sprite_parser(data);
