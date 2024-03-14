@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/03/12 21:15:52 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/13 19:04:05 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@
 # define ENEMY_FLW_TIME 5000
 
 //	Screen Resolution
-# define WIN_WIDTH		1600
-# define WIN_HEIGHT		750
+# define WIN_WIDTH		1500
+# define WIN_HEIGHT		800
 # define WIN_TITLE		"Cub3D - fda-est & rvaz"
 
 # define TEXTURE_WIDTH	64
@@ -266,6 +266,8 @@ typedef struct s_data
 {
 	void		*mlx;
 	void		*mlx_win;
+	int			floor_colour;
+	int			ceiling_colour;
 	t_img		*img;
 	t_file		*file;
 	t_map		map;
@@ -275,9 +277,9 @@ typedef struct s_data
 	int			sprite_amt;
 	t_img		**textures;
 	uint64_t	start_time;
+	uint64_t	curr_time;
 	double		*z_buffer;
 	uint64_t	next_frame;
-	time_t		delta_time;
 }				t_data;
 
 /* =====================================================================*
@@ -329,11 +331,13 @@ void		map_check(t_data *data);
 
 //			parser_2.c
 void		identifier_init(t_data *data);
+void		ceiling_floor_init(t_data *data);
 
 //			parser.c
 void		parser(t_data *data, char *str);
 
 //			texture_parser.c
+void		image_init(t_data *dt, t_img *img, char	*path);
 void		texture_parser(t_data *data);
 
 //			sprite_parser.c
@@ -403,18 +407,19 @@ void		get_colid_pos(t_point *cld_pos_1,
 void		update_sprite(t_data *data, t_sprite *sprites, int sprite_amt);
 
 //			utils.c
-void		initializer(t_data *data);
 int			coordinate_finder(char **mtx, char c, char axle);
 int			display_error(char *str);
+void		update_view(t_data *data);
+int			get_pixel(t_img *img, int x, int y);
+uint64_t	get_timestamp(t_data *data);
+
+//			check_utils.c
 int			is_inside_map(t_point point, t_point map_size);
 int			is_player(t_point point, t_data *data);
 int			is_wall(t_point point, t_data *data);
 int			is_door(t_point current, t_data *data);
-void		update_view(t_data *data);
-void		begining_timestamp(t_data *data);
-int			get_pixel(t_img *img, int x, int y);
-uint64_t	get_timestamp(t_data *data);
-uint64_t	get_abs_timestamp(t_data *data);
+
+
 
 //			utils_2.c
 t_point		vector_add(t_point v1, t_point v2);
@@ -435,4 +440,5 @@ void		texture_array_init(t_data *data);
 
 int			shader(int color, double distance, t_point k, short mode);
 short		rc_door(t_data *data, t_sprite *door, t_player *player);
+
 #endif

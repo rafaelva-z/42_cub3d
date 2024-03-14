@@ -2,8 +2,8 @@ NO ./textures/map/north_wall.xpm
 SO ./textures/map/south_wall.xpm
 WE ./textures/map/west_wall.xpm
 EA ./textures/map/east_wall.xpm 
-C ./textures/map/ceiling.xpm                      
-F ./textures/map/floor3.xpm   
+C 200,167,45
+F 255,0,0
 
 
 111111111111111

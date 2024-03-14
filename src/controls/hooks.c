@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:44:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/03/12 20:58:03 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/13 18:16:51 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	game_update(t_data *data)
 	t_player	*player;
 	int			update;
 
-	data->delta_time = get_abs_timestamp(data);
 	update = 0;
 	player = &data->player;
 	while (get_timestamp(data) < data->next_frame)
@@ -35,6 +34,7 @@ int	game_update(t_data *data)
 	update_view(data);
 	if (!player->mouse_toggle)
 		mlx_mouse_move(data->mlx, data->mlx_win, WIN_WIDTH / 2, WIN_HEIGHT / 2);
+	data->curr_time = get_timestamp(data);
 	return (0);
 }
 

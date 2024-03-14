@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 14:59:53 by rvaz              #+#    #+#             */
-/*   Updated: 2024/03/12 21:07:40 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/13 18:35:16 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ static void	calc_move_dir(t_player *player)
 int	move_player(t_data *data)
 {
 	t_player	*player;
+	uint64_t	time;
+	t_point		pos_to_check;
 
+	time = get_timestamp(data) - data->curr_time;
 	player = &data->player;
 	if (!player->actions)
 		return (0);
@@ -49,10 +52,9 @@ int	move_player(t_data *data)
 	vector_norm(&player->mov_dir);
 	player->mov_dir = (t_point){player->mov_dir.x * MOVE_SPD,
 		player->mov_dir.y * MOVE_SPD};
-	if (!is_wall(vector_add(player->mov_dir,
-				vector_add(player->pos, player->mov_dir)), data)
-		&& is_door(vector_add(player->mov_dir,
-				vector_add(player->pos, player->mov_dir)), data) <= 1)
+	pos_to_check = vector_add(player->mov_dir,
+			vector_add(player->pos, player->mov_dir));
+	if (!is_wall(pos_to_check, data) && is_door(pos_to_check, data) <= 1)
 	{
 		player->pos = vector_add(player->pos, player->mov_dir);
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:08:06 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/03/12 17:49:58 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/13 19:28:05 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,14 @@ static int	new_line_check(char *s)
 		line_count++;
 		while (s[++i] && s[i] != '\n')
 			;
+		if (!s[i])
+			return (0);
 	}
 	if (!s[i])
 		return (0);
 	while (s[++i])
-	{
 		if (s[i] == '\n' && s[i + 1] == '\n')
 			return (0);
-	}
 	if (i && s[i - 1] == '\n')
 		return (0);
 	return (1);
@@ -102,6 +102,7 @@ void	parser(t_data *data, char *str)
 	file_extractor(data, str, NULL, NULL);
 	trimmer(data);
 	identifier_init(data);
+	ceiling_floor_init(data);
 	map_check(data);
 	texture_parser(data);
 	sprite_parser(data);

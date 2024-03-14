@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rc_floor_ceiling.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 13:51:53 by rvaz              #+#    #+#             */
-/*   Updated: 2024/03/06 15:33:27 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/13 19:26:33 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,16 @@
 
 static void	fc_set_color(t_data *data, t_point t_pos, t_point *color)
 {
-	color->x = data->textures[F_IMG]->color_grid[(int)t_pos.y][(int)t_pos.x];
-	color->y = data->textures[C_IMG]->color_grid[(int)t_pos.y][(int)t_pos.x];
+	if (data->floor_colour == -1)
+	{
+		color->x = data->textures[F_IMG]->color_grid[(int)t_pos.y]
+		[(int)t_pos.x];
+		color->y = data->textures[C_IMG]->color_grid[(int)t_pos.y]
+		[(int)t_pos.x];
+		return ;
+	}
+	color->x = data->ceiling_colour;
+	color->y = data->floor_colour;
 }
 
 static void	fc_set_pos(t_point *t_step, t_point *real_pos, t_point *t_pos)
@@ -35,12 +43,13 @@ static void	fc_set_pos(t_point *t_step, t_point *real_pos, t_point *t_pos)
  * 			"real_pos" is the current position x and y,
  * 			"t_pos" is the position in the texture image.
 */
-static void	rc_fc_loop(t_point *r, t_vector ray_p, t_point *color, t_data *data)
+static void	rc_fc_loop(t_point *r, t_vector ray_p, t_data *data)
 {
 	t_point	t_step;
 	double	distance;
 	t_point	real_pos;
 	t_point	t_pos;
+	t_point	color;
 
 	while (++r->y < WIN_HEIGHT)
 	{
@@ -53,11 +62,11 @@ static void	rc_fc_loop(t_point *r, t_vector ray_p, t_point *color, t_data *data)
 		while (++r->x < WIN_WIDTH)
 		{
 			fc_set_pos(&t_step, &real_pos, &t_pos);
-			fc_set_color(data, t_pos, color);
+			fc_set_color(data, t_pos, &color);
 			draw_pixel(data->img, (int)r->x, (int)r->y,
-				shader(color->x, r->y, (t_point){WIN_HEIGHT * 0.844, 45}, 0));
+				shader(color.x, r->y, (t_point){WIN_HEIGHT * 0.844, 45}, 0));
 			draw_pixel(data->img, (int)r->x, WIN_HEIGHT - (int)r->y,
-				shader(color->y, r->y, (t_point){WIN_HEIGHT * 0.844, 45}, 0));
+				shader(color.y, r->y, (t_point){WIN_HEIGHT * 0.844, 45}, 0));
 		}
 	}
 }
@@ -73,12 +82,11 @@ void	rc_floor_ceiling(t_data *data)
 	t_point	r;
 	t_point	raydir0;
 	t_point	raydir1;
-	t_point	color;
 
 	r.y = -1;
 	raydir0.x = data->player.dir.x - data->player.plane.x;
 	raydir0.y = data->player.dir.y - data->player.plane.y;
 	raydir1.x = data->player.dir.x + data->player.plane.x;
 	raydir1.y = data->player.dir.y + data->player.plane.y;
-	rc_fc_loop(&r, (t_vector){raydir0, raydir1}, &color, data);
+	rc_fc_loop(&r, (t_vector){raydir0, raydir1}, data);
 }

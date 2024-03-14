@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initializer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/03/12 21:14:47 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/13 17:37:45 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,13 @@ static void	init_data(t_data *data)
 	data->file->west_file = NULL;
 	data->file->floor_file = NULL;
 	data->file->ceiling_file = NULL;
-	begining_timestamp(data);
+	data->start_time = get_timestamp(data);
 	data->sprites = NULL;
 	data->z_buffer = calloc(WIN_WIDTH, sizeof(double));
 	texture_array_init(data);
 	data->next_frame = 0;
+	data->ceiling_colour = -1;
+	data->floor_colour = -1;
 }
 
 static void	init_mlx(t_data *data)
