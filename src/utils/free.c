@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:32:59 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/27 19:37:09 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:37:58 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,14 @@ void	free_file(t_file *file)
 	free (file);
 }
 
+void	free_sprites(t_data *data)
+{
+	if (data->sprites)
+		free(data->sprites);
+	if (data->sprt_order)
+		free(data->sprt_order);
+}
+
 void	free_and_exit(t_data *data, char *msg, int exit_status)
 {
 	mlx_do_key_autorepeaton(data->mlx);
@@ -88,6 +96,7 @@ void	free_and_exit(t_data *data, char *msg, int exit_status)
 	{
 		free_textures(data);
 		free_data(data);
+		free_sprites(data);
 	}
 	exit(exit_status);
 }

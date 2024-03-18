@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:44:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/03/13 18:16:51 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/18 16:43:10 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int	key_release(int keycode, t_player *player)
 
 int	mouse_reader(int x, int y, t_player *player)
 {
+	(void)y;
 	if (player->mouse_toggle)
 		return (0);
 	if (x > WIN_WIDTH / 2)
@@ -100,11 +101,6 @@ int	mouse_reader(int x, int y, t_player *player)
 		rotate_point(&player->dir, -ROT_SPD * MOUSE_SENS);
 		rotate_point(&player->plane, -ROT_SPD * MOUSE_SENS);
 	}
-	if (y > WIN_HEIGHT / 2 && player->vertical > -150)
-		player->vertical -= VERTICAL_SPD * MOUSE_SENS;
-	else if (y < WIN_HEIGHT / 2 && player->vertical < 150)
-		player->vertical += VERTICAL_SPD * MOUSE_SENS;
-	player->mouse.x = x;
 	return (0);
 }
 

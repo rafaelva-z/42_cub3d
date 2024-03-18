@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initializer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/03/13 17:37:45 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:44:00 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ static void	init_player(t_data *data)
 	data->player.fov = START_FOV;
 	data->player.vertical = 0;
 	data->player.actions = 0;
-	data->player.mouse = (t_point){0, 0};
 	data->player.mov_dir = (t_point){0, 0};
 	data->player.mouse_toggle = 1;
 }
