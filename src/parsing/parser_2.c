@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 23:05:31 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/03/18 16:19:24 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:37:49 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,25 @@ static int	colour_parsing(t_data *data, char *str)
 
 void	ceiling_floor_init(t_data *data)
 {
+	int	count;
+
+	count = 0;
 	if ((int)ft_strlen(data->file->ceiling_file)
 		!= str_finder(data->file->ceiling_file, "1234567890,"))
+	{
 		image_init(data, data->textures[C_IMG], data->file->ceiling_file);
+		count++;
+	}
 	else
 		data->ceiling_colour = colour_parsing(data, data->file->ceiling_file);
 	if ((int)ft_strlen(data->file->floor_file)
 		!= str_finder(data->file->floor_file, "1234567890,"))
+	{
 		image_init(data, data->textures[F_IMG], data->file->floor_file);
+		count++;	
+	}
 	else
 		data->floor_colour = colour_parsing(data, data->file->floor_file);
+	if (count == 1)
+		free_and_exit(data, ERR_MIX, 1);
 }
