@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 23:05:31 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/03/18 16:37:49 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/03/18 17:42:45 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	ceiling_floor_init(t_data *data)
 		!= str_finder(data->file->floor_file, "1234567890,"))
 	{
 		image_init(data, data->textures[F_IMG], data->file->floor_file);
-		count++;	
+		count++;
 	}
 	else
 		data->floor_colour = colour_parsing(data, data->file->floor_file);

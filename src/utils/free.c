@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 17:32:59 by rvaz              #+#    #+#             */
-/*   Updated: 2024/03/18 16:37:58 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/18 17:44:26 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	free_textures(t_data *data)
 {
 	int	i;
 
-	if (!data->textures)
+	if (!data || !data->textures)
 		return ;
 	i = -1;
 	while (++i < 44)
@@ -42,7 +42,7 @@ static void	free_textures(t_data *data)
 	free(data->textures);
 }
 
-void	free_data(t_data *data)
+static void	free_data(t_data *data)
 {
 	if (data->z_buffer)
 		free (data->z_buffer);
@@ -71,14 +71,7 @@ void	free_data(t_data *data)
 	}
 }
 
-void	free_file(t_file *file)
-{
-	if (file->file)
-		matrix_deleter(&file->file);
-	free (file);
-}
-
-void	free_sprites(t_data *data)
+static void	free_sprites(t_data *data)
 {
 	if (data->sprites)
 		free(data->sprites);
@@ -88,8 +81,8 @@ void	free_sprites(t_data *data)
 
 void	free_and_exit(t_data *data, char *msg, int exit_status)
 {
-	mlx_do_key_autorepeaton(data->mlx);
-	mlx_mouse_show(data->mlx, data->mlx_win);
+	if (data->mlx)
+		mlx_do_key_autorepeaton(data->mlx);
 	if (msg)
 		ft_putstr_fd(msg, 2);
 	if (data)

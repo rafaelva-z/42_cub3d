@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/03/18 17:01:05 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/18 17:55:59 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,16 +90,16 @@
 
 //	Map Matrix Identifiers
 
-# define MAP_EMPTY				'0'
-# define MAP_WALL				'1'
-# define MAP_PLAYER_NORTH		'N'
-# define MAP_PLAYER_SOUTH		'S'
-# define MAP_PLAYER_EAST		'E'
-# define MAP_PLAYER_WEST		'W'
-# define MAP_ENEMY				'M'
-# define MAP_DOOR				'D'
-# define MAP_MOVING_DOOR		'P'
-# define MAP_OPEN_DOOR			'O'
+# define MAP_EMPTY				48
+# define MAP_WALL				49
+# define MAP_PLAYER_NORTH		78
+# define MAP_PLAYER_SOUTH		83
+# define MAP_PLAYER_EAST		69
+# define MAP_PLAYER_WEST		87
+# define MAP_ENEMY				77
+# define MAP_DOOR				68
+# define MAP_MOVING_DOOR		80
+# define MAP_OPEN_DOOR			79
 
 typedef enum s_door_state
 {
@@ -174,7 +174,6 @@ typedef enum s_sprite_type
 	SPRT_DOOR,
 }				t_sprite_type;
 
-
 typedef struct s_2d_point
 {
 	double	x;
@@ -247,8 +246,8 @@ typedef struct s_sprite
 
 typedef struct s_rc_sprites
 {
-	t_point		transform;			// matrix multiplication
-	t_point		sprt_size;		// sprite size on screen
+	t_point		transform;
+	t_point		sprt_size;
 	t_point		draw_start;
 	t_point		draw_end;
 	int			sprite_screen_x;
@@ -424,8 +423,6 @@ int			is_player(t_point point, t_data *data);
 int			is_wall(t_point point, t_data *data);
 int			is_door(t_point current, t_data *data);
 
-
-
 //			utils_2.c
 t_point		vector_add(t_point v1, t_point v2);
 void		vector_norm(t_point *vector);
@@ -433,9 +430,10 @@ t_point		vector_rotate(t_point vector, double angle);
 void		rotate_point(t_point *point, double angle);
 
 //			free.c
-void		free_data(t_data *data);
-void		free_file(t_file *file);
 void		free_and_exit(t_data *data, char *msg, int exit_status);
+
+//			free2.c
+void		free_file(t_file *file);
 
 //			initializer.c
 void		initializer(t_data *data);

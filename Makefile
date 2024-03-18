@@ -6,7 +6,7 @@
 #    By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by rvaz              #+#    #+#              #
-#    Updated: 2024/03/18 15:54:36 by rvaz             ###   ########.fr        #
+#    Updated: 2024/03/18 17:45:38 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,7 @@ SRCS		=	$(addprefix ./src/,				\
 				update_sprite.c					\
 				check_utils.c					\
 				free.c							\
+				free2.c							\
 				initializer_textures.c			\
 				initializer.c					\
 				time_utils.c 					\
@@ -108,6 +109,8 @@ fclean: clean
 re: fclean all
 	@echo "$(TAG) Recompiling."
 	@make -C $(LIBFT_PATH) re
+
+bonus: all
 
 run: all
 	@clear

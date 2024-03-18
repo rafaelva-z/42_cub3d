@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 15:38:11 by rvaz              #+#    #+#             */
-/*   Updated: 2024/03/18 16:22:56 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/18 17:06:51 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@
 # define MOVE_RIGHT		KEY_D
 # define ZOOM_IN		KEY_PLUS
 # define ZOOM_OUT		KEY_MINUS
-# define ROT			KEY_E
-# define RROT			KEY_Q
+# define ROT			KEY_RIGHT
+# define RROT			KEY_LEFT
 # define LOOK_UP		KEY_UP
 # define LOOK_DOWN		KEY_DOWN
 # define TOGGLE_MOUSE   KEY_CTRL
