@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:08:06 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/03/13 19:28:05 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/18 16:10:52 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	extension(t_data *data, char *str)
 	while (--i > 0 && str[i] != '.')
 		;
 	if (ft_strncmp(str + i, ".cub", 5))
-		free_and_exit(data, "Error: invalid file extension", 1);
+		free_and_exit(data, ERR_EXT, 1);
 }
 
 static int	new_line_check(char *s)
@@ -69,7 +69,7 @@ static void	file_extractor(t_data *data, char *str, char *s, char *join_s)
 		join_s = ft_strjoin_free(join_s, s, 3);
 	}
 	if (!join_s)
-		free_and_exit(data, "Error: empty map...\n", 1);
+		free_and_exit(data, ERR_EMPTY, 1);
 	if (new_line_check(join_s) == 0)
 	{
 		free (join_s);

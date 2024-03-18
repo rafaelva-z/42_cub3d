@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/03/13 19:04:05 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/18 16:39:39 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 # define DEBUG 0
-# define SHADER 0
+# define SHADER 1
 
 # include "player.h"
 # include "../lib/libft/libft.h"
@@ -45,6 +45,14 @@
 # define ERR_DOOR		"cub3d: invalid door placement\n"
 # define ERR_IMG		"cub3d: Image failed loading\n"
 # define ERR_TIME		"cub3d: timestamp failed\n"
+# define ERR_EXT		"cub3d: invalid file extension\n"
+# define ERR_EMPTY		"cub3d: empty map...\n"
+# define ERR_INV_ID		"cub3d: invalid identifier\n"
+# define ERR_DOUBLE_ID	"cub3d: Doubled identifier\n"
+# define ERR_CLR_BOUND	"cub3d: Colour values out of bounds\n"
+# define ERR_COLOUR		"cub3d: Colour in the wrong format\n"
+# define ERR_MIX		"cub3d: Mix of colour and texture (ceiling/floor)\n"
+
 # define MSG_EXIT		"cub3d: Thank you for testing!\n"
 # define MSG_LOSE		"cub3d: You lost!\n"
 
