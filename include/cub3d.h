@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/03/18 16:39:39 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/03/18 17:01:05 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@
 # define ENEMY_FLW_TIME 5000
 
 //	Screen Resolution
-# define WIN_WIDTH		1500
-# define WIN_HEIGHT		800
+# define WIN_WIDTH		950
+# define WIN_HEIGHT		700
 # define WIN_TITLE		"Cub3D - fda-est & rvaz"
 
 # define TEXTURE_WIDTH	64
@@ -257,7 +257,6 @@ typedef struct s_rc_sprites
 typedef struct s_player
 {
 	int			actions;
-	t_point		mouse;
 	int			mouse_toggle;
 	t_point		pos;
 	t_point		dir;
@@ -298,9 +297,7 @@ typedef struct s_data
 void		set_actions(int keycode, t_data *data);
 
 //			actions.c
-int			vertical_movement(t_player *player);
 int			rotate_player(t_player *player);
-int			adjust_fov(t_player *player);
 int			move_player(t_data *data);
 void		toggle_mouse(t_data *data);
 void		door_interactions(t_data *data);

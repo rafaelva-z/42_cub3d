@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 14:59:53 by rvaz              #+#    #+#             */
-/*   Updated: 2024/03/13 18:35:16 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/18 16:26:07 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,6 @@ int	rotate_player(t_player *player)
 
 void	toggle_mouse(t_data *data)
 {
-	if (data->player.mouse_toggle)
-		mlx_mouse_hide(data->mlx, data->mlx_win);
-	else
-		mlx_mouse_show(data->mlx, data->mlx_win);
 	data->player.mouse_toggle = !data->player.mouse_toggle;
 }
 
@@ -119,48 +115,3 @@ void	door_interactions(t_data *data)
 		}
 	}
 }
-
-/**
- * @brief	Updates the player's field of view based on the keys pressed
-*/
-// int	adjust_fov(t_player *player)
-// {
-// 	// find a better way to actually change fov
-// 	if (player->actions & 1 << ZOOM_IN_B && player->plane.x < 10)
-// 	{
-// 		player->fov -= FOV_SPD;
-// 		player->plane = (t_point){player->plane.x * 0.9, player->plane.y * 0.9};
-// 		return (1);
-// 	}
-// 	else if (player->actions & 1 << ZOOM_OUT_B && player->fov < 150)
-// 	{
-// 		player->fov += FOV_SPD;
-// 		player->plane = (t_point){player->plane.x * 1.111111111,
-// 			player->plane.y * 1.111111111};
-// 		return (1);
-// 	}
-// 	return (0);
-// }
-
-/**
- * @brief	Updates the player's vertical view based on the keys pressed
-*/
-// int	vertical_movement(t_player *player)
-// {
-// 	if (player->actions & 1 << LOOK_UP_B && player->vertical < 100)
-// 	{
-// 		player->vertical += VERTICAL_SPD;
-// 		return (1);
-// 	}
-// 	else if (player->actions & 1 << LOOK_DOWN_B
-// 		&& player->vertical > -100)
-// 	{
-// 		player->vertical -= VERTICAL_SPD;
-// 		return (1);
-// 	}
-// 	return (0);
-// }
-
-/**
- * @brief	Toggles the mouse controls and visibility
-*/

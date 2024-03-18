@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 11:42:45 by rvaz              #+#    #+#             */
-/*   Updated: 2024/03/12 20:33:24 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/18 15:39:35 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,4 +125,5 @@ void	rc_sprites(t_data *data)
 		sc_set_draw_pos(rc);
 		draw_sprite(data, rc, i);
 	}
+	free(rc);
 }

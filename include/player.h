@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 15:38:11 by rvaz              #+#    #+#             */
-/*   Updated: 2024/03/12 21:13:46 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/18 16:22:56 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,10 @@
 
 //	Player Constants
 
-# define MOUSE_SENS     2
+# define MOUSE_SENS		0.3
 # define START_FOV		66
 # define FOV_SPD		0.001
 # define MOVE_SPD		0.1
 # define ROT_SPD		4
-# define VERTICAL_SPD	1
 
 #endif
