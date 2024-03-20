@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   controls.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 15:03:40 by rvaz              #+#    #+#             */
-/*   Updated: 2024/02/23 18:44:42 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/18 16:27:44 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	set_actions(int keycode, t_data *data)
 		data->player.actions |= 1 << MOVE_LEFT_B;
 	else if (keycode == MOVE_RIGHT)
 		data->player.actions |= 1 << MOVE_RIGHT_B;
-	else if (keycode == ROT)
+	else if (data->player.mouse_toggle && keycode == ROT)
 		data->player.actions |= 1 << ROT_B;
-	else if (keycode == RROT)
+	else if (data->player.mouse_toggle && keycode == RROT)
 		data->player.actions |= 1 << RROT_B;
 	else if (keycode == ZOOM_OUT)
 		data->player.actions |= 1 << ZOOM_OUT_B;

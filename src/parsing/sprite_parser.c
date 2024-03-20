@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprite_parser.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:11:16 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/03/05 12:43:47 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/20 14:49:10 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void	sprite_parser(t_data *data)
 	int	j;
 
 	data->sprite_amt = matrix_finder(data->map.map, "MD");
-	data->sprites = calloc(data->sprite_amt, sizeof(t_sprite));
-	data->sprt_order = calloc(data->sprite_amt, sizeof(int));
+	data->sprites = ft_calloc(data->sprite_amt, sizeof(t_sprite));
+	data->sprt_order = ft_calloc(data->sprite_amt, sizeof(int));
 	data->sprite_amt = 0;
 	i = -1;
 	while (data->map.map[++i])
