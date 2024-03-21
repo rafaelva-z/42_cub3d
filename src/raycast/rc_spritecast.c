@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 11:42:45 by rvaz              #+#    #+#             */
-/*   Updated: 2024/03/18 15:39:35 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/21 16:40:58 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ void	rc_sprites(t_data *data)
 	t_rc_sprites	*rc;
 	int				i;
 
+	if (data->sprite_amt == 0)
+		return ;
 	rc = malloc(sizeof(t_rc_sprites));
 	if (!rc)
 		free_and_exit(data, ERR_MALLOC, 1);

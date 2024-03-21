@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 22:26:46 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/03/12 17:49:32 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/21 18:13:13 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,55 @@ static void	step_forward(t_sprite *sprt)
 		sprt->pos.y += (ENEMY_SPD * sprt->dir.y);
 }
 
+static void	death_animation(t_data *data)
+{
+	t_point	pos;
+	t_point last_hit;
+	int		sq_amt;
+	int		sq_size;
+
+	pos = (t_point){0, 0};
+	last_hit = pos;
+	sq_size = 8;
+	sq_amt = (WIN_HEIGHT * WIN_WIDTH) / sq_size;
+	while (sq_amt > 0)
+	{
+		while (pos.x < WIN_WIDTH - last_hit.x)
+		{
+			draw_square(data->img, pos.x, pos.y, sq_size, 0);
+			pos.x += sq_size;
+			mlx_put_image_to_window(data->mlx, data->mlx_win, data->img->img, 0, 0);
+		}
+		while (pos.y < WIN_HEIGHT - last_hit.y)
+		{
+			draw_square(data->img, pos.x, pos.y, sq_size, 0);
+			pos.y += sq_size;
+			mlx_put_image_to_window(data->mlx, data->mlx_win, data->img->img, 0, 0);
+		}
+		while (pos.x > last_hit.x)
+		{
+			draw_square(data->img, pos.x, pos.y, sq_size, 0);
+			pos.x -= sq_size;
+			mlx_put_image_to_window(data->mlx, data->mlx_win, data->img->img, 0, 0);
+		}
+		while (pos.y > last_hit.y)
+		{
+			draw_square(data->img, pos.x, pos.y, sq_size, 0);
+			pos.y -= sq_size;
+			mlx_put_image_to_window(data->mlx, data->mlx_win, data->img->img, 0, 0);
+		}
+		last_hit.x += sq_size;
+		last_hit.y += sq_size;
+		sq_amt -= 1;
+	}
+}
+
+static void	player_die(t_data *data)
+{
+	death_animation(data);
+	free_and_exit(data, MSG_LOSE, 0);
+}
+
 void	enemy(t_data *data)
 {
 	int		i;
@@ -100,7 +149,7 @@ void	enemy(t_data *data)
 		if (dist > 10)
 			continue ;
 		if (dist < 0.5)
-			free_and_exit(data, MSG_LOSE, 0);
+			player_die(data);
 		rot_dir *= -1;
 		player_in_sight(data, &data->sprites[i]);
 		if (data->sprites[i].state != E_FOLLOW)
