@@ -6,7 +6,7 @@
 #    By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by rvaz              #+#    #+#              #
-#    Updated: 2024/03/18 15:54:36 by rvaz             ###   ########.fr        #
+#    Updated: 2024/03/21 18:16:46 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,7 @@ SRCS		=	$(addprefix ./src/,				\
 				draw_line.c						\
 				draw_stuff.c 					\
 				draw_utils.c					\
+				draw_square.c					\
 				)								\
 				$(addprefix utils/,				\
 				update_sprite.c					\

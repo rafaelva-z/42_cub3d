@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 20:44:05 by rvaz              #+#    #+#             */
-/*   Updated: 2024/03/18 17:01:05 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/03/21 17:38:34 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -383,6 +383,9 @@ void		sc_set_draw_pos(t_rc_sprites *rc);
 
 //			draw_stuff.c
 void		draw_wall(t_data *data, int r, t_ray *ray, t_sprite *door);
+
+//			draw_square.c
+void		draw_square(t_img *img, int x, int y, int size, int color);
 
 //			draw_line.c
 void		draw_vertical_line(t_point start, int size, t_img *img,
